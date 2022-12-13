@@ -1,54 +1,57 @@
 <template>
-  <div class="form">
-    <div class="background">
-        <h3> <router-link to="/"><span>—</span> Регистрация <span>—</span></router-link></h3>
-        <div class="info_name">
-            <input v-model="name"  class="block mt-1 w-full" type="text" name="name" placeholder="Введите имя"   />
-         </div>     
-        <!-- Email Address -->
-        <div class="info_email">
-            <input v-model="email"  class="block mt-1 w-full" type="email" name="email" placeholder="Введите почту"  />
-        </div>      
-        <!-- Avatar -->
-        <!-- <div class="info_avatar">
-            <input type="file" id="customFile" @change="onAttachmentChange" placeholder="Вставьте картинку">
-        </div>       -->
-        <!-- Password -->
-        <div class="info_password">
-            <input v-model="password" class="block mt-1 w-full" type="password" name="password" placeholder="Введите пароль"  />
-        </div>      
-        <!-- Confirm Password -->
-        <div class="info_confirm_passord">
-            <input v-model="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" placeholder="Введите пароль еще раз"  />
-        </div>      
-        <div class="info_link">
-            <button @click.prevent="register" type="submit">Отправить</button>
+  <div class="background">
+    <div class="form">
+        <div style="width: 80%;">
+            <router-link to="/"><img src="img/logo.png" alt=""></router-link>
+            <p class="welcome">Добро пожаловать!!!</p>
+            <h1>Регистрация</h1>
         </div>
-        <div>
-        <router-link class="info_link_text" to="/login">
-                Уже зарегистрирован?
-        </router-link>
-       
-        </div>
-        <div>
-        <a href="https://xn--b1aew.xn--p1ai/" class="info_link_text">
-                Политика конфиденциальности
-            </a>
-        </div> 
+        
+        <form>
+            <div>
+                <label for="name">Имя</label>
+                <input v-model="name" type="text" name="name" placeholder="Введите имя">
+            </div>
+           
+            <div>
+                <label for="surname">Фамилия</label>
+                <input v-model="surname" type="text" name="surname" placeholder="Введите фамилию">
+            </div>
+            
+            <div>
+                <label for="email">Email</label>
+                <input v-model="email" type="email" name="email" placeholder="Введите почту">
+            </div>
+                 
+            <div>
+                <label for="password">Пароль</label>
+                <input v-model="password" type="password" name="password" placeholder="Придумайте пароль">
+            </div>
+            
+            <div>
+                <label for="password_confirmation">Повторите пароль</label>
+                <input v-model="password_confirmation" type="password" name="password_confirmation" placeholder="Повторите пароль">
+            </div>            
+
+            <button>Зарегистрироваться ⇀</button>
+            <p>Уже есть аккаунт? <router-link to="/login" href="">Войдите</router-link></p>
+        </form>
+    </div>
+    <div class="people">
+        <img src="img/people_reg_log.png" alt="">
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Registration',
-
   data(){
     return{
-        name: null,
-        email: null,
-        password: null,
-        password_confirmation: null,
+        name: '',
+        surname: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     }
   },
 
@@ -80,106 +83,92 @@ export default {
 </script>
 
 <style lang="css" scoped>
-    h3{
-        color: white;
-        text-align: center;
-        font-size: 2vw;
-        margin-top: -1.5vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    h3 span{
-        color: #9FC926;
-    }
-    .form{
-        background-image: url(img/image10.png);
-        background-position-y: -20vw;
-        background-size: 100%;
-        background-repeat: no-repeat;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
     .background{
-        background-color: #191d21dc;
         display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 1vw;
-        width: 40%;
-        height: 75%;
-        padding: 5vw 0;
+        flex-direction: row;    
+        align-items: flex-end;
+        justify-content: space-around;
+        margin-top: 4vh;
     }
-    .info_name{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
+    img{
+        width: 200px;
+        height: 55px;
+        margin-bottom: 25px;
     }
-    .info_email{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    .info_password{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    .info_confirm_passord{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    .info_link_text{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    
-    input{
-        background-color: transparent;
-        border: none;
-        border-bottom: #9FC926 2px solid;
-        outline: none;
-        width: 25vw;
-        height: 50px;
-        color: white;
-        padding: 5px;
-    }
-    
-    .form button{
-        width: 25vw;
-        height: 50px;
-        background-color: transparent;
-        color: white;
-        font-size: 1.2vw;
-        font-family: 'Philosopher', sans-serif;
-        border: #9FC926 2px solid;
-        margin-top: 5vh;
-    }
-    .form button:hover{
-        background-color: #9FC926;
-        color: #191D21;
-        transition-duration: 0.5s;
-    }
-    input::placeholder{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    body{
-        background-image: url(../../img/image10.png);
-        background-repeat: no-repeat;
-        background-position: center;
+    .welcome{
+        color: rgba(255, 255, 255, 0.5);
     }
     h1{
         color: white;
-        font-size: 2vw;
-        font-family: 'Comfortaa', cursive; 
+        font-size: 56px;
+        font-family: 'Cabin', sans-serif;
     }
-    .logo{
+    .form{
+        background: #1D2023;
+        border-radius: 20px;
+        width: 600px;
+        height: 900px;
         display: flex;
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
-        margin-top: 2vw;
+    }
+    .form p{
+        color: rgba(255, 255, 255, 0.2);
+        font-family: 'Cabin', sans-serif;
+        font-size: 16px;
+        margin: 20px 0;
+    }
+    .form p a{
+        color: #AF3131;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    form div{
+        display: flex;
+        flex-direction: column;
+    }
+    input{
+        background: transparent;
+        border: 2px #AF3131 solid;
+        border-radius: 4px;
+        width: 480px;
+        height: 45px;
+        color: white;
+        font-size: 16px;
+        font-family: 'Cabin', sans-serif;
+    }
+    input::placeholder{
+        /* color: white; */
+        font-size: 14px;
+        padding-left: 10px;
+        font-family: 'Cabin', sans-serif;
+    }
+    label{
+        color: white;
+        font-size: 16px;
+        font-weight: lighter;
+        font-family: 'Cabin', sans-serif;
+        margin-bottom: 7px;
+    }
+    button{
+        width: 270px;
+        height: 45px;
+        border-radius: 23px;
+        background-color: #AF3131;
+        color: white;
+        font-size: 16px;
+        font-family: 'Cabin', sans-serif;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+    .people img{
+        width: 730px;
+        height: 740px;
     }
 </style>

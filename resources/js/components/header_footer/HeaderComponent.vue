@@ -2,13 +2,13 @@
     <div>
         <header>
             <ul>
-                <li><img src="/img/logo.png" alt=""></li>
+                <li><router-link to="/"><img src="/img/logo.png" alt=""></router-link></li>
                 <li><router-link to="/">Главная</router-link></li>
                 <li><router-link to="">Каталог</router-link></li>
                 <li><router-link to="">Корзина</router-link></li>
                 <li><router-link to="">О нас</router-link></li>
                 <li><input type="search"><img class="search" src="img/search.png" alt=""></li>
-                <li><router-link class="register" to="">Регистрация</router-link></li>
+                <li><router-link class="register" to="/register">Регистрация</router-link></li>
                 <a class="burger-menu_button">
                     <span class="burger-menu_lines"></span>
                 </a>

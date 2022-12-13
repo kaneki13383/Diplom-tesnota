@@ -1,7 +1,9 @@
 <template>
-    <HeaderComponentVue></HeaderComponentVue>
+    <div v-if="this.$route.path === '/register' || this.$route.path === '/login'"></div>
+    <HeaderComponentVue v-else></HeaderComponentVue>
     <router-view></router-view> 
-    <FooterComponentVue></FooterComponentVue>
+    <div v-if="this.$route.path === '/register' || this.$route.path === '/login'"></div>
+    <FooterComponentVue v-else></FooterComponentVue>
 </template>
 <script lang="ts">
 import HeaderComponentVue from '../../components/header_footer/HeaderComponent.vue';
@@ -12,6 +14,14 @@ export default {
     data (){
         return{}
     },
+
+    computed: {
+        headerTab() {  
+            if(this.$route.path === '/register'){
+                HeaderComponentVue
+            }
+        }
+    }
     
 }
 </script>

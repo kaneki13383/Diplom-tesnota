@@ -1,19 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MainView from '../views/main/MainView.vue';
-// import RegisterComponent from '../components/RegisterComponent.vue';
-// import LoginComponent from '../components/LoginComponent.vue';
+import RegisterComponent from '../components/autorization/RegisterComponent.vue';
+import LoginComponent from '../components/autorization/LoginComponent.vue';
 // import GetComponent from '../components/GetComponent.vue';
-// import DashboardComponent from '../components/DashboardComponent.vue';
+import DashboardComponent from '../components/autorization/DashboardComponent.vue';
 
 const router = new createRouter({
     base: "/",
     history: createWebHistory(),
     routes: [
         { path: "/", component: MainView},
-        // { path: "/register", component: RegisterComponent},
-        // { path: "/login", component: LoginComponent},
+        { path: "/register", component: RegisterComponent},
+        { path: "/login", component: LoginComponent},
         // { path: "/get", component: GetComponent},
-        // { path: "/dashboard", component: DashboardComponent},
+        { path: "/dashboard", component: DashboardComponent},
     ],
 });
 

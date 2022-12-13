@@ -28,13 +28,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     Route::post('/load-avatar', '\App\Http\Controllers\LoadAvatarController');
 // });
 
-
-
-Route::get('/products', [ProductController::class, 'all']);
-Route::get('/view/{id}', [ProductController::class, 'get']);
-Route::get('/users', [UserOutputController::class, 'all']);
-Route::delete('/delete/{id}', [DeleteUser::class, 'delete']);
-Route::post('/add_product', [AddProductController:: class, 'addproduct']);
-Route::delete('/delete_product/{id}', [DeleteProductController::class, 'delete']);
-Route::post('/review', [ReviewController::class, 'addreview']);
-Route::get('/getreview', [ReviewController::class, 'getreview']);
