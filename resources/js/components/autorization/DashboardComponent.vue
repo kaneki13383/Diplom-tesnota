@@ -34,6 +34,9 @@
             <div class="click" id="nowOrders">
                 <p>Текущие заказы</p>
             </div>
+            <div @click.prevent="logout" class="click" id="nowOrders">
+                <p>Выход</p>
+            </div>
         </div>
         <div>
             <div>
@@ -41,8 +44,10 @@
                 <h2>Профиль</h2>
             </div>
             <div class="info_data">
-                <ChangeComponent v-if="show == 'change'"></ChangeComponent>
-                <DataOrderComponent v-else-if="show == 'data_order'"></DataOrderComponent>
+                <transition name="slide-fade" mode="out-in">
+                    <ChangeComponent v-if="show == 'change'"></ChangeComponent>
+                    <DataOrderComponent v-else-if="show == 'data_order'"></DataOrderComponent>
+                </transition>                
             </div>
         </div>
     </div>
@@ -168,6 +173,16 @@ export default {
 </script>
 
 <style lang="css" scoped>
+    .slide-fade-enter-active {
+        transition: all .5s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .5s ;
+    }
+    .slide-fade-enter, .slide-fade-leave-to {
+        transform: translateY(-200px);
+        opacity: 0;
+    }
     .d-f{
         margin-top: 100px;
         display: flex;
