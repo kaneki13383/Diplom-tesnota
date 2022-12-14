@@ -33,7 +33,7 @@
                 <input v-model="password_confirmation" type="password" name="password_confirmation" placeholder="Повторите пароль">
             </div>            
 
-            <button>Зарегистрироваться ⇀</button>
+            <button @click.prevent="register">Зарегистрироваться ⇀</button>
             <p>Уже есть аккаунт? <router-link to="/login" href="">Войдите</router-link></p>
         </form>
     </div>
@@ -62,15 +62,17 @@ export default {
   methods: {
     register(){
         axios.get('/sanctum/csrf-cookie').then(Response => {
-                axios.post('/register', {name: this.name, email: this.email, password: this.password, password_confirmation: this.password_confirmation})
+                axios.post('/register', {name: this.name, surname: this.surname, email: this.email, password: this.password, password_confirmation: this.password_confirmation})
             .then(r =>{
                 console.log(r)
                 this.name = '';
+                this.surname = '';
                 this.email = '';
                 this.password = '';
                 this.password_confirmation = '';         
                     localStorage.setItem('x_xsrf_token', r.config.headers['X-XSRF-TOKEN']);
-                    localStorage.setItem('user',r.data['name']);
+                    localStorage.setItem('name',r.data['name']);
+                    localStorage.setItem('surname',r.data['surname']);
                     localStorage.setItem('email',r.data['email']);
                     localStorage.setItem('id',r.data['id']);
                     localStorage.setItem('avatar',r.data['avatar']);
@@ -88,7 +90,7 @@ export default {
         flex-direction: row;    
         align-items: flex-end;
         justify-content: space-around;
-        margin-top: 4vh;
+        margin-top: 2vh;
     }
     img{
         width: 200px;
@@ -105,6 +107,7 @@ export default {
     }
     .form{
         background: #1D2023;
+        box-shadow: 10px 11px 20px black;
         border-radius: 20px;
         width: 600px;
         height: 900px;
@@ -141,12 +144,12 @@ export default {
         height: 45px;
         color: white;
         font-size: 16px;
+        padding-left: 10px;
         font-family: 'Cabin', sans-serif;
     }
     input::placeholder{
         /* color: white; */
         font-size: 14px;
-        padding-left: 10px;
         font-family: 'Cabin', sans-serif;
     }
     label{
@@ -161,6 +164,7 @@ export default {
         height: 45px;
         border-radius: 23px;
         background-color: #AF3131;
+        border: none;
         color: white;
         font-size: 16px;
         font-family: 'Cabin', sans-serif;

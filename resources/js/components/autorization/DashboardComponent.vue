@@ -1,5 +1,5 @@
 <template>
-    <div class="d-f">
+    <!-- <div class="d-f">
         <div class="logout">
             <img src="img/no-avatar.png" v-if="avatar == 'NULL' || avatar == 'undefined'" alt="">
             <img :src="avatar" alt="" v-else>
@@ -10,33 +10,66 @@
             <button @click.prevent="logout" type="submit">Выход</button>
         </div>
         <div class="info">
-            <p>Ваше имя: {{name}}</p>
+            <p>Ваше имя: {{name}} {{surname}}</p>
             <p>Ваша почта: {{email}}</p>
         </div>        
+    </div> -->
+    <div class="d-f">
+        <div class="all_info">
+            <div class="info_user">
+                <img src="img/no_avatar.jpg" v-if="avatar === 'NULL' || avatar === 'undefined'" alt="">
+                <img :src="avatar" alt="" v-else>
+                <p>{{name}} {{surname}}</p>
+                <p>{{email}}</p>
+            </div>
+            <div v-on:click="showView('change')" id="changeData" class="click">
+                <p>Изменить данные</p>
+            </div>
+            <div v-on:click="showView('data_order')" id="orders" class="click">
+                <p>Данные для заказа</p>
+            </div>
+            <div class="click" id="historyOrders">
+                <p>История заказов</p>
+            </div>
+            <div class="click" id="nowOrders">
+                <p>Текущие заказы</p>
+            </div>
+        </div>
+        <div>
+            <div>
+                <p class="pagination">Главная / Профиль / {{pagination}}</p>
+                <h2>Профиль</h2>
+            </div>
+            <div class="info_data">
+                <ChangeComponent v-if="show == 'change'"></ChangeComponent>
+                <DataOrderComponent v-else-if="show == 'data_order'"></DataOrderComponent>
+            </div>
+        </div>
     </div>
-    <div>
-        <h3><span>—</span> Оставьте свой отзыв <span>—</span></h3>
-        <div class="review-df"> 
-            <div class="counter">{{counter}}/255</div>
-            <textarea v-model="review" class="review" name="review" id="" maxlength="255" placeholder="Оставите отзыв о нашей компании"></textarea>
-            <button v-on:click="Review1()" class="button_sub">Отправить</button>
-        </div>   
-    </div>
-    <div><FooterView></FooterView></div>
+    
 </template>
 
 <script>
-
+import HeaderComponent from '../header_footer/HeaderComponent.vue';
+import ChangeComponent from './ChangeComponent.vue';
+import DataOrderComponent from './DataOrderComponent.vue';
 export default {
-  components: { },
+
+    components:{
+        ChangeComponent,
+        DataOrderComponent,
+    },
+
     data(){
         return{
             name: '',
+            surname: '',
             email: '',
             file: '',
             id: '',
             avatar: '',
-            review: ''
+            show: 'change',
+            pagination: ' Изменить данные'
         }
     },
 
@@ -45,10 +78,12 @@ export default {
             HeaderComponent.data.token = localStorage.getItem('x_xsrf_token')
         }
         this.getName()
+        this.getSurame()
         this.getEmail()
         this.getAvatar()
             this.getId()
         document.title = this.name;
+        this.showView(this.show);
     },
 
     computed:{
@@ -62,7 +97,8 @@ export default {
             axios.post('/logout')
             .then( res => {
                 localStorage.removeItem('x_xsrf_token')
-                localStorage.removeItem('user')
+                localStorage.removeItem('name')
+                localStorage.removeItem('surname')
                 localStorage.removeItem('email')
                 localStorage.removeItem('id')
                 localStorage.removeItem('avatar')
@@ -96,7 +132,10 @@ export default {
             this.file = this.$refs.file.files[0];
         },
         getName(){
-            this.name = localStorage.getItem('user')
+            this.name = localStorage.getItem('name')
+        },
+        getSurame(){
+            this.surname = localStorage.getItem('surname')
         },
         getEmail(){
             this.email = localStorage.getItem('email')
@@ -107,22 +146,21 @@ export default {
         getAvatar(){
             this.avatar = localStorage.getItem('avatar')
         },
-        Review1(){
-            let formData = new FormData();
-            formData.append('review', this.review);
-            formData.append('name_user', this.name);
-            formData.append('avatar', this.avatar)
-            axios.post('/api/review', 
-            formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                },
-                )
-            
-            .then(res =>{
-                console.log()
+        showView(text){
+            let btns = document.querySelectorAll(".click");
+            this.show = text;
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.id === 'changeData' && this.show === 'change'){
+                    btn.classList.add('active')
+                    this.pagination = 'Изменить данные'
+                } else if(btn.id === 'orders' && this.show === 'data_order'){
+                    btn.classList.add('active')
+                    this.pagination = 'Данные для заказа'
+                } else if(btn.id === 'historyOrders' && this.show === 'historyOrders'){
+                    btn.classList.add('active')
+                } 
+                
             })
         }
     }
@@ -130,152 +168,81 @@ export default {
 </script>
 
 <style lang="css" scoped>
-    .logout{
-        display: flex;
-        margin-top: 10vh;
-        flex-wrap: wrap;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: baseline;
-        align-content: space-around;
-        align-items: center;
-    }
-    .counter{
-        color: white;
-        font-size: 1.2vw;
-        font-family: 'Comfortaa', sans-serif;
-        position: absolute;
-        margin: 8vw 0;
-        margin-left: 17vw;
-    }
-    .logout p{
-        color: white;
-        font-size: 1.2vw;
-        font-family: 'Comfortaa', sans-serif;
-        margin-bottom: -1vw;
-    }
-    .logout button{
-        width: 20vw;
-        height: 50px;
-        background-color: transparent;
-        color:  white ;
-        font-size: 1.2vw;
-        font-family: 'Philosopher', sans-serif;
-        border:  #9fc926 2px solid;
-        margin-top: 5vh;
-    }
-    .logout button:hover{
-        background-color: #9fc926;
-        color: #191D21;
-        transition-duration: 0.5s;
-    }
-    .logout input{
-        width: 20vw;
-        height: 50px;
-        background-color: transparent;
-        color: white;
-        font-size: 1.2vw;
-        font-family: 'Philosopher', sans-serif;
-        border:  #9fc926 2px solid;
-        margin-top: 5vh;
-        /* opacity: 0; */
-        display: none;
-    }
-    label{
-        background-color: transparent;
-        font-family: 'Philosopher', sans-serif;
-        color: white;
-        font-size: 1.2vw;
-        border: 2px #9fc926 solid;
-        width: 20vw;
-        height: 50px;
-        margin-top: 3vw;
-        padding-top: 0.5vh;
-        text-align: center;
-    }
-    .logout input, label:hover{
-        background-color: #9fc926;
-        color: #191D21;
-        transition-duration: 0.5s;
-    }
-    .logout img{
-        width: 250px;
-        height: 250px;
-        border-radius: 200px;
-    }
     .d-f{
-        display: flex;        
-        align-items: baseline;
-        justify-content: space-around;
+        margin-top: 100px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-evenly;
     }
-    .info{
-        background-color: #191D21;
-        width: 700px;
-        height: 400px;
-        color: white;
-        font-size: 1.5vw;
-        font-family: 'Comfortaa', cursive;
+    .all_info{
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        padding-left: 3vw;
+        gap: 5px;
     }
-    h3{
-      color: white;
-      text-align: center;
-      font-size: 2vw;
-      margin: 8vw 0;
-      font-family: 'Comfortaa', cursive;
-    }
-    h3 span{
-      color: #9FC926;
-    }
-    .review-df{
+    .info_user{
+        background: rgba(22, 24, 27, 0.7);
+        width: 290px;
+        height: 300px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 25px;
     }
-    .review{
+    .info_user img{
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+        margin-top: 25px;
+        border: 5px rgba(255, 255, 255, 0.5) solid;
+    }
+    .info_user p{
         color: white;
-        resize: none;
-        background: transparent;
-        width: 500px;
-        height: 200px;
-        border: #9FC926 2px solid;
-        font-size: 1.2vw;
-        font-family: 'Comfortaa', sans-serif;
+        font-family: "Comfortaa", serif;
+        font-size: 20px;
     }
-    button{
-    width: 10vw;
-    height: 50px;
-    background-color: transparent;
-    color: white;
-    font-size: 1.2vw;
-    font-family: 'Philosopher', sans-serif;
-    border: #9FC926 2px solid;
-    margin-top: 5vh;
+    .info_user p:last-child{
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
     }
-    form button:hover{
-    background-color: #9FC926;
-    color: #191D21;
-    transition-duration: 0.5s;
+    .click{
+        width: 290px;
+        height: 85px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: rgba(22, 24, 27, 0.7);
     }
-    
-    input::placeholder, textarea::placeholder{
+    .active{        
+        background: rgba(175, 49, 49, 0.58);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        transition: 0.5s;
+    }
+    .click p{
+        font-size: 20px;
+        font-family: "Comfortaa", serif;
         color: white;
-        font-size: 1vw;
-        padding: 1vw;
-        font-family: 'Comfortaa', cursive;
+        cursor: pointer;
     }
-
-    @media screen and (max-width: 1024px) {
-        .d-f{
-            flex-direction: column;
-            align-items: center;
-            gap: 10vw;
-        }
-        .info{
-            font-size: 1.2rem;
-        }
+    .info_data{
+        background: rgba(22, 24, 27, 0.7);
+        border-radius: 15px;
+        padding: 50px;
+        margin-bottom: 100px;
+    }
+    .pagination{
+        color: #AF3131;
+        font-size: 18px;
+        font-family: "Comfortaa", serif;
+    }
+    h2{
+        font-family: "Comfortaa", serif;
+        font-size: 32px;
+        color: white;
+        margin-top: 15px;
+        margin-bottom: 30px;
     }
 </style>

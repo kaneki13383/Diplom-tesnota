@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddProductController;
 use App\Http\Controllers\DeleteProductController;
 use App\Http\Controllers\DeleteUser;
+use App\Http\Controllers\LoadAvatarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -28,3 +29,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     Route::post('/load-avatar', '\App\Http\Controllers\LoadAvatarController');
 // });
 
+Route::post('/load-avatar', [LoadAvatarController::class, 'store']);

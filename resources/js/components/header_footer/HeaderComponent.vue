@@ -5,10 +5,10 @@
                 <li><router-link to="/"><img src="/img/logo.png" alt=""></router-link></li>
                 <li><router-link to="/">Главная</router-link></li>
                 <li><router-link to="">Каталог</router-link></li>
-                <li><router-link to="">Корзина</router-link></li>
+                <li v-show="token"><router-link to="">Корзина</router-link></li>
                 <li><router-link to="">О нас</router-link></li>
-                <li><input type="search"><img class="search" src="img/search.png" alt=""></li>
-                <li><router-link class="register" to="/register">Регистрация</router-link></li>
+                <li><input type="search" placeholder="Поиск"><img class="search" src="img/search.png" alt=""></li>
+                <li><router-link v-show="!token" class="register" to="/register">Регистрация</router-link> <router-link v-show="token" to="/dashboard">{{name}}</router-link></li>
                 <a class="burger-menu_button">
                     <span class="burger-menu_lines"></span>
                 </a>
@@ -21,9 +21,61 @@
 export default {
     data () {
         return {
-
+            token: '',
+            name: '',
         }
-    }
+    },
+
+    watch: {
+        '$route'(){
+            this.getToken()
+            this.getName()
+        }
+    },
+
+    mounted(){
+        this.getToken()
+        this.getName()
+        // window.addEventListener("resize", function(){
+        //     let width_window = this.innerWidth;
+            
+        //     // console.log(width_window);
+        //     if(width_window >= 1025){
+        //         document.getElementById('navig').style.display = 'flex'
+        //         document.getElementById('navig').style.opacity = '1'
+        //     }else{
+        //         document.getElementById('navig').style.display = 'none'
+        //         document.getElementById('navig').style.opacity = '0'
+        //         document.getElementById('burger').style.position = 'absolute'
+        //     }
+        // }, false);
+        
+    },
+
+    updated(){
+        this.getToken();
+        this.getName()
+    },
+
+    methods:{
+        getToken(){
+            this.token = localStorage.getItem('x_xsrf_token')
+        },
+        getName(){
+            this.name = localStorage.getItem('name')
+        },
+        // display(){
+        //     if(document.getElementById('navig').style.opacity == '1'){
+        //         document.getElementById('navig').style.opacity = '0'
+        //         document.getElementById('navig').style.display = 'none'
+        //         document.getElementById('burger').style.position = 'absolute'
+        //     }else{
+        //         document.getElementById('navig').style.opacity = '1'
+        //         document.getElementById('navig').style.display = 'flex'
+        //         document.getElementById('burger').style.position = 'fixed'
+        //     }            
+        // }
+    },
 }
 </script>
 
@@ -55,6 +107,12 @@ export default {
         background: transparent;
         border: white 2px solid;
         border-radius: 13px;
+        color: white;
+        font-family: 'Comfortaa', cursive;
+        padding-left: 10px;
+    }
+    li input::placeholder{
+        color: white;
     }
     .search{
         width: 30px;

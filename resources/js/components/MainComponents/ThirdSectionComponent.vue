@@ -57,6 +57,7 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+        padding-top: 50px;
     }
     input[type=text]{
         width: 435px;
@@ -64,21 +65,23 @@ export default {
         background-color: #1D2023;
         border: 5px #AF3131 solid;
         border-radius: 9px;
+        color: white;
+        font-size: 20px;
+        font-family: 'Cabin', sans-serif;
+        font-weight: bold;
+        padding-left: 20px;
     }
     input::placeholder{
         color: white;
         font-size: 20px;
         font-family: 'Cabin', sans-serif;
         font-weight: bold;
-        padding-left: 20px;
     }
     textarea::placeholder{
         color: white;
         font-size: 20px;
         font-family: 'Cabin', sans-serif;
         font-weight: bold;
-        padding-left: 20px;
-        padding-top: 20px;
     }
     textarea{
         width: 435px;
@@ -86,6 +89,12 @@ export default {
         border: 5px #AF3131 solid;
         border-radius: 9px;
         resize: none;
+        color: white;
+        font-size: 20px;
+        font-family: 'Cabin', sans-serif;
+        font-weight: bold;
+        padding-left: 20px;
+        padding-top: 20px;
     }
     .request button{
         width: 250px;
@@ -105,7 +114,7 @@ export default {
     }
     img{
         position: relative;
-        top: 40px;
+        top: 21px;
         right: 2px;
         width: 605px;
     }

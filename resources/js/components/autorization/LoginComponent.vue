@@ -1,24 +1,34 @@
 <template>
-    <div class="log">
-        <div class="background">
-        <h3><router-link to="/"><span>—</span> Авторизация <span>—</span></router-link></h3>
-        <div class="info_email">
-            <input v-model="email" type="email" name="email" placeholder="Email">
+    <div class="background">
+    <div class="form">
+        <div style="width: 80%;">
+            <router-link to="/"><img src="img/logo.png" alt=""></router-link>
+            <p class="welcome">Рады вас видеть снова!!!</p>
+            <h1>Войти</h1>
         </div>
-        <div class="info_password">
-            <input v-model="password" type="password" name="password" placeholder="Пароль">
-        </div>
-            <button @click.prevent="login" type="submit">Войти</button>
-        <div>
-            <router-link class="info_link_text" to="/register">Нет аккаунта?</router-link>
-        </div>
-        <div>
-            <a  class="info_link_text">
-                Политика конфиденциальности
-            </a>
-        </div>
-        </div> 
+        
+        <form>
+            
+            <div>
+                <label for="email">Email</label>
+                <input v-model="email" type="email" name="email" placeholder="Введите почту">
+            </div>
+                 
+            <div>
+                <label for="password">Пароль</label>
+                <input v-model="password" type="password" name="password" placeholder="Придумайте пароль">
+            </div>
+            
+                    
+
+            <button @click.prevent="login">Войти ⇀</button>
+            <p>Нет аккаунта? <router-link to="/register" href="">Зарегистрироваться</router-link></p>
+        </form>
     </div>
+    <div class="people">
+        <img src="img/people_reg_log.png" alt="">
+    </div>
+  </div>
 </template>
 
 <script>
@@ -44,7 +54,8 @@ export default {
                     this.email = '';
                     this.password = '';
                     localStorage.setItem('x_xsrf_token', r.config.headers['X-XSRF-TOKEN']);
-                    localStorage.setItem('user',r.data['name']);
+                    localStorage.setItem('name',r.data['name']);
+                    localStorage.setItem('surname',r.data['surname']);
                     localStorage.setItem('email',r.data['email']);
                     localStorage.setItem('id',r.data['id']);
                     localStorage.setItem('avatar',r.data['avatar']);
@@ -68,79 +79,94 @@ export default {
 </script>
 
 <style lang="css" scoped>
-    h3{
-        color: white;
-        text-align: center;
-        font-size: 2vw;
-        margin-top: -1.5vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    h3 span{
-        color: #9FC926;
-    }
-    .info_email{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    .info_password{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
-    }
-    .log{
-        background-image: url('img/image22.png');
-        background-size: 100%;
-        background-repeat: no-repeat;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
     .background{
-        background-color: #191d21dc;
         display: flex;
-        align-items: center;
+        flex-direction: row;    
+        align-items: flex-end;
+        justify-content: space-around;
+        margin-top: 12vh;
+    }
+    img{
+        width: 200px;
+        height: 55px;
+        margin-bottom: 25px;
+    }
+    .welcome{
+        color: rgba(255, 255, 255, 0.5);
+    }
+    h1{
+        color: white;
+        font-size: 56px;
+        font-family: 'Cabin', sans-serif;
+    }
+    .form{
+        background: #1D2023;
+        box-shadow: 10px 11px 20px black;
+        border-radius: 20px;
+        width: 600px;
+        height: 750px;
+        display: flex;
         flex-direction: column;
-        gap: 1vw;
-        width: 40%;
-        height: 55%;
-        padding: 5vw 0;
+        align-items: center;
+        justify-content: center;
+    }
+    .form p{
+        color: rgba(255, 255, 255, 0.2);
+        font-family: 'Cabin', sans-serif;
+        font-size: 16px;
+        margin: 20px 0;
+    }
+    .form p a{
+        color: #AF3131;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    form div{
+        display: flex;
+        flex-direction: column;
     }
     input{
-        background-color: transparent;
-        border: none;
-        border-bottom: #9FC926 2px solid;
-        outline: none;
-        width: 25vw;
-        height: 50px;
+        background: transparent;
+        border: 2px #AF3131 solid;
+        border-radius: 4px;
+        width: 480px;
+        height: 45px;
         color: white;
-        padding: 5px;
-    }
-    
-    .log button{
-        width: 25vw;
-        height: 50px;
-        background-color: transparent;
-        color: white;
-        font-size: 1.2vw;
-        font-family: 'Philosopher', sans-serif;
-        border: #9FC926 2px solid;
-        margin-top: 5vh;
-    }
-    .log button:hover{
-        background-color: #9FC926;
-        color: #191D21;
-        transition-duration: 0.5s;
+        font-size: 16px;
+        padding-left: 10px;
+        font-family: 'Cabin', sans-serif;
     }
     input::placeholder{
-        color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
+        /* color: white; */
+        font-size: 14px;
+        font-family: 'Cabin', sans-serif;
     }
-    .info_link_text{
+    label{
         color: white;
-        font-size: 1vw;
-        font-family: 'Comfortaa', cursive;
+        font-size: 16px;
+        font-weight: lighter;
+        font-family: 'Cabin', sans-serif;
+        margin-bottom: 7px;
+    }
+    button{
+        width: 150px;
+        height: 45px;
+        border-radius: 23px;
+        background-color: #AF3131;
+        border: none;
+        color: white;
+        font-size: 16px;
+        font-family: 'Cabin', sans-serif;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+    .people img{
+        width: 730px;
+        height: 740px;
     }
 </style>

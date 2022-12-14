@@ -17,6 +17,9 @@
             body{
                 background: #212529;
             }
+            input, textarea{
+                outline: none;
+            }
         </style>
     </head>
     <body id="app">     

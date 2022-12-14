@@ -1,7 +1,11 @@
 <template>
     <div v-if="this.$route.path === '/register' || this.$route.path === '/login'"></div>
     <HeaderComponentVue v-else></HeaderComponentVue>
-    <router-view></router-view> 
+
+    
+        <router-view></router-view>
+
+
     <div v-if="this.$route.path === '/register' || this.$route.path === '/login'"></div>
     <FooterComponentVue v-else></FooterComponentVue>
 </template>
@@ -14,6 +18,7 @@ export default {
     data (){
         return{}
     },
+
 
     computed: {
         headerTab() {  
