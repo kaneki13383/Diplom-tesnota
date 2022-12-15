@@ -34,13 +34,13 @@
             <div class="click" id="nowOrders">
                 <p>Текущие заказы</p>
             </div>
-            <div @click.prevent="logout" class="click" id="nowOrders">
+            <div @click.prevent="logout" class="click">
                 <p>Выход</p>
             </div>
         </div>
         <div>
             <div>
-                <p class="pagination">Главная / Профиль / {{pagination}}</p>
+                <p class="pagination">Главная / Профиль / {{pagination}} </p>
                 <h2>Профиль</h2>
             </div>
             <div class="info_data">
@@ -180,7 +180,7 @@ export default {
         transition: all .5s ;
     }
     .slide-fade-enter, .slide-fade-leave-to {
-        transform: translateY(-200px);
+        transform: translateX(200px);
         opacity: 0;
     }
     .d-f{

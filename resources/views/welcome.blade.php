@@ -20,9 +20,13 @@
             input, textarea{
                 outline: none;
             }
+            html{
+                overflow-x: hidden;
+            }
         </style>
     </head>
     <body id="app">     
 
+    
     </body>
 </html>
