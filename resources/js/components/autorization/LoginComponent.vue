@@ -8,7 +8,6 @@
         </div>
         
         <form>
-            
             <div>
                 <label for="email">Email</label>
                 <input v-model="email" type="email" name="email" placeholder="Введите почту">
@@ -17,9 +16,7 @@
             <div>
                 <label for="password">Пароль</label>
                 <input v-model="password" type="password" name="password" placeholder="Придумайте пароль">
-            </div>
-            
-                    
+            </div>             
 
             <button @click.prevent="login">Войти ⇀</button>
             <p>Нет аккаунта? <router-link to="/register" href="">Зарегистрироваться</router-link></p>

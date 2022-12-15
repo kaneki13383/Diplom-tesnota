@@ -98,6 +98,37 @@ export default {
     },
 
     methods:{
+        submitFile(){
+            let formData = new FormData();
+            formData.append('file', this.file);
+            this.getId()
+            formData.append('id', this.id);
+            axios.post('/load-avatar',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(r => {
+                let fileName = '../uploads/' + this.file.name;
+                localStorage.setItem('avatar', fileName);
+                this.avatar = fileName
+                this.file = '';
+            })
+                .catch(function(){
+                    console.log('FAILURE!!');
+                });
+        },
+
+        handleFileUpload(){
+            this.file = this.$refs.file.files[0];
+        },
+        
+        getId(){
+            this.id = localStorage.getItem('id')
+        },
+
         logout(){
             axios.post('/logout')
             .then( res => {

@@ -5,10 +5,10 @@
             <input type="text" placeholder="Имя">
             <input type="text" placeholder="Фамилия">
             <input type="text" placeholder="Email">
-            <input type="password" placeholder="Пароль">
-            <!-- <input type="file" id="file" ref="file" required v-on:change="handleFileUpload()">
+            <!-- <input type="password" placeholder="Пароль"> -->
+            <input type="file" id="file" ref="file" required v-on:change="handleFileUpload()">
             <p v-show="file.name">{{file.name}}</p>
-            <button v-on:click="submitFile()">Загрузить</button> -->
+            <button @click.prevent="submitFile()">Загрузить</button>
             <button>Сохранить</button>
         </form>
     </div>
@@ -44,7 +44,8 @@ export default {
             ).then(r => {
                 let fileName = '../uploads/' + this.file.name;
                 localStorage.setItem('avatar', fileName);
-                this.avatar = fileName
+                console.log(fileName);
+                this.avatar = fileName;
                 this.file = '';
             })
                 .catch(function(){
