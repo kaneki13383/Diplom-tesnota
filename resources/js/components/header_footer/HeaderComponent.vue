@@ -6,9 +6,9 @@
                 <li><router-link to="/">Главная</router-link></li>
                 <li><router-link to="">Каталог</router-link></li>
                 <li v-show="token"><router-link to="">Корзина</router-link></li>
-                <li><router-link to="">О нас</router-link></li>
+                <li><router-link to="/about">О нас</router-link></li>
                 <li><input type="search" placeholder="Поиск"><img class="search" src="img/search.png" alt=""></li>
-                <li><router-link v-show="!token" class="register" to="/register">Регистрация</router-link> <router-link v-show="token" to="/dashboard">{{name}}</router-link></li>
+                <li><router-link v-show="!token" class="register" to="/register">Регистрация</router-link> <router-link v-show="token" to="/dashboard">{{this.$store.state.user.name}}</router-link></li>
                 <a class="burger-menu_button">
                     <span class="burger-menu_lines"></span>
                 </a>
@@ -61,8 +61,8 @@ export default {
         getToken(){
             this.token = localStorage.getItem('x_xsrf_token')
         },
-        getName(){
-            this.name = localStorage.getItem('name')
+        getName() {
+           this.$store.state.user.name = localStorage.getItem("name");
         },
         // display(){
         //     if(document.getElementById('navig').style.opacity == '1'){

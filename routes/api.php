@@ -30,3 +30,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // });
 
 Route::post('/load-avatar', [LoadAvatarController::class, 'store']);
+Route::post('/changeInfoUser', [UserOutputController::class, 'changeInfoUser']);

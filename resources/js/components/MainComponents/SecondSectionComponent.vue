@@ -52,6 +52,7 @@ export default {
     }
     div img{
         width: 720px;
+        border-radius: 15px;
     }
     .links{
         display: flex;

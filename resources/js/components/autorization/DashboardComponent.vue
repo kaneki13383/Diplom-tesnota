@@ -1,26 +1,11 @@
 <template>
-    <!-- <div class="d-f">
-        <div class="logout">
-            <img src="img/no-avatar.png" v-if="avatar == 'NULL' || avatar == 'undefined'" alt="">
-            <img :src="avatar" alt="" v-else>
-            <label for="file">Выберите аватар</label>
-            <p v-show="file.name">{{file.name}}</p>
-            <input type="file" id="file" ref="file" required v-on:change="handleFileUpload()">
-            <button v-on:click="submitFile()">Загрузить</button>
-            <button @click.prevent="logout" type="submit">Выход</button>
-        </div>
-        <div class="info">
-            <p>Ваше имя: {{name}} {{surname}}</p>
-            <p>Ваша почта: {{email}}</p>
-        </div>        
-    </div> -->
     <div class="d-f">
         <div class="all_info">
             <div class="info_user">
-                <img src="img/no_avatar.jpg" v-if="avatar === 'NULL' || avatar === 'undefined'" alt="">
-                <img :src="avatar" alt="" v-else>
-                <p>{{name}} {{surname}}</p>
-                <p>{{email}}</p>
+                <img src="img/no_avatar.jpg" v-if="this.$store.state.avatar === 'NULL' || this.$store.state.avatar === 'undefined'" alt="">
+                <img :src="this.$store.state.avatar" alt="" v-else>
+                <p>{{this.$store.state.user.name}} {{this.$store.state.user.surname}}</p>
+                <p>{{this.$store.state.user.email}}</p>
             </div>
             <div v-on:click="showView('change')" id="changeData" class="click">
                 <p>Изменить данные</p>
@@ -144,20 +129,22 @@ export default {
         handleFileUpload(){
             this.file = this.$refs.file.files[0];
         },
-        getName(){
-            this.name = localStorage.getItem('name')
+        getName() {
+           this.$store.state.user.name = localStorage.getItem("name");
         },
-        getSurame(){
-            this.surname = localStorage.getItem('surname')
+
+        getSurame() {
+            this.$store.state.user.surname = localStorage.getItem("surname");
         },
-        getEmail(){
-            this.email = localStorage.getItem('email')
+
+        getEmail() {
+            this.$store.state.user.email = localStorage.getItem("email");
         },
         getId(){
             this.id = localStorage.getItem('id')
         },
         getAvatar(){
-            this.avatar = localStorage.getItem('avatar')
+            this.$store.state.avatar = localStorage.getItem('avatar')
         },
         showView(text){
             let btns = document.querySelectorAll(".click");
