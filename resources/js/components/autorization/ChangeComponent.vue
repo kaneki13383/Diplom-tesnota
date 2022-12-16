@@ -44,7 +44,7 @@ export default {
             ).then(r => {
                 let fileName = '../uploads/' + this.file.name;
                 localStorage.setItem('avatar', fileName);
-                console.log(fileName);
+                // console.log(fileName);
                 this.avatar = fileName;
                 this.file = '';
             })
@@ -60,6 +60,7 @@ export default {
         getId(){
             this.id = localStorage.getItem('id')
         },
+
     }
 }
 </script>
@@ -94,6 +95,14 @@ export default {
         font-size: 20px;
         padding-left: 20px;
     }
+    /* #file{
+        width: 80%;
+        height: 60px;
+        background: #1D2023;
+        border: 2px #AF3131 solid;
+        border-radius: 9px;
+        color: white;
+    } */
     input::placeholder{
         color: white;
         font-size: 20px;
