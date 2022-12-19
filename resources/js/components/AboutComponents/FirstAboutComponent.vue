@@ -104,7 +104,7 @@ export default {
         padding: 10px 25px;
         transition: .5s;
     }
-    .d-f_why_we a:hover{
+    .d-f_why_we > a:hover{
         background: #af3131;
         color: #212529;
         font-weight: bold;
@@ -112,6 +112,7 @@ export default {
     .arrow{
         font-size: 50px;
         margin-left: 70px;
+        font-weight: normal;
         color: #af3131;
         transition: .5s;
     }

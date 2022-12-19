@@ -25,4 +25,16 @@ class UserOutputController extends Controller
             'email' => $email
         ]);
     }
+
+    public function dataOrder(Request $request)
+    {
+        $id = $request->input('id');
+        $adress = $request->input('adress');
+        $number = $request->input('number');
+
+        DB::table('users')->where('id', $id)->update([
+            'adress' => $adress,
+            'number' => $number
+        ]);
+    }
 }

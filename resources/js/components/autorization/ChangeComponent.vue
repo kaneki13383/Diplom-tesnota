@@ -5,16 +5,8 @@
             <input v-model="name" type="text" placeholder="Имя" />
             <input v-model="surname" type="text" placeholder="Фамилия" />
             <input v-model="email" type="text" placeholder="Email" />
-            <input type="password" placeholder="Пароль">
-            <input
-                type="file"
-                id="file"
-                ref="file"
-                required
-                v-on:change="handleFileUpload()"
-            />
-            <p v-show="file.name">{{ file.name }}</p>
-            <button @click.prevent="submitFile()">Загрузить</button>
+            <input type="password" placeholder="Пароль" />
+
             <button @click.prevent="changeInfoUser">Сохранить</button>
         </form>
     </div>
@@ -48,15 +40,16 @@ export default {
             formData.append("name", this.name);
             formData.append("surname", this.surname);
             formData.append("email", this.email);
-            axios.post("/api/changeInfoUser", formData, {
+            axios
+                .post("/api/changeInfoUser", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 })
                 .then((res) => {
-                    localStorage.setItem('name', this.name);
-                    localStorage.setItem('surname', this.surname);
-                    localStorage.setItem('email', this.email);
+                    localStorage.setItem("name", this.name);
+                    localStorage.setItem("surname", this.surname);
+                    localStorage.setItem("email", this.email);
                     this.name = localStorage.getItem("name");
                     this.surname = localStorage.getItem("surname");
                     this.email = localStorage.getItem("email");
@@ -98,7 +91,7 @@ export default {
         },
 
         getName() {
-           this.$store.state.user.name = localStorage.getItem("name");
+            this.$store.state.user.name = localStorage.getItem("name");
         },
 
         getSurame() {

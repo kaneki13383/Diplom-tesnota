@@ -6,11 +6,13 @@ export default createStore({
             user: {
                 name: '',
                 surname: '',
-                email: ''
+                email: '',
+                adress: '',
+                number: ''
             }
         }
     },
     mutations: {
-        
+
     }
 })
