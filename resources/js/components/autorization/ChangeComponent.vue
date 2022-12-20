@@ -5,8 +5,7 @@
             <input v-model="name" type="text" placeholder="Имя" />
             <input v-model="surname" type="text" placeholder="Фамилия" />
             <input v-model="email" type="text" placeholder="Email" />
-            <input type="password" placeholder="Пароль" />
-
+            <!-- <input type="password" placeholder="Пароль" /> -->
             <button @click.prevent="changeInfoUser">Сохранить</button>
         </form>
     </div>

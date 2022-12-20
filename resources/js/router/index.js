@@ -5,34 +5,36 @@ import LoginComponent from '../components/autorization/LoginComponent.vue';
 // import GetComponent from '../components/GetComponent.vue';
 import DashboardComponent from '../components/autorization/DashboardComponent.vue';
 import AboutView from '../views/about/AboutView.vue';
+import AdminView from '../views/admin/AdminView.vue';
 
 const router = new createRouter({
     base: "/",
     history: createWebHistory(),
     routes: [
-        { path: "/", component: MainView},
-        { path: "/register", component: RegisterComponent},
-        { path: "/login", component: LoginComponent},
+        { path: "/", component: MainView },
+        { path: "/register", component: RegisterComponent },
+        { path: "/login", component: LoginComponent },
         // { path: "/get", component: GetComponent},
         { path: "/dashboard", component: DashboardComponent },
-        { path: "/about", component:  AboutView}
+        { path: "/about", component: AboutView },
+        { path: "/admin", component: AdminView }
     ],
 });
 
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('x_xsrf_token')
 
-    if(!token && to.path == '/dashboard'){
-        if (to.path === '/login' || to.path === '/register'){
+    if (!token && to.path == '/dashboard') {
+        if (to.path === '/login' || to.path === '/register') {
             return next();
-        } else{
+        } else {
             return next({
                 path: '/login'
             })
         }
     }
 
-    if ((to.path === '/login' || to.path === '/register') && token){
+    if ((to.path === '/login' || to.path === '/register') && token) {
         return next({
             path: '/dashboard'
         })

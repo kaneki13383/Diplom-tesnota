@@ -90,7 +90,10 @@
         </div>
         <div>
             <div>
-                <p class="pagination">Главная / Профиль / {{ pagination }}</p>
+                <p class="pagination">
+                    <router-link to="/"> Главная </router-link> / Профиль /
+                    {{ pagination }}
+                </p>
                 <h2>Профиль</h2>
             </div>
             <div class="info_data">
@@ -138,7 +141,7 @@ export default {
         this.getEmail();
         this.getAvatar();
         this.getId();
-        document.title = this.name;
+        document.title = this.$store.state.user.name;
         this.showView(this.show);
     },
 
@@ -372,6 +375,7 @@ export default {
     top: 315px;
     left: 300px;
     cursor: pointer;
+    transition: 0.5s;
 }
 .info_user p {
     color: white;
@@ -409,7 +413,8 @@ export default {
     padding: 50px;
     margin-bottom: 100px;
 }
-.pagination {
+.pagination,
+a {
     color: #af3131;
     font-size: 18px;
     font-family: "Comfortaa", serif;

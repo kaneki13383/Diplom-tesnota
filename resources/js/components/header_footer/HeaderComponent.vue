@@ -2,7 +2,7 @@
     <div>
         <header>
             <ul>
-                <li>
+                <li class="adaptive">
                     <router-link to="/"
                         ><img src="/img/logo.png" alt=""
                     /></router-link>
@@ -11,7 +11,7 @@
                 <li><router-link to="">Меню</router-link></li>
                 <li v-show="token"><router-link to="">Корзина</router-link></li>
                 <li><router-link to="/about">О нас</router-link></li>
-                <li>
+                <li class="adaptive">
                     <input type="search" placeholder="Поиск" /><img
                         class="search"
                         src="img/search.png"
@@ -126,15 +126,19 @@ li input {
     color: white;
     font-family: "Comfortaa", cursive;
     padding-left: 10px;
+    margin-right: 20px;
 }
 li input::placeholder {
     color: white;
 }
 .search {
+    position: relative;
     width: 30px;
     height: 30px;
-    margin-left: -50px;
-    margin-bottom: -10px;
+    /* margin-left: -70px; */
+    /* margin-bottom: -10px; */
+    left: -70px;
+    bottom: -10px;
     z-index: 2;
 }
 button {
@@ -155,19 +159,30 @@ button {
     ul li a {
         font-size: 15px;
     }
+    .adaptive input {
+        width: 30vw;
+    }
+    ul li img {
+        width: 15vw;
+        height: 4vw;
+    }
     ul li:last-child {
         padding: 7px 25px;
     }
 }
 @media screen and (max-width: 768px) {
-    ul li:not(:first-child) {
+    li {
         display: none;
     }
-    ul li:nth-child(6) {
+    ul li img {
+        width: 25vw;
+        height: 6vw;
+    }
+    .adaptive {
         display: block;
     }
-    ul li img {
-        width: 20vw;
+    .adaptive input {
+        width: 40vw;
     }
     .burger-menu_button {
         position: relative;
