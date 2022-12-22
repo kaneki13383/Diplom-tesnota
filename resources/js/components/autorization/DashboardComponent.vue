@@ -2,27 +2,30 @@
     <div class="d-f">
         <div class="all_info">
             <div class="info_user">
-                <img
-                    class="avatar"
-                    src="img/no_avatar.jpg"
-                    v-if="
-                        this.$store.state.avatar === 'NULL' ||
-                        this.$store.state.avatar === 'undefined'
-                    "
-                    alt=""
-                />
-                <img
-                    class="avatar"
-                    :src="this.$store.state.avatar"
-                    alt=""
-                    v-else
-                />
-                <img
-                    v-on:click="edit = 'show'"
-                    class="edit_avatar"
-                    src="img/Edit Profile.png"
-                    alt=""
-                />
+                <div style="display: flex; flex-direction: row; align-items: flex-end;">
+                    <img
+                        class="avatar"
+                        src="img/no_avatar.jpg"
+                        v-if="
+                            this.$store.state.avatar === 'NULL' ||
+                            this.$store.state.avatar === 'undefined'
+                        "
+                        alt=""
+                    />                
+                    <img
+                        class="avatar"
+                        :src="this.$store.state.avatar"
+                        alt=""
+                        v-else
+                    />
+                    <img
+                        v-on:click="edit = 'show'"
+                        class="edit_avatar"
+                        src="img/Edit Profile.png"
+                        alt=""
+                    />
+                </div>
+
                 <transition name="bounce">
                     <div v-if="edit == 'show'" class="modal_bg">
                         <div class="modal">
@@ -91,8 +94,7 @@
         <div>
             <div>
                 <p class="pagination">
-                    <router-link to="/"> Главная </router-link> / Профиль /
-                    {{ pagination }}
+                    <router-link to="/"> Главная </router-link> / Профиль / {{ pagination }}
                 </p>
                 <h2>Профиль</h2>
             </div>
@@ -353,7 +355,7 @@ export default {
 }
 .info_user {
     background: rgba(22, 24, 27, 0.7);
-    width: 290px;
+    width: auto;
     height: 300px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -371,11 +373,10 @@ export default {
 }
 .edit_avatar {
     border: none;
-    position: absolute;
-    top: 315px;
-    left: 300px;
     cursor: pointer;
-    transition: 0.5s;
+    width: 50px;
+    height: 50px;
+    margin-left: -50px;
 }
 .info_user p {
     color: white;
@@ -425,5 +426,70 @@ h2 {
     color: white;
     margin-top: 15px;
     margin-bottom: 30px;
+}
+@media screen and (max-width: 1025px) {
+    .all_info{
+        width: 200px;
+    }
+    .info_user p{
+        font-size: 17px;
+    }
+    .click{
+        width: 200px;
+    }
+    .click p{
+        font-size: 17px;
+    }
+    .avatar{
+        width: 100px;
+        height: 100px;
+    }
+}  
+@media screen and (max-width: 900px) {
+    .d-f{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .all_info{
+        width: auto;
+    }
+    .info_user{
+        width: 70vw;
+    }
+    .click{
+        width: 70vw;
+    }
+    .pagination{
+        text-align: center;
+        margin-top: 50px;
+    }
+    h2{
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .info_data{
+        padding: 30px;
+    }
+    .modal_body{
+        gap: 10vw;
+    }
+    .modal label{
+        font-size: 17px;
+        padding: 2vw 3.5vw;
+        text-align: center;
+    }
+    .modal button{
+        padding: 2vw 3.5vw;
+        font-size: 13px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .d-f{
+        width: 100%;
+    }
+    
 }
 </style>

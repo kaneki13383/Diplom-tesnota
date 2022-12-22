@@ -1,20 +1,37 @@
 <template>
     <div>
         <header id="menu">
+            <div class="d-f_adaptive">
+                <div>
+                    <router-link to="/">
+                        <img src="/img/logo.png" alt="">
+                    </router-link>
+                </div>
+
+                <div>
+                    <a class="burger" id="burger" v-on:click="display()">
+                        <img src="img/burger_menu.svg" alt="">
+                    </a>
+                </div>
+            </div>
+
             <ul id="navig">
-                    <router-link to="/"
-                        ><img src="/img/logo.png" alt=""
-                    /></router-link>
+                <li id="logo">
+                    <router-link to="/">
+                        <img src="/img/logo.png" alt="">
+                    </router-link>
+                </li>
                 <li><router-link to="/">Главная</router-link></li>
                 <li><router-link to="">Меню</router-link></li>
                 <li v-show="token"><router-link to="">Корзина</router-link></li>
                 <li><router-link to="/about">О нас</router-link></li>
                 <li>
-                    <input type="search" placeholder="Поиск" /><img
+                    <input type="search" placeholder="Поиск" />
+                    <!-- <img
                         class="search"
                         src="img/search.png"
                         alt=""
-                    />
+                    /> -->
                 </li>
                 <li>
                     <router-link v-show="!token" class="register" to="/register"
@@ -25,9 +42,12 @@
                     }}</router-link>
                 </li>
             </ul>
-                <a class="burger-menu_button" id="burger" v-on:click="display()">
+
+
+               
+                <!-- <a class="burger-menu_button" id="burger" v-on:click="display()">
                     <span class="burger-menu_lines"></span>
-                </a>
+                </a> -->
         </header>
     </div>
 </template>
@@ -61,7 +81,9 @@ export default {
                 document.getElementById('navig').style.opacity = '1'
             }else{
                 document.getElementById('navig').style.display = 'none'
+                document.getElementById('burger').style.display = 'block'
                 document.getElementById('navig').style.opacity = '0'
+                document.getElementById('burger').style.opacity = '1'
             }
         }, false);
     },
@@ -92,6 +114,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.d-f_adaptive{
+    display: none;
+}
+.burger{
+    display: none;
+}
 header {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -109,9 +137,6 @@ a {
     color: white;
     font-family: "Comfortaa", cursive;
     font-size: 18px;
-}
-.burger-menu_button {
-    display: none;
 }
 li input {
     height: 44px;
@@ -166,56 +191,35 @@ button {
         padding: 7px 25px;
     }
 }
-@media screen and (max-width: 768px) {
-    #navig {
+@media screen and (max-width: 768px) {    
+    #logo{
         display: none;
+    }
+    .burger{
+        display: block;
+        z-index: 10;
+    }
+    .burger img{        
+        width: 44px;
+        height: 44px;
     }
     ul{
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 5vw;
-        transition: .5s;
+        margin-top: 5vw;
+        font-weight: bolder;
+        font-size: 30px;
     }
-
-    .adaptive input {
-        width: 40vw;
+    li input{
+        width: 50vw;
     }
-    .burger-menu_button {
-        position: relative;
+    .d-f_adaptive{
         display: flex;
-        justify-content: center;
-        z-index: 30;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        -webkit-transition: 0.4s;
-        -moz-transition: 0.4s;
-        -o-transition: 0.4s;
-        transition: 0.4s;
-    }
-    .burger-menu_lines::before,
-    .burger-menu_lines::after,
-    .burger-menu_lines {
-        position: absolute;
-        top: 40px;
-        width: 50px;
-        height: 3px;
-        background-color: #af3131;
-        -webkit-transition: 0.4s;
-        -moz-transition: 0.4s;
-        -o-transition: 0.4s;
-        transition: 0.4s;
-    }
-    .burger-menu_lines {
-        transform: translate(-50%, -50%);
-    }
-    .burger-menu_lines::before {
-        content: "";
-        top: -12px;
-    }
-    .burger-menu_lines::after {
-        content: "";
-        top: 12px;
+        flex-direction: row; 
+        align-items: center;
+        justify-content: space-around;
     }
 }
 </style>

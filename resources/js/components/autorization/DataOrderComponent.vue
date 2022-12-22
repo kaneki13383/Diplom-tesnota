@@ -68,7 +68,7 @@ export default {
 .background {
     background: #202428;
     border: 3px #af3131 solid;
-    width: 1150px;
+    width: 60vw;
     height: auto;
     border-radius: 15px;
     color: white;
@@ -113,5 +113,15 @@ button:hover {
     background: #af3131;
     color: #1d2023;
     cursor: pointer;
+}
+@media screen and (max-width: 900px) {
+    button{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 540px) {
+    .background{
+        width: 100%;
+    }
 }
 </style>
