@@ -188,4 +188,22 @@ button {
     width: 730px;
     height: 740px;
 }
+@media screen and (max-width: 1350px) {
+    .people{
+        display: none;
+    }
+}
+@media screen and (max-width: 620px) {
+    .form{
+        width: 100vw;
+    }
+    input{
+        width: 400px;
+    }
+}
+@media screen and (max-width: 420px) {
+    input{
+        width: 300px;
+    }
+}
 </style>

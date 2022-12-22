@@ -1,17 +1,15 @@
 <template>
     <div>
-        <header>
-            <ul>
-                <li class="adaptive">
+        <header id="menu">
+            <ul id="navig">
                     <router-link to="/"
                         ><img src="/img/logo.png" alt=""
                     /></router-link>
-                </li>
                 <li><router-link to="/">Главная</router-link></li>
                 <li><router-link to="">Меню</router-link></li>
                 <li v-show="token"><router-link to="">Корзина</router-link></li>
                 <li><router-link to="/about">О нас</router-link></li>
-                <li class="adaptive">
+                <li>
                     <input type="search" placeholder="Поиск" /><img
                         class="search"
                         src="img/search.png"
@@ -26,10 +24,10 @@
                         this.$store.state.user.name
                     }}</router-link>
                 </li>
-                <a class="burger-menu_button">
+            </ul>
+                <a class="burger-menu_button" id="burger" v-on:click="display()">
                     <span class="burger-menu_lines"></span>
                 </a>
-            </ul>
         </header>
     </div>
 </template>
@@ -40,6 +38,7 @@ export default {
         return {
             token: "",
             name: "",
+            width: window.innerWidth,
         };
     },
 
@@ -53,19 +52,18 @@ export default {
     mounted() {
         this.getToken();
         this.getName();
-        // window.addEventListener("resize", function(){
-        //     let width_window = this.innerWidth;
+        window.addEventListener("resize", function(){
+            let width_window = this.innerWidth;
 
-        //     // console.log(width_window);
-        //     if(width_window >= 1025){
-        //         document.getElementById('navig').style.display = 'flex'
-        //         document.getElementById('navig').style.opacity = '1'
-        //     }else{
-        //         document.getElementById('navig').style.display = 'none'
-        //         document.getElementById('navig').style.opacity = '0'
-        //         document.getElementById('burger').style.position = 'absolute'
-        //     }
-        // }, false);
+            // console.log(width_window);
+            if(width_window >= 768){
+                document.getElementById('navig').style.display = 'flex'
+                document.getElementById('navig').style.opacity = '1'
+            }else{
+                document.getElementById('navig').style.display = 'none'
+                document.getElementById('navig').style.opacity = '0'
+            }
+        }, false);
     },
 
     updated() {
@@ -80,17 +78,15 @@ export default {
         getName() {
             this.$store.state.user.name = localStorage.getItem("name");
         },
-        // display(){
-        //     if(document.getElementById('navig').style.opacity == '1'){
-        //         document.getElementById('navig').style.opacity = '0'
-        //         document.getElementById('navig').style.display = 'none'
-        //         document.getElementById('burger').style.position = 'absolute'
-        //     }else{
-        //         document.getElementById('navig').style.opacity = '1'
-        //         document.getElementById('navig').style.display = 'flex'
-        //         document.getElementById('burger').style.position = 'fixed'
-        //     }
-        // }
+        display(){
+            if(document.getElementById('navig').style.opacity == '1'){
+                document.getElementById('navig').style.opacity = '0'
+                document.getElementById('navig').style.display = 'none'
+            }else{
+                document.getElementById('navig').style.opacity = '1'
+                document.getElementById('navig').style.display = 'flex'
+            }
+        }
     },
 };
 </script>
@@ -105,11 +101,11 @@ ul {
     justify-content: space-evenly;
     align-items: center;
 }
-ul li img {
+img {
     width: 150px;
     height: 40px;
 }
-ul li a {
+a {
     color: white;
     font-family: "Comfortaa", cursive;
     font-size: 18px;
@@ -171,16 +167,16 @@ button {
     }
 }
 @media screen and (max-width: 768px) {
-    li {
+    #navig {
         display: none;
     }
-    ul li img {
-        width: 25vw;
-        height: 6vw;
+    ul{
+        display: flex;
+        flex-direction: column;
+        gap: 5vw;
+        transition: .5s;
     }
-    .adaptive {
-        display: block;
-    }
+
     .adaptive input {
         width: 40vw;
     }
