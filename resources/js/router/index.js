@@ -6,6 +6,7 @@ import LoginComponent from '../components/autorization/LoginComponent.vue';
 import DashboardComponent from '../components/autorization/DashboardComponent.vue';
 import AboutView from '../views/about/AboutView.vue';
 import AdminView from '../views/admin/AdminView.vue';
+import MenuView from '../views/menu/MenuView.vue';
 
 const router = new createRouter({
     base: "/",
@@ -17,7 +18,8 @@ const router = new createRouter({
         // { path: "/get", component: GetComponent},
         { path: "/dashboard", component: DashboardComponent },
         { path: "/about", component: AboutView },
-        { path: "/admin", component: AdminView }
+        { path: "/admin", component: AdminView },
+        { path: "/menu", component: MenuView }
     ],
 });
 
