@@ -10,7 +10,7 @@
                 </p>
                 <div class="links">
                     <a href="">Подробнее</a>
-                    <a href="">Каталог</a>
+                    <a href="">Меню</a>
                 </div>
             </div>
             <div>
