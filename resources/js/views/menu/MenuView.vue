@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FirstSectionComponent />
+        <FirstSectionComponent></FirstSectionComponent>
     </div>
 </template>
 
