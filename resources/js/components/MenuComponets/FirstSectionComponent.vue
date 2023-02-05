@@ -1,42 +1,61 @@
 <template>
-    <div>
-        <h2>Фильтры</h2>
-        <div class="d-f gap">
-            <div class="d-f">
-                <div>
-                    <div class="filter">
-                        <p>Виды</p>
+    <div class="all">
+        <div class="side_filter">
+            <h2>Фильтры</h2>
+            <div class="d-f gap">
+                <div class="d-f">
+                    <div>
+                        <div class="filter">
+                            <p>Виды</p>
+                        </div>
+                    </div>
+                    <div class="last_active">
+                        <div class="active">
+                            <p>Дессерты</p>
+                        </div>
+                        <div class="active">
+                            <p>Закуски</p>
+                        </div>
+                        <div class="active">
+                            <p>Напитки</p>
+                        </div>
                     </div>
                 </div>
-                <div class="last_active">
-                    <div class="active">
-                        <p>Дессерты</p>
+                <div class="d-f">
+                    <div>
+                        <div class="filter">
+                            <p>Цена</p>
+                        </div>
                     </div>
-                    <div class="active">
-                        <p>Закуски</p>
-                    </div>
-                    <div class="active">
-                        <p>Напитки</p>
-                    </div>
-                </div>
-            </div>
-            <div class="d-f">
-                <div>
-                    <div class="filter">
-                        <p>Цена</p>
-                    </div>
-                </div>
-                <div class="last_active">
-                    <div class="active">
-                        <div class="range-slider">
-                            <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number"  min="0" max="1000"/> <p>До</p> <input  v-model.number="maxPrice" type="number"  min="0" max="1000"/></span>
-                            <input @change="slider" v-model.number="minPrice" min="0" max="1000" step="1" type="range" />
-                            <input @change="slider" v-model.number="maxPrice" min="0" max="1000" step="1" type="range" />
-                            <svg width="100%" height="24"></svg>
+                    <div class="last_active">
+                        <div class="active">
+                            <div class="range-slider">
+                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number"  min="0" max="1000"/> <p>До</p> <input  v-model.number="maxPrice" type="number"  min="0" max="1000"/></span>
+                                <input @change="slider" v-model.number="minPrice" min="0" max="1000" step="1" type="range" />
+                                <input @change="slider" v-model.number="maxPrice" min="0" max="1000" step="1" type="range" />
+                                <svg width="100%" height="24"></svg>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div style="">
+            <p class="pagination">
+                <router-link to="/"> Главная </router-link> / О нас
+            </p>
+            <h2>Меню</h2>
+            <div class="products_df">
+                <div v-for="product in menu" :key="product">
+                    <div class="card" v-if="product.price >= minPrice && product.price < maxPrice">
+                        <img :src="product.img" alt="">
+                        <p>{{ product.name }}</p>
+                        <p class="price">Цена: {{ product.price }} ₽</p>
+                        <button>Купить</button>
+                    </div>
+                    
+                </div>
+            </div>            
         </div>
     </div>
 </template>
@@ -47,7 +66,11 @@
             return{
                 minPrice: 150,
                 maxPrice: 900,
+                menu: []
             }
+        },
+        mounted(){
+            this.allMenu()
         },
         methods: {
             slider: function() {
@@ -56,12 +79,84 @@
                     this.maxPrice = this.minPrice;
                     this.minPrice = tmp;
                 }
+            },
+            allMenu(){
+                axios.get('/api/menu_all')
+                    .then(res => {
+                        console.log(res.data)
+                        this.menu = res.data;
+                    })
             }
         }
     }
 </script>
 
 <style lang="css" scoped>
+.side_filter{
+    position: fixed;
+    left: 100px;
+}
+.products_df{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5vw;
+}
+.pagination,
+a {
+    color: #af3131;
+    font-size: 18px;
+    font-family: "Comfortaa", serif;
+    margin-top: 30px;
+}
+.card{
+    width: 350px;
+    height: 400px;
+    background: #1d2023;
+    border: 2px solid #AF3131;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4vw;
+    color: white;
+    transition: .5s;
+    cursor: pointer;
+}
+.card:hover{
+    box-shadow: 8px 7px 20px #af3131;
+}
+.card p{
+    font-size: 17px;
+}
+.card .price{
+    font-size: 25px;
+}
+.card button{
+    width: 240px;
+    height: 40px;
+    background: transparent;
+    border: 2px solid #AF3131;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: .5s;
+}
+.card button:hover{
+    background: #AF3131;
+    color: #1d2023;
+    font-weight: bold;
+}
+.card img{
+    width: 240px;
+    height: 180px;
+    border-radius: 5px;
+}
+.all{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 .range-slider {
   width: 90%;
   margin: auto;
@@ -83,7 +178,6 @@ input[type=number] {
   text-align: center;
   font-size: 1.2vw;
   background: transparent;
-  -moz-appearance: textfield;
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -97,7 +191,6 @@ input[type=number]:out-of-range {
 }
 
 input[type=range] {
-  -webkit-appearance: none;
   width: 100%;
 }
 
@@ -121,7 +214,6 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
-  animate: 0.2s;
   background: white;
   border-radius: 1px;
   box-shadow: none;

@@ -19,7 +19,7 @@ const router = new createRouter({
         { path: "/dashboard", component: DashboardComponent },
         { path: "/about", component: AboutView },
         { path: "/admin", component: AdminView },
-        { path: "/menu", component: MenuView }
+        { path: "/catalog", component:  MenuView}
     ],
 });
 
