@@ -44,7 +44,7 @@
             <p class="pagination">
                 <router-link to="/"> Главная </router-link> / О нас
             </p>
-            <h2>Меню</h2>
+            <h3>Меню</h3>
             <div class="products_df">
                 <div v-for="product in menu" :key="product">
                     <div class="card" v-if="product.price >= minPrice && product.price < maxPrice">
@@ -66,7 +66,8 @@
             return{
                 minPrice: 150,
                 maxPrice: 900,
-                menu: []
+                menu: [],
+                price: []
             }
         },
         mounted(){
@@ -85,6 +86,11 @@
                     .then(res => {
                         console.log(res.data)
                         this.menu = res.data;
+
+                        for (let index = 0; index < this.menu.length; index++) {
+                            this.price += this.menu[index]['price']                
+                        }
+                        console.log(this.price);
                     })
             }
         }
@@ -245,6 +251,13 @@ h2{
     font-family: "Comfortaa", serif;
     font-size: 40px;
     margin-top: 100px;
+    margin-bottom: 40px;
+}
+h3{
+    color: white;
+    font-family: "Comfortaa", serif;
+    font-size: 40px;
+    margin-top: 50px;
     margin-bottom: 40px;
 }
 .filter{

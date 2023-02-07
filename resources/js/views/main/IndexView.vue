@@ -19,13 +19,13 @@
             <div :key="route.path" class="bg"></div>
         </transition>
 
-        <transition name="bounce" appear="">
+        <transition name="bounce">
             <div :key="route.path" class="translate">
                 <img src="img/logo.png" alt="" />
             </div>
         </transition>
 
-        <transition name="bounce2" appear="">
+        <transition name="bounce2">
             <div :key="route.path" class="translate2">
                 <img src="img/animation.png" alt="" />
             </div>
