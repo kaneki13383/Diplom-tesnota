@@ -29,7 +29,7 @@
                         бонусы и скидки.
                     </p>
                 </div>
-                <router-link to=""
+                <router-link to="/catalog"
                     >Перейти к меню
                     <p class="arrow">→</p></router-link
                 >

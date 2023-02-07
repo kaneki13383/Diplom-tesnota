@@ -51,9 +51,8 @@
                         <img :src="product.img" alt="">
                         <p>{{ product.name }}</p>
                         <p class="price">Цена: {{ product.price }} ₽</p>
-                        <button>Купить</button>
-                    </div>
-                    
+                        <button v-if="token">Купить</button>
+                    </div>                    
                 </div>
             </div>            
         </div>
@@ -67,7 +66,8 @@
                 minPrice: 0,
                 maxPrice: 0,
                 menu: [],
-                price: []
+                price: [],
+                token: localStorage.getItem("x_xsrf_token")
             }
         },
         mounted(){
