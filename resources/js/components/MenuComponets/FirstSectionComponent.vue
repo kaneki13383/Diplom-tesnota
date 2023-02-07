@@ -40,14 +40,14 @@
                 </div>
             </div>
         </div>
-        <div style="">
+        <div style="width: 70%; margin-left: 20vw;">
             <p class="pagination">
                 <router-link to="/"> Главная </router-link> / О нас
             </p>
             <h3>Меню</h3>
             <div class="products_df">
                 <div v-for="product in menu" :key="product">
-                    <div class="card" v-if="product.price >= minPrice && product.price < maxPrice">
+                    <div class="card" v-if="product.price >= minPrice && product.price <= maxPrice">
                         <img :src="product.img" alt="">
                         <p>{{ product.name }}</p>
                         <p class="price">Цена: {{ product.price }} ₽</p>
@@ -64,8 +64,8 @@
     export default {
         data(){
             return{
-                minPrice: 150,
-                maxPrice: 900,
+                minPrice: 0,
+                maxPrice: 0,
                 menu: [],
                 price: []
             }
@@ -84,13 +84,13 @@
             allMenu(){
                 axios.get('/api/menu_all')
                     .then(res => {
-                        console.log(res.data)
                         this.menu = res.data;
 
                         for (let index = 0; index < this.menu.length; index++) {
-                            this.price += this.menu[index]['price']                
+                            this.price.push(this.menu[index]['price']);             
                         }
-                        console.log(this.price);
+                        this.minPrice = Math.min.apply(null, this.price);
+                        this.maxPrice = Math.max.apply(null, this.price);
                     })
             }
         }
