@@ -92,20 +92,27 @@ export default {
                 // this.file = res.data['file']
             })
         },
-        saveEdit(){
-            axios.post('/api/edit_product',{
-                id_product: this.id_product,
-                name: this.name,
-                price: this.price,
-                discription: this.discription,
-                type: this.type,
-            })
-            this.name = '' 
-            this.price = '' 
-            this.discription = '' 
-            this.type = '' 
-            this.show = false
-            this.allMenu()
+        saveEdit(){         
+            let formData = new FormData();
+            formData.append("file", this.file);
+            formData.append("id_product", this.id_product);
+            formData.append("name", this.name);
+            formData.append("price", this.price);
+            formData.append("discription", this.discription);
+            formData.append("type", this.type);
+            axios.post('/api/edit_product',formData,{
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }})
+                .then(res => {
+                    this.name = '' 
+                    this.price = '' 
+                    this.discription = '' 
+                    this.type = '' 
+                    this.file = ''
+                    this.show = false
+                    this.allMenu()
+                })
         },
         deleteProduct(id){
             axios.delete(`/api/delete_product${id}`)

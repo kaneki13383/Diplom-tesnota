@@ -39,11 +39,15 @@ class MenuController extends Controller
 
     public function edit(Request $request)
     {
+        $fileName = $request->file->getClientOriginalName();
+
+        $request->file->move(public_path('menu'), $fileName);
         Menu::where('id', $request->input('id_product'))->update([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
             'discription' => $request->input('discription'),
             'type' => $request->input('type'),
+            'img' => '../menu/'.$fileName
         ]);
     }
 }
