@@ -31,4 +31,19 @@ class MenuController extends Controller
     {
         Menu::where('id', $id)->delete();
     }
+
+    public function find($id)
+    {
+        return Menu::find($id);
+    }
+
+    public function edit(Request $request)
+    {
+        Menu::where('id', $request->input('id_product'))->update([
+            'name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'discription' => $request->input('discription'),
+            'type' => $request->input('type'),
+        ]);
+    }
 }

@@ -10,6 +10,7 @@
                         ref="file"
                         required
                         v-on:change="handleFileUpload()">
+                        <p class="file_name" v-show="file.name">{{ file.name }}</p>
                 
                 <input type="text" v-model="name" placeholder="Введите название товара">
                 
@@ -18,24 +19,32 @@
                 <textarea placeholder="Введите описание товара" v-model="discription" name="" id="" cols="30" rows="10"></textarea>
 
                 <select v-model="type" name="Выберите тип" id="">
-                    <option disabled>Выберите тип</option>
                     <option v-for="typ in types" :key="typ" :value="typ.id">{{ typ.type }}</option>
                 </select>
 
-                <button @click.prevent="creareProduct()">Добавить</button>
+                <button v-if="show == false" @click.prevent="creareProduct()">Добавить</button>
+                <button v-if="show == true" @click.prevent="saveEdit()">Редактировать</button>
             </form>
         </div>
-        <div class="all_product">
-            <div v-for="product in menu" :key="product">
+        <div style="width: 60%;">
+            <div class="h2_tovar">
+                <h2>Товары</h2>
+            </div>
+            <div class="all_product">
+                <div v-for="product in menu" :key="product">
                     <div :id="product.type.type" class="card">
                         <img :src="product.img" alt="">
                         <p>{{ product.name }}</p>
                         <p>{{ product.type.type }}</p>
                         <p class="price">Цена: {{ product.price }} ₽</p>
-                        <p @click.prevent="deleteProduct(product.id)">Delete</p>
+                        <div style="display: flex; gap: 40px;">
+                            <p @click.prevent="deleteProduct(product.id)">Delete</p>
+                            <p @click.prevent="editProduct(product.id)">Edit</p>
+                        </div>
                     </div>
                 </div>
-        </div>
+            </div>
+        </div>        
     </div>
 </template>
 
@@ -49,14 +58,16 @@ export default {
             price: '',
             discription: '',
             type: '',
-            file: ''
+            file: '',
+            show: false,
+            id_product: 0
         }
     },
     mounted() {
         this.AllTypes()
         this.allMenu()
     },
-    methods: {        
+    methods: {  
         AllTypes(){
                 axios.get('/api/type_all')
                     .then(res => {
@@ -68,6 +79,33 @@ export default {
                 .then(res => {
                     this.menu = res.data.data;
                 })
+        },
+        editProduct(id){
+            this.show = true
+            this.id_product = id
+            axios.get(`/api/product/${id}`)
+            .then(res => {
+                this.name = res.data['name']
+                this.price = res.data['price']
+                this.discription = res.data['discription']
+                this.type = res.data['type']
+                // this.file = res.data['file']
+            })
+        },
+        saveEdit(){
+            axios.post('/api/edit_product',{
+                id_product: this.id_product,
+                name: this.name,
+                price: this.price,
+                discription: this.discription,
+                type: this.type,
+            })
+            this.name = '' 
+            this.price = '' 
+            this.discription = '' 
+            this.type = '' 
+            this.show = false
+            this.allMenu()
         },
         deleteProduct(id){
             axios.delete(`/api/delete_product${id}`)
@@ -107,10 +145,27 @@ export default {
 *{
     color: white;
 }
-
+.h2_tovar{
+    font-size: 25px;
+    font-family: "Comfortaa", serif;
+    margin-top: 155px;
+    border-bottom: 2px solid #AF3131;
+    width: 70%;
+    padding-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 150px;
+}
+.add_product .file_name{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    color: white;
+}
 .add_product{
     font-family: "Comfortaa", serif;
-    width: 50%; 
+    width: 40%; 
     display: flex; 
     flex-direction: column; 
     align-items: center;
@@ -158,15 +213,20 @@ form textarea{
     width: 310px;
     border-radius: 15px;
     resize: none;
+    font-family: "Comfortaa", serif;
+    font-size: 15px;
+    padding-left: 5px;
+    padding-top: 10px;
+}
+form input{
+    font-family: "Comfortaa", serif;
+    font-size: 15px;
+    padding-left: 5px;
 }
 input::placeholder,textarea::placeholder{
     color: white;
     font-family: "Comfortaa", serif;
     font-size: 16px;
-    padding-left: 5px;
-}
-textarea::placeholder{
-    padding-top: 7px;
 }
 button{
     background: transparent;
@@ -202,10 +262,10 @@ option{
     color: white;
 }
 .all_product{
-    width: 50%;
     border-left: 2px solid #AF3131;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 5vw;
     padding: 100px;
 }

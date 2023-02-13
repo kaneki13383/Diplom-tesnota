@@ -33,3 +33,5 @@ Route::get('/menu_all', [MenuController::class, 'allMenu']);
 Route::get('/type_all', [TypeController::class, 'all']);
 Route::post('/create_product', [MenuController::class, 'createProduct']);
 Route::delete('/delete_product{id}', [MenuController::class, 'delete']);
+Route::get('/product/{id}', [MenuController::class, 'find']);
+Route::post('/edit_product', [MenuController::class, 'edit']);
