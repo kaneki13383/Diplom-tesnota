@@ -24,12 +24,12 @@
                     <div class="last_active">
                         <div class="active">
                             <div class="range-slider">
-                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number"  min="0" max="1000"/> 
+                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number"  :min="minPrice" :max="10000"/> 
                                     <p>До</p> 
-                                    <input  v-model.number="maxPrice" type="number"  min="0" max="1000"/>
+                                    <input  v-model.number="maxPrice" type="number"  :min="minPrice" :max="10000"/>
                                 </span>
-                                <input @change="slider" v-model.number="minPrice" min="0" max="1000" step="1" type="range" />
-                                <input @change="slider" v-model.number="maxPrice" min="0" max="1000" step="1" type="range" />
+                                <input @change="slider" v-model.number="minPrice" :min="minPrice" :max="10000" step="1" type="range" />
+                                <input @change="slider" v-model.number="maxPrice" :min="minPrice" :max="10000" step="1" type="range" />
                                 <svg width="100%" height="24"></svg>
                             </div>
                         </div>

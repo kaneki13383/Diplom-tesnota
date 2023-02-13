@@ -32,3 +32,4 @@ Route::post('/dataOrder', [UserOutputController::class, 'dataOrder']);
 Route::get('/menu_all', [MenuController::class, 'allMenu']);
 Route::get('/type_all', [TypeController::class, 'all']);
 Route::post('/create_product', [MenuController::class, 'createProduct']);
+Route::delete('/delete_product{id}', [MenuController::class, 'delete']);

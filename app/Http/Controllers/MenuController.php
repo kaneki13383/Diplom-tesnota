@@ -26,4 +26,9 @@ class MenuController extends Controller
             'type' => $request->input('type'),
         ]);
     }
+    
+    public function delete($id)
+    {
+        Menu::where('id', $id)->delete();
+    }
 }

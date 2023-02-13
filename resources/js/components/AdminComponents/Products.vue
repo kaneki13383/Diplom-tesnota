@@ -32,10 +32,8 @@
                         <p>{{ product.name }}</p>
                         <p>{{ product.type.type }}</p>
                         <p class="price">Цена: {{ product.price }} ₽</p>
+                        <p @click.prevent="deleteProduct(product.id)">Delete</p>
                     </div>
-                    <!-- <div class="warning" v-else>
-                        <h1>Нет товаров по выбранным фильтрам</h1>
-                    </div>                    -->
                 </div>
         </div>
     </div>
@@ -70,6 +68,12 @@ export default {
                 .then(res => {
                     this.menu = res.data.data;
                 })
+        },
+        deleteProduct(id){
+            axios.delete(`/api/delete_product${id}`)
+            .then(res => {
+                this.allMenu()
+            })
         },
         creareProduct(){            
             let formData = new FormData();
