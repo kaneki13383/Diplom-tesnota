@@ -9,6 +9,8 @@ class Menu extends Model
 {
     use HasFactory;
 
+    protected $guarded = false;
+
     public function types()
     {
         return $this->belongsTo(Type::class, 'type');
