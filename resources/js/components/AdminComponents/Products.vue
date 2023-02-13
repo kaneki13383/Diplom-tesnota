@@ -155,7 +155,7 @@ export default {
 .h2_tovar{
     font-size: 25px;
     font-family: "Comfortaa", serif;
-    margin-top: 155px;
+    margin-top: 55px;
     border-bottom: 2px solid #AF3131;
     width: 70%;
     padding-bottom: 35px;
@@ -180,7 +180,7 @@ export default {
 .add_product p{
     color: #AF3131;
     font-size: 15px;
-    margin-top: 120px;
+    margin-top: 15px;
     margin-bottom: 25px;
 }
 .add_product h1{

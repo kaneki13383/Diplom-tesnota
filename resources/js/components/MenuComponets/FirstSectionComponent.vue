@@ -24,12 +24,12 @@
                     <div class="last_active">
                         <div class="active">
                             <div class="range-slider">
-                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number"  :min="minPrice" :max="10000"/> 
+                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number" :min="0" :max="5000"/> 
                                     <p>До</p> 
-                                    <input  v-model.number="maxPrice" type="number"  :min="minPrice" :max="10000"/>
+                                    <input  v-model.number="maxPrice" type="number"  :min="0" :max="5000"/>
                                 </span>
-                                <input @change="slider" v-model.number="minPrice" :min="minPrice" :max="10000" step="1" type="range" />
-                                <input @change="slider" v-model.number="maxPrice" :min="minPrice" :max="10000" step="1" type="range" />
+                                <input @change="slider" v-model.number="minPrice" :min="0" :max="5000" step="1" type="range" />
+                                <input @change="slider" v-model.number="maxPrice" :min="0" :max="5000" step="1" type="range" />
                                 <svg width="100%" height="24"></svg>
                             </div>
                         </div>
@@ -54,17 +54,14 @@
                 <router-link to="/"> Главная </router-link> / О нас
             </p>
             <h3>Меню</h3>
-            <div class="products_df">
-                <div v-for="product in menu" :key="product">
-                    <div :id="product.type.type" class="card" v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
+            <div class="products_df" >
+                <div v-for="product in menu" :key="product" ref="element" v-on:change="hidediv">
+                    <div class="card" v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
                         <img :src="product.img" alt="">
                         <p>{{ product.name }}</p>
                         <p class="price">Цена: {{ product.price }} ₽</p>
                         <button v-if="token">Купить</button>
                     </div>
-                    <!-- <div class="warning" v-else>
-                        <h1>Нет товаров по выбранным фильтрам</h1>
-                    </div>                    -->
                 </div>
             </div>            
         </div>
@@ -81,7 +78,7 @@
                 price: [],
                 token: localStorage.getItem("x_xsrf_token"),
                 types: [],
-                sort_on: []
+                sort_on: [],
             }
         },
         mounted(){
