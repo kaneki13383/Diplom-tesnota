@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import store from '../store';
+
 export default {
     name: "Login",
 
@@ -74,7 +76,7 @@ export default {
                         localStorage.setItem(
                             "x_xsrf_token",
                             r.config.headers["X-XSRF-TOKEN"]
-                        );
+                        );                        
                         localStorage.setItem("name", r.data["name"]);
                         localStorage.setItem("surname", r.data["surname"]);
                         localStorage.setItem("email", r.data["email"]);
@@ -82,6 +84,7 @@ export default {
                         localStorage.setItem("avatar", r.data["avatar"]);
                         localStorage.setItem("adress", r.data["adress"]);
                         localStorage.setItem("number", r.data["number"]);
+                        localStorage.setItem("role", r.data["role"]);
                         if (r.data["role"] == 0) {
                             this.$router.push("/dashboard");
                         } else {

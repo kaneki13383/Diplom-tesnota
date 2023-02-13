@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->string('discription');
+            $table->string('discription', 1000);
             $table->string('img');
+            $table->unsignedBigInteger('type');
+            $table->foreign('type')->references('id')->on('types')->onDelete('cascade');
             $table->timestamps();
         });
     }

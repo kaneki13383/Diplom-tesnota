@@ -10,14 +10,8 @@
                         </div>
                     </div>
                     <div class="last_active">
-                        <div class="active">
-                            <p>Дессерты</p>
-                        </div>
-                        <div class="active">
-                            <p>Закуски</p>
-                        </div>
-                        <div class="active">
-                            <p>Напитки</p>
+                        <div v-for="typ in types" :key="typ" @click="sort_on.includes(typ.type) ? {} : this.sort_on.push(typ.type)" class="active">
+                            <p>{{ typ.type }}</p>
                         </div>
                     </div>
                 </div>
@@ -30,11 +24,26 @@
                     <div class="last_active">
                         <div class="active">
                             <div class="range-slider">
-                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number"  min="0" max="1000"/> <p>До</p> <input  v-model.number="maxPrice" type="number"  min="0" max="1000"/></span>
+                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number"  min="0" max="1000"/> 
+                                    <p>До</p> 
+                                    <input  v-model.number="maxPrice" type="number"  min="0" max="1000"/>
+                                </span>
                                 <input @change="slider" v-model.number="minPrice" min="0" max="1000" step="1" type="range" />
                                 <input @change="slider" v-model.number="maxPrice" min="0" max="1000" step="1" type="range" />
                                 <svg width="100%" height="24"></svg>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="sort_on != ''" class="d-f">
+                    <div>
+                        <div class="filter">
+                            <p>Вкл. фильтры</p>
+                        </div>
+                    </div>
+                    <div class="last_active">
+                        <div class="active" v-for="(active, index) in sort_on" :key="active">
+                            <p @click="sort_on.splice(index, 1)"><span>{{ active }} X</span></p>
                         </div>
                     </div>
                 </div>
@@ -47,12 +56,15 @@
             <h3>Меню</h3>
             <div class="products_df">
                 <div v-for="product in menu" :key="product">
-                    <div class="card" v-if="product.price >= minPrice && product.price <= maxPrice">
+                    <div :id="product.type.type" class="card" v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
                         <img :src="product.img" alt="">
                         <p>{{ product.name }}</p>
                         <p class="price">Цена: {{ product.price }} ₽</p>
                         <button v-if="token">Купить</button>
-                    </div>                    
+                    </div>
+                    <!-- <div class="warning" v-else>
+                        <h1>Нет товаров по выбранным фильтрам</h1>
+                    </div>                    -->
                 </div>
             </div>            
         </div>
@@ -67,11 +79,14 @@
                 maxPrice: 0,
                 menu: [],
                 price: [],
-                token: localStorage.getItem("x_xsrf_token")
+                token: localStorage.getItem("x_xsrf_token"),
+                types: [],
+                sort_on: []
             }
         },
         mounted(){
             this.allMenu()
+            this.AllTypes()
         },
         methods: {
             slider: function() {
@@ -84,20 +99,32 @@
             allMenu(){
                 axios.get('/api/menu_all')
                     .then(res => {
-                        this.menu = res.data;
+                        this.menu = res.data.data;
 
                         for (let index = 0; index < this.menu.length; index++) {
                             this.price.push(this.menu[index]['price']);             
                         }
                         this.minPrice = Math.min.apply(null, this.price);
                         this.maxPrice = Math.max.apply(null, this.price);
+
                     })
-            }
+            },
+            AllTypes(){
+                axios.get('/api/type_all')
+                    .then(res => {
+                        this.types = res.data;
+                    })
+            },
         }
     }
 </script>
 
 <style lang="css" scoped>
+.warning{
+    color: white;
+    font-family: "Comfortaa", serif;
+    margin: 14vw;
+}
 .side_filter{
     position: fixed;
     left: 100px;
@@ -285,6 +312,7 @@ h3{
     background: rgb(175, 49, 49, 58%);
     font-size: 18px;
     border-bottom: 1px white solid;
+    cursor: pointer;
 }
 .d-f{
     display: flex;

@@ -14,7 +14,10 @@ import FirstSectionComponent from '../../components/MenuComponets/FirstSectionCo
             return{
 
             }
-        }
+        },
+        mounted() {
+            document.title = 'Меню'
+        },
     }
 </script>
 

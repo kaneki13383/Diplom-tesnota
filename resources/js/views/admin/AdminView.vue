@@ -7,10 +7,15 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            role: localStorage.getItem('role')
+        };
     },
     mounted() {
         document.title = "Админка";
+        if (this.role != 1) {
+            this.$router.push("/")
+        }
     },
     methods: {
         logout() {

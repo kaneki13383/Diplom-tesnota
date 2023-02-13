@@ -1,14 +1,10 @@
 <?php
 
-use App\Http\Controllers\AddProductController;
-use App\Http\Controllers\DeleteProductController;
-use App\Http\Controllers\DeleteUser;
 use App\Http\Controllers\LoadAvatarController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserOutputController;
 
 /*
@@ -34,3 +30,4 @@ Route::post('/load-avatar', [LoadAvatarController::class, 'store']);
 Route::post('/changeInfoUser', [UserOutputController::class, 'changeInfoUser']);
 Route::post('/dataOrder', [UserOutputController::class, 'dataOrder']);
 Route::get('/menu_all', [MenuController::class, 'allMenu']);
+Route::get('/type_all', [TypeController::class, 'all']);

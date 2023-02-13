@@ -172,6 +172,9 @@ export default {
                 localStorage.removeItem("avatar");
                 localStorage.removeItem("adress");
                 localStorage.removeItem("number");
+                localStorage.removeItem("age");
+                localStorage.removeItem("city");
+                localStorage.removeItem("role");
                 this.$router.push("/");
                 // console.log(res);
             });
