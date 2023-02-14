@@ -42,8 +42,8 @@
                         </div>
                     </div>
                     <div class="last_active">
-                        <div class="active" v-for="(active, index) in sort_on" :key="active">
-                            <p @click="sort_on.splice(index, 1)"><span>{{ active }} X</span></p>
+                        <div class="active" v-for="(active, index) in sort_on" :key="active" @click="sort_on.splice(index, 1)">
+                            <p> {{ active }}</p><p>X</p>
                         </div>
                     </div>
                 </div>
@@ -56,12 +56,14 @@
             <h3>Меню</h3>
             <div class="products_df" >
                 <div v-for="product in menu" :key="product" ref="element" v-on:change="hidediv">
-                    <div class="card" v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
-                        <img :src="product.img" alt="">
-                        <p>{{ product.name }}</p>
-                        <p class="price">Цена: {{ product.price }} ₽</p>
-                        <button v-if="token">Купить</button>
-                    </div>
+                    <router-link :to="{ path: '/product/'+product.id }"  v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
+                        <div class="card">
+                            <img :src="product.img" alt="">
+                            <p>{{ product.name }}</p>
+                            <p class="price">Цена: {{ product.price }} ₽</p>
+                            <button v-if="token">Купить</button>
+                        </div>
+                    </router-link>
                 </div>
             </div>            
         </div>
@@ -130,6 +132,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 5vw;
+    margin-bottom: 5vw;
 }
 .pagination,
 a {
@@ -155,6 +158,9 @@ a {
 }
 .card:hover{
     box-shadow: 8px 7px 20px #af3131;
+}
+div:empty{
+    display: none;
 }
 .card p{
     font-size: 17px;
@@ -304,7 +310,7 @@ h3{
     width: 270px;
     height: 50px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     background: rgb(175, 49, 49, 58%);
     font-size: 18px;
