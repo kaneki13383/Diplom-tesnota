@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div v-if="cart.length != 0">
                 Итого: {{ summ }}
             </div>
             <div class="cart_empty" v-if="cart.length == 0">

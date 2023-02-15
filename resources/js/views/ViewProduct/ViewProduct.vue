@@ -10,8 +10,8 @@
                 <p class="price">{{ this.product['price'] }}  ₽ / за порцию</p>
                 <div style="display: flex; flex-direction: column; width: 360px;">
                     <button></button>
-                    <button v-if="token" @click.prevent="addCart(product.id)">В корзину</button>
-                    <button v-if="token">Добавить к столику</button>
+                    <button v-if="!token" @click.prevent="addCart(product.id)">В корзину</button>
+                    <button v-if="!token">Добавить к столику</button>
                 </div>
             </div>
         </div>
