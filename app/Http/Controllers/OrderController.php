@@ -11,6 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function allAdmin()
+    {
+        return OrderResource::collection(Order::all());
+    }
+
+    public function editStatus($id, Request $request)
+    {
+        Order::where('id', $id)->update([
+            'status' => $request->input('status')
+        ]);
+    }
+
+    public function allEndOrders()
+    {
+        return OrderResource::collection(Order::where('id_user', Auth::user()->id)->where('status', 'Завершен')->get());
+    }
+    
     public function all()
     {
         return OrderResource::collection(Order::where('id_user', Auth::user()->id)->where('status', '!=', 'Завершен')->get());

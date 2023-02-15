@@ -1,7 +1,7 @@
 <template>
     <div class="background">
         <form>
-            <h2>Изенить даные</h2>
+            <h2>Изменить даные</h2>
             <input v-model="name" type="text" placeholder="Имя" />
             <input v-model="surname" type="text" placeholder="Фамилия" />
             <input v-model="email" type="text" placeholder="Email" />

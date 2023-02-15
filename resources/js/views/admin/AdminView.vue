@@ -25,7 +25,7 @@
                 <div class="item">
                     <img width="50" height="50" src="img/Speech.svg" alt="">
                 </div>
-                <div class="item">
+                <div class="item" @click="show = 'orders'">
                     <img width="50" height="50" src="img/Purchase Order.svg" alt="">
                 </div>
                 <div class="item">
@@ -40,6 +40,7 @@
         </div>
         <div class="info">
             <Products v-if="show == 'products'" />
+            <Orders v-if="show == 'orders'" />
         </div>
     </div>
     
@@ -47,9 +48,11 @@
 
 <script>
 import Products from '../../components/AdminComponents/Products.vue';
+import Orders from '../../components/AdminComponents/Orders.vue';
 export default {
     components: {
         Products,
+        Orders
     },
     data() {
         return {

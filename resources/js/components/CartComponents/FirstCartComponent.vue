@@ -27,7 +27,12 @@
                 </div>
                 <div class="order" v-if="cart.length != 0">
                     <form>
-                        <button @click.prevent="createOrder()">Оформить заказ</button>
+                        <button v-if="addres != 'NULL' && number != 'NULL'" @click.prevent="createOrder()">Оформить заказ</button>
+                        <button v-else @click.prevent="show = true">Оформить заказ</button>
+                        <div class="warning" v-show="show == true">
+                            <div class="close" @click="show = false">X</div>
+                            <p>Вы не заполнили данные для совершения заказа! Перейдите в <router-link to="/dashboard">профиль</router-link> и заполните ее</p>
+                        </div>
                         <div class="check">
                             <input type="checkbox" required class="custom-checkbox" id="happy" name="happy" value="yes">
                             <label for="happy"></label>
@@ -48,7 +53,10 @@
         data() {
             return {
                 cart: [],
-                summ: 0
+                summ: 0,
+                addres: localStorage.getItem('adress'),
+                number: localStorage.getItem('number'),
+                show: false
             }
         },
         mounted() {
@@ -84,6 +92,37 @@
 </script>
 
 <style lang="css" scoped>
+.warning{
+    position: fixed;
+    width: 300px;
+    height: 120px;
+    border: 2px solid #af3131;
+    background: #212529;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7vw;
+    margin-top: 10vw;
+}
+.warning p{
+    font-family: "Roboto", serif;
+    font-size: 17px;
+    text-align: center;
+}
+.warning p a{
+    color: #af3131;
+}
+.close{
+    position: relative;
+    color: #af3131;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Roboto", serif;
+    top: -45px;
+    left: 94%;
+    cursor: pointer;
+}
 *{
     color: white;
 }

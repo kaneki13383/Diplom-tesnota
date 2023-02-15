@@ -13,13 +13,14 @@ import ThirdSectionComponentVue from '../../components/MainComponents/ThirdSecti
 import FourSectionComponentVue from '../../components/MainComponents/FourSectionComponent.vue'
 export default {
   data() {
-    return {};
+    return {
+      role: '',
+    };
   },
   
   mounted(){    
-        document.title = "Главная"
-    },
-    
+    document.title = "Главная"
+  },
   components: {
     FirstSectionComponentVue,
     SecondSectionComponentVue,

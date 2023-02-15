@@ -81,7 +81,7 @@
             <div v-on:click="showView('data_order')" id="orders" class="click">
                 <p>Данные для заказа</p>
             </div>
-            <div class="click" id="historyOrders">
+            <div v-on:click="showView('historyOrders')" class="click" id="historyOrders">
                 <p>История заказов</p>
             </div>
             <div v-on:click="showView('now_orders')" class="click" id="nowOrders">
@@ -103,6 +103,7 @@
                     <ChangeComponent v-if="show == 'change'"></ChangeComponent>
                     <DataOrderComponent v-else-if="show == 'data_order'"></DataOrderComponent>
                     <nowOrders v-else-if="show == 'now_orders'"></nowOrders>
+                    <HistoryOrders v-else-if="show == 'historyOrders'" />
                 </transition>
             </div>
         </div>
@@ -114,11 +115,13 @@ import HeaderComponent from "../header_footer/HeaderComponent.vue";
 import ChangeComponent from "./ChangeComponent.vue";
 import DataOrderComponent from "./DataOrderComponent.vue";
 import nowOrders from "./nowOrders.vue";
+import HistoryOrders from "./HistoryOrders.vue";
 export default {
     components: {
         ChangeComponent,
         DataOrderComponent,
-        nowOrders
+        nowOrders,
+        HistoryOrders
     },
 
     data() {
@@ -236,6 +239,7 @@ export default {
                     this.pagination = "Данные для заказа";
                 } else if (btn.id === "historyOrders" && this.show === "historyOrders") {
                     btn.classList.add("active");
+                    this.pagination = "История заказов";
                 } else if (btn.id === "nowOrders" && this.show === "now_orders"){
                     btn.classList.add("active");
                     this.pagination = "Текущие заказы";

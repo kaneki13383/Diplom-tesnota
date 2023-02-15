@@ -24,6 +24,10 @@ export default {
         this.getId();
         this.getAdress();
         this.getNumber();
+        if (this.adress == 'NULL' || this.number == 'NULL'){
+            this.adress = ''
+            this.number = ''
+        }
     },
 
     methods: {

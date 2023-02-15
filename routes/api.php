@@ -48,3 +48,6 @@ Route::post('/add_review', [ReviewController::class, 'add']);
 
 Route::post('/create_order', [OrderController::class, 'createOrder']);
 Route::get('/orders', [OrderController::class, 'all']);
+Route::get('/orders_end', [OrderController::class, 'allEndOrders']);
+Route::get('/orders_admin', [OrderController::class, 'allAdmin']);
+Route::post('/order_status/{id}', [OrderController::class, 'editStatus']);

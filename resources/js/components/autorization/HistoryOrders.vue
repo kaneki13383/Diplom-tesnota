@@ -25,7 +25,7 @@
             </div>
         </div>
         <div v-else>
-            <h1>Заказов нет!</h1>
+            <h1>Вы еще не завершили ни одного заказа!</h1>
         </div>
     </div>
 </template>
@@ -42,21 +42,19 @@
         },
         methods: {
             getOrders(){
-                axios.get('/api/orders')
+                axios.get('/api/orders_end')
                 .then(res => {
-                        this.orders = res.data.data;
-                        
-                        console.log(this.orders);
+                    this.orders = res.data.data
                 })
             }
         },
     }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 h1{
     font-family: "Comfortaa", serif;
-    margin: 15vw 0 15vw 25vw;
+    margin: 15vw 0 15vw 12vw;
 }
 .background {
     background: #202428;
