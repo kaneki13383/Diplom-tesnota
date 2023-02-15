@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Cart extends Model
 {
     use HasFactory;
 
     protected $guarded = false;
 
-    public function types()
+    public function menus()
     {
-        return $this->belongsTo(Type::class, 'type');
+        return $this->belongsTo(Menu::class, 'id');
     }
 
-    public function cart()
+    public function users()
     {
-        return $this->hasMany(Cart::class);
+        return $this->belongsTo(User::class, 'id');
     }
 }

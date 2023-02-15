@@ -10,8 +10,8 @@
                 <p class="price">{{ this.product['price'] }}  ₽ / за порцию</p>
                 <div style="display: flex; flex-direction: column; width: 360px;">
                     <button></button>
-                    <button>В корзину</button>
-                    <button>Добавить к столику</button>
+                    <button v-if="token" @click.prevent="addCart(product.id)">В корзину</button>
+                    <button v-if="token">Добавить к столику</button>
                 </div>
             </div>
         </div>
@@ -27,7 +27,8 @@
         data() {
             return {
                 product: [],
-                id: null
+                id: null,
+                token: localStorage.getItem('token')
             }
         },
         mounted() {
@@ -46,6 +47,9 @@
                 let url = window.location.pathname
                 this.id = url.split('/')[2]
             },
+            addCart(id){
+                axios.post(`/api/cart/${id}`)
+            }
         },
     }
 </script>

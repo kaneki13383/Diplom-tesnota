@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoadAvatarController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Http\Request;
@@ -35,3 +36,7 @@ Route::post('/create_product', [MenuController::class, 'createProduct']);
 Route::delete('/delete_product{id}', [MenuController::class, 'delete']);
 Route::get('/product/{id}', [MenuController::class, 'find']);
 Route::post('/edit_product', [MenuController::class, 'edit']);
+
+Route::get('/cart/all', [CartController::class, 'all']);
+Route::post('/cart/{id}', [CartController::class, 'add']);
+Route::post('/cart_delete/{id}', [CartController::class, 'delete']);

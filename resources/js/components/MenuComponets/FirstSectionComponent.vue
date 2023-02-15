@@ -55,15 +55,18 @@
             </p>
             <h3>Меню</h3>
             <div class="products_df" >
-                <div v-for="product in menu" :key="product" ref="element" v-on:change="hidediv">
+                <div v-for="product in menu" :key="product" ref="element">
                     <router-link :to="{ path: '/product/'+product.id }"  v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
                         <div class="card">
                             <img :src="product.img" alt="">
                             <p>{{ product.name }}</p>
                             <p class="price">Цена: {{ product.price }} ₽</p>
-                            <button v-if="token">Купить</button>
+                            <button v-if="token" @click.prevent="addCart(product.id)">Купить</button>
                         </div>
                     </router-link>
+                    <!-- <div class="warning" v-else>
+                        <h2>По вашим фильтрам ничего не найдено!</h2>
+                    </div> -->
                 </div>
             </div>            
         </div>
@@ -114,6 +117,9 @@
                         this.types = res.data;
                     })
             },
+            addCart(id){
+                axios.post(`/api/cart/${id}`)
+            }
         }
     }
 </script>
