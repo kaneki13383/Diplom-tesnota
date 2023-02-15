@@ -5,20 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Order extends Model
 {
     use HasFactory;
 
     protected $guarded = false;
 
-    public function types()
+    public function users()
     {
-        return $this->belongsTo(Type::class, 'type');
-    }
-
-    public function cart()
-    {
-        return $this->hasMany(Cart::class);
+        return $this->belongsTo(User::class, 'id');
     }
 
     public function products_order()

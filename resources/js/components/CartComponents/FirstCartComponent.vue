@@ -21,12 +21,24 @@
                     </div>
                 </div>
             </div>
-            <div v-if="cart.length != 0">
-                Итого: {{ summ }}
+            <div class="bottom_div">
+                <div class="itogo" v-if="cart.length != 0">
+                    <p>Итого: {{ summ }} ₽</p>
+                </div>
+                <div class="order" v-if="cart.length != 0">
+                    <form>
+                        <button @click.prevent="createOrder()">Оформить заказ</button>
+                        <div class="check">
+                            <input type="checkbox" required class="custom-checkbox" id="happy" name="happy" value="yes">
+                            <label for="happy"></label>
+                            <span>Ставя галочку вы соглашаетесь с <a href="./Условия сделки.docx">уловиями сделки</a></span>
+                        </div> 
+                    </form>
+                </div>
             </div>
             <div class="cart_empty" v-if="cart.length == 0">
                 <h1>Корзина пуста</h1>
-            </div>
+            </div>            
         </div>
     </div>
 </template>
@@ -58,6 +70,14 @@
                     .then(res => {
                         this.getCart()
                     })
+            },
+            createOrder(){
+                axios.post('/api/create_order',{
+                    summ: this.summ
+                })
+                .then(res => {
+                    this.getCart()
+                })
             }
         },
     }
@@ -71,7 +91,7 @@
     color: #af3131;    
     font-size: 18px;
     font-family: "Comfortaa", serif;
-    margin-left: 10%;
+    margin-left: 5%;
     margin-top: 60px;
 }
 .pagination a{
@@ -111,5 +131,102 @@
 }
 .delete{
     cursor: pointer;
+}
+.itogo p{
+    font-size: 28px;
+    font-family: "Roboto", serif;
+    border-bottom: 2px solid #af3131;
+    padding-bottom: 10px;
+}
+.order form{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+.order button{
+    width: 360px;
+    height: 50px;
+    border-radius: 7px;
+    background: #212529;
+    color: white;
+    border: 2px solid #af3131;
+    font-family: "Roboto", serif;
+    font-size: 20px;
+    transition: .5s;
+}
+.check{
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    width: 360px;
+    text-align: center;
+    font-family: "Roboto", serif;
+}
+.check span a{
+    color: #af3131;
+}
+.order button:hover{
+    background: #af3131;
+    color: #212529;
+    cursor: pointer;
+}
+.custom-checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.custom-checkbox+label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.custom-checkbox+label::before {
+  content: '';
+  display: inline-block;
+  width: 1.3em;
+  height: 1.3em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #af3131;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.custom-checkbox:checked+label::before {
+  border-color: #af3131;
+  background-color: #212529;
+  background-image: url("./img/галочка.svg");
+  background-size: cover;
+}
+/* стили при наведении курсора на checkbox */
+.custom-checkbox:not(:disabled):not(:checked)+label:hover::before {
+  border-color: #d77070;
+}
+/* стили для активного состояния чекбокса (при нажатии на него) */
+.custom-checkbox:not(:disabled):active+label::before {
+  background-color: #d77070;
+  border-color: #d77070;
+}
+/* стили для чекбокса, находящегося в фокусе */
+.custom-checkbox:focus+label::before {
+  box-shadow: 0 0 0 0.2rem #6f1f1f;
+}
+/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
+.custom-checkbox:focus:not(:checked)+label::before {
+  border-color: #d77070;
+}
+/* стили для чекбокса, находящегося в состоянии disabled */
+.custom-checkbox:disabled+label::before {
+  background-color: #d77070;
+}
+.bottom_div{
+    margin-bottom: 90px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin-left: 5%;
 }
 </style>

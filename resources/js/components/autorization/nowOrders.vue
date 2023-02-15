@@ -1,0 +1,118 @@
+<template>
+    <div class="background">
+        <div v-if="orders.length != 0">
+            <div v-for="order in orders" :key="order">
+                <div>
+                    <h2>Заказ №{{ order.id }}</h2>
+                    <div style="display: flex; flex-wrap: wrap; gap: 5vw; justify-content: space-around;">
+                        <div class="card" v-for="product in order.products" :key="product">
+                            <img :src="product.id_product[0].img" alt="">
+                            <p>{{ product.id_product[0].name }}</p>
+                            <p class="price">Цена: {{ product.id_product[0].price }} ₽</p>
+                            <p>Кол-во: {{ product.count }}</p>
+                        </div>
+                    </div>
+                    <div class="bottom_order">
+                        <p>Итого заказа: {{ order.order_price }} ₽</p>
+                        <p>Статус: {{ order.status }}</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <h1>Заказов нет!</h1>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                orders: []
+            }
+        },
+        mounted() {
+            this.getOrders()
+        },
+        methods: {
+            getOrders(){
+                axios.get('/api/orders')
+                .then(res => {
+                        this.orders = res.data.data;
+                        
+                        console.log(this.orders);
+                })
+            }
+        },
+    }
+</script>
+
+<style lang="css" scoped>
+h1{
+    font-family: "Comfortaa", serif;
+    margin: 15vw 0 15vw 25vw;
+}
+.background {
+    background: #202428;
+    border: 3px #af3131 solid;
+    width: 60vw;
+    height: auto;
+    border-radius: 15px;
+    color: white;
+}
+.card img{
+    width: 240px;
+    height: 180px;
+    border-radius: 5px;
+}
+.card{
+    width: 350px;
+    height: 400px;
+    background: #1d2023;
+    border: 2px solid #AF3131;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4vw;
+    color: white;
+    transition: .5s;
+    cursor: pointer;
+}
+.card:hover{
+    box-shadow: 8px 7px 20px #af3131;
+}
+div:empty{
+    display: none;
+}
+.card p{
+    font-size: 17px;
+    font-family: "Comfortaa", serif;
+}
+.card .price{
+    font-size: 25px;
+}
+h2{
+    font-family: "Comfortaa", serif;
+    text-align: center;
+    margin: 2vw 0;
+}
+.bottom_order{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between; 
+    width: 85%; 
+    margin-left: 7.5%;
+    font-family: "Comfortaa", serif;
+    font-size: 20px;
+    margin-top: 4vw;
+    margin-bottom: 4vw;
+}
+.bottom_order p{
+    border-bottom: 2px solid #af3131;
+    padding-bottom: 10px;
+}
+</style>

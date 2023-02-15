@@ -1,7 +1,7 @@
 <template>
     <div class="d-f_sec">
         <div class="text">
-            <h4>Здесь вы можете оставить свою заявку</h4>
+            <h4>Здесь вы можете оставить свой отзыв</h4>
             <p>
                 Для этого будет достаточно вашего телефонного номера и
                 электронного адреса. Так же вы можете добавить в комментарии
@@ -9,16 +9,17 @@
             </p>
         </div>
         <div class="request">
-            <input type="text" placeholder="тел" />
-            <input type="text" placeholder="почта" />
+            <input type="text" v-model="number" placeholder="тел" />
+            <input type="text" v-model="email" placeholder="почта" />
             <textarea
+                v-model="text"
                 name=""
                 id=""
                 cols="30"
                 rows="10"
                 placeholder="коментарий"
             ></textarea>
-            <button>Отправить</button>
+            <button @click.prevent="addReview()">Отправить</button>
             <img src="img/bottom_form_main.svg" alt="" />
         </div>
     </div>
@@ -27,7 +28,25 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            number: '',
+            email: '',
+            text: ''
+        };
+    },
+    methods: {
+        addReview(){
+            axios.post('/api/add_review', {
+                number: this.number,
+                email: this.email,
+                text: this.text
+            })
+            .then(res => {
+                this.number = ''
+                this.email = ''
+                this.text = ''
+            })
+        }
     },
 };
 </script>

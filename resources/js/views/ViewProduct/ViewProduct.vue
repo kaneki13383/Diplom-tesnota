@@ -9,9 +9,9 @@
                 <h1>{{ this.product['name'] }}</h1>
                 <p class="price">{{ this.product['price'] }}  ₽ / за порцию</p>
                 <div style="display: flex; flex-direction: column; width: 360px;">
-                    <button></button>
-                    <button v-if="!token" @click.prevent="addCart(product.id)">В корзину</button>
-                    <button v-if="!token">Добавить к столику</button>
+                    <button v-show="token"></button>
+                    <button v-show="token" @click.prevent="addCart(product.id)">В корзину</button>
+                    <button v-show="token">Добавить к столику</button>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             return {
                 product: [],
                 id: null,
-                token: localStorage.getItem('token')
+                token: localStorage.getItem('x_xsrf_token')
             }
         },
         mounted() {

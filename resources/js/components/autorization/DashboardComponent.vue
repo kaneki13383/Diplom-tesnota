@@ -84,7 +84,7 @@
             <div class="click" id="historyOrders">
                 <p>История заказов</p>
             </div>
-            <div class="click" id="nowOrders">
+            <div v-on:click="showView('now_orders')" class="click" id="nowOrders">
                 <p>Текущие заказы</p>
             </div>
             <div @click.prevent="logout" class="click">
@@ -101,9 +101,8 @@
             <div class="info_data">
                 <transition name="slide-fade" mode="out-in">
                     <ChangeComponent v-if="show == 'change'"></ChangeComponent>
-                    <DataOrderComponent
-                        v-else-if="show == 'data_order'"
-                    ></DataOrderComponent>
+                    <DataOrderComponent v-else-if="show == 'data_order'"></DataOrderComponent>
+                    <nowOrders v-else-if="show == 'now_orders'"></nowOrders>
                 </transition>
             </div>
         </div>
@@ -114,10 +113,12 @@
 import HeaderComponent from "../header_footer/HeaderComponent.vue";
 import ChangeComponent from "./ChangeComponent.vue";
 import DataOrderComponent from "./DataOrderComponent.vue";
+import nowOrders from "./nowOrders.vue";
 export default {
     components: {
         ChangeComponent,
         DataOrderComponent,
+        nowOrders
     },
 
     data() {
@@ -233,11 +234,11 @@ export default {
                 } else if (btn.id === "orders" && this.show === "data_order") {
                     btn.classList.add("active");
                     this.pagination = "Данные для заказа";
-                } else if (
-                    btn.id === "historyOrders" &&
-                    this.show === "historyOrders"
-                ) {
+                } else if (btn.id === "historyOrders" && this.show === "historyOrders") {
                     btn.classList.add("active");
+                } else if (btn.id === "nowOrders" && this.show === "now_orders"){
+                    btn.classList.add("active");
+                    this.pagination = "Текущие заказы";
                 }
             });
         },
