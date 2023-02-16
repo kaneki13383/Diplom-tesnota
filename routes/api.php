@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoadAvatarController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,3 +52,5 @@ Route::get('/orders', [OrderController::class, 'all']);
 Route::get('/orders_end', [OrderController::class, 'allEndOrders']);
 Route::get('/orders_admin', [OrderController::class, 'allAdmin']);
 Route::post('/order_status/{id}', [OrderController::class, 'editStatus']);
+
+Route::get('/promo', [PromoController::class, 'all']);

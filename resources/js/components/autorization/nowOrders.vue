@@ -19,8 +19,7 @@
                     <div class="bottom_order">
                         <p>Итого заказа: {{ order.order_price }} ₽</p>
                         <p>Статус: {{ order.status }}</p>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -44,9 +43,7 @@
             getOrders(){
                 axios.get('/api/orders')
                 .then(res => {
-                        this.orders = res.data.data;
-                        
-                        console.log(this.orders);
+                    this.orders = res.data.data;
                 })
             }
         },

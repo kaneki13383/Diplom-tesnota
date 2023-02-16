@@ -4,7 +4,7 @@
             <h2>Данные для заказа</h2>
             <input v-model="adress" type="text" placeholder="Адрес доставки" />
             <input v-model="number" type="text" placeholder="Номер телефона" />
-            <input type="text" placeholder="Промокод (если есть)" />
+            <input type="text" v-model="active_promo" placeholder="Промокод (если есть)" />
             <button @click.prevent="dataOrder">Сохранить</button>
         </form>
     </div>
@@ -17,6 +17,8 @@ export default {
             id: "",
             adress: localStorage.getItem("adress"),
             number: localStorage.getItem("number"),
+            promo: [],
+            active_promo: ''
         };
     },
 
@@ -50,6 +52,23 @@ export default {
                     this.number = localStorage.getItem("number");
                     this.getAdress();
                     this.getNumber();
+                    axios.get('/api/promo')
+                    .then(res => {
+                        this.promo = res.data
+                        
+                        for (let index = 0; index < this.promo.length; index++) {
+                            if(this.promo[index].promo == this.active_promo){
+                                localStorage.setItem("active_promo", this.active_promo)
+                            }
+                            else{
+                                
+                            }
+                        } 
+
+                        
+
+                        
+                    })
                 });
         },
 

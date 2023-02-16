@@ -7,7 +7,8 @@
                     <img :src="product.id_product.img" alt="">
                     <p>{{ product.id_product.name }}</p>
                     <p>Кол-во порций: {{ product.count }}</p>
-                    <p>Цена: {{ product.id_product.price * product.count }} ₽</p>
+                    <p v-if="active_promo">Цена: {{ (product.id_product.price - (product.id_product.price * .15)) * product.count }} ₽</p>
+                    <p v-else>Цена: {{ product.id_product.price * product.count}} ₽</p>
                     <div class="delete" @click.prevent="deleteProduct(product.id_product.id)">
                         <svg width="45" height="45" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="60" height="60" fill="url(#pattern0)"/>
@@ -56,11 +57,13 @@
                 summ: 0,
                 addres: localStorage.getItem('adress'),
                 number: localStorage.getItem('number'),
-                show: false
+                show: false,
+                active_promo: ''
             }
         },
         mounted() {
             this.getCart()
+            this.getPromo()
         },
         methods: {
             getCart(){
@@ -68,10 +71,23 @@
                     .then(res => {
                         this.cart = res.data.data
                         this.summ = 0
-                        for (let index = 0; index < this.cart.length; index++) {
-                            this.summ += this.cart[index].id_product.price * this.cart[index].count
+
+                        if(this.active_promo){
+                            for (let index = 0; index < this.cart.length; index++) {
+                                this.summ += (this.cart[index].id_product.price - (this.cart[index].id_product.price * .15)) * this.cart[index].count
+                            }  
                         }
+                        else{
+                            for (let index = 0; index < this.cart.length; index++) {
+                                this.summ += this.cart[index].id_product.price * this.cart[index].count
+                            }
+                        }
+                        
                     })
+            },
+            getPromo(){
+                this.active_promo = localStorage.getItem('active_promo')
+                console.log(this.active_promo);
             },
             deleteProduct(id){
                 axios.post(`/api/cart_delete/${id}`)
@@ -85,6 +101,7 @@
                 })
                 .then(res => {
                     this.getCart()
+                    localStorage.removeItem("active_promo")
                 })
             }
         },

@@ -60,7 +60,8 @@
                         <div class="card">
                             <img :src="product.img" alt="">
                             <p>{{ product.name }}</p>
-                            <p class="price">Цена: {{ product.price }} ₽</p>
+                            <p class="price" v-if="active_promo">Цена: {{ product.price - (product.price * .15)}} ₽</p>
+                            <p class="price" v-else>Цена: {{ product.price }} ₽</p>
                             <button v-if="token" @click.prevent="addCart(product.id)">Купить</button>
                         </div>
                     </router-link>
@@ -84,6 +85,7 @@
                 token: localStorage.getItem("x_xsrf_token"),
                 types: [],
                 sort_on: [],
+                active_promo: localStorage.getItem('active_promo')
             }
         },
         mounted(){
