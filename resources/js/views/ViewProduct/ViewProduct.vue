@@ -11,7 +11,7 @@
                 <p class="price" v-else>{{ this.product['price'] }}  ₽ / за порцию</p>
                 <div style="display: flex; flex-direction: column; width: 360px;">
                     <button v-show="token"></button>
-                    <button v-show="token" @click.prevent="addCart(product.id)">В корзину</button>
+                    <button v-show="token" @click.prevent="addCart(product.id), countCart()">В корзину</button>
                     <button v-show="token">Добавить к столику</button>
                 </div>
             </div>
@@ -38,6 +38,16 @@
             this.getProduct()
         },
         methods: {
+            countCart(){
+                this.cart_count = 0
+                axios.get('/api/cart/all')
+                .then(res => {
+                    for (let index = 0; index < res.data.data.length; index++) {
+                        this.cart_count += res.data.data[index].count
+                    }
+                    this.$store.state.user.cart_count = this.cart_count;
+                })
+        },
             getProduct(){
                 axios.get(`/api/product/${this.id}`)
                     .then((res) => {

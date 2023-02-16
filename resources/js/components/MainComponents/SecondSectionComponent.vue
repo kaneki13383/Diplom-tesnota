@@ -9,8 +9,8 @@
                     и астомсфера.
                 </p>
                 <div class="links">
-                    <a href="">Подробнее</a>
-                    <a href="">Меню</a>
+                    <router-link to="/about">Подробнее</router-link>
+                    <router-link to="/catalog">Меню</router-link>
                 </div>
             </div>
             <div>

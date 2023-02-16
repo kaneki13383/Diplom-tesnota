@@ -23,7 +23,7 @@
                 </li>
                 <li><router-link to="/">Главная</router-link></li>
                 <li><router-link to="/catalog">Меню</router-link></li>
-                <li v-show="token"><router-link to="/cart">Корзина</router-link></li>
+                <li v-show="token"><router-link to="/cart">Корзина <p class="cart_count" v-if="this.$store.state.user.cart_count != 0">{{ this.$store.state.user.cart_count }}</p></router-link></li>
                 <li><router-link to="/about">О нас</router-link></li>
                 <li>
                     <input type="search" placeholder="Поиск" />
@@ -42,9 +42,6 @@
                     }}</router-link>
                 </li>
             </ul>
-
-
-               
                 <!-- <a class="burger-menu_button" id="burger" v-on:click="display()">
                     <span class="burger-menu_lines"></span>
                 </a> -->
@@ -59,6 +56,7 @@ export default {
             token: "",
             name: "",
             width: window.innerWidth,
+            cart_count: 0
         };
     },
 
@@ -66,15 +64,16 @@ export default {
         $route() {
             this.getToken();
             this.getName();
+            this.countCart();
         },
     },
 
     mounted() {
+        this.countCart()
         this.getToken();
         this.getName();
         window.addEventListener("resize", function(){
             let width_window = this.innerWidth;
-
             // console.log(width_window);
             if(width_window >= 768){
                 document.getElementById('navig').style.display = 'flex'
@@ -97,6 +96,18 @@ export default {
         getToken() {
             this.token = localStorage.getItem("x_xsrf_token");
         },
+        countCart(){
+            if(this.token){
+                this.cart_count = 0
+                axios.get('/api/cart/all')
+                .then(res => {
+                    for (let index = 0; index < res.data.data.length; index++) {
+                        this.cart_count += res.data.data[index].count
+                    }
+                    this.$store.state.user.cart_count = this.cart_count;
+                })
+            }
+        },
         getName() {
             this.$store.state.user.name = localStorage.getItem("name");
         },
@@ -114,6 +125,18 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.cart_count{
+    position: absolute;
+    top: 2%;
+    right: 54%;
+    background: #af3131;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .d-f_adaptive{
     display: none;
 }

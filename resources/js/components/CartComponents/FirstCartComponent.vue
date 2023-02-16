@@ -9,7 +9,7 @@
                     <p>Кол-во порций: {{ product.count }}</p>
                     <p v-if="active_promo">Цена: {{ (product.id_product.price - (product.id_product.price * .15)) * product.count }} ₽</p>
                     <p v-else>Цена: {{ product.id_product.price * product.count}} ₽</p>
-                    <div class="delete" @click.prevent="deleteProduct(product.id_product.id)">
+                    <div class="delete" @click.prevent="deleteProduct(product.id_product.id), countCart()">
                         <svg width="45" height="45" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="60" height="60" fill="url(#pattern0)"/>
                             <defs>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="order" v-if="cart.length != 0">
                     <form>
-                        <button v-if="addres != 'NULL' && number != 'NULL'" @click.prevent="createOrder()">Оформить заказ</button>
+                        <button v-if="addres != 'NULL' && number != 'NULL'" @click.prevent="createOrder(), countCart()">Оформить заказ</button>
                         <button v-else @click.prevent="show = true">Оформить заказ</button>
                         <div class="warning" v-show="show == true">
                             <div class="close" @click="show = false">X</div>
@@ -58,7 +58,8 @@
                 addres: localStorage.getItem('adress'),
                 number: localStorage.getItem('number'),
                 show: false,
-                active_promo: ''
+                active_promo: '',
+                cart_coun: 0
             }
         },
         mounted() {
@@ -66,6 +67,16 @@
             this.getPromo()
         },
         methods: {
+            countCart(){
+                    this.cart_count = 0
+                    axios.get('/api/cart/all')
+                    .then(res => {
+                        for (let index = 0; index < res.data.data.length; index++) {
+                            this.cart_count += res.data.data[index].count
+                        }
+                        this.$store.state.user.cart_count = this.cart_count;
+                    })
+            },
             getCart(){
                 axios.get('/api/cart/all')
                     .then(res => {
@@ -87,7 +98,6 @@
             },
             getPromo(){
                 this.active_promo = localStorage.getItem('active_promo')
-                console.log(this.active_promo);
             },
             deleteProduct(id){
                 axios.post(`/api/cart_delete/${id}`)

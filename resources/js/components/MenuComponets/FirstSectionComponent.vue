@@ -24,12 +24,12 @@
                     <div class="last_active">
                         <div class="active">
                             <div class="range-slider">
-                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number" :min="0" :max="5000"/> 
+                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number" :min="199" :max="5000"/> 
                                     <p>До</p> 
-                                    <input  v-model.number="maxPrice" type="number"  :min="0" :max="5000"/>
+                                    <input  v-model.number="maxPrice" type="number"  :min="199" :max="5000"/>
                                 </span>
-                                <input @change="slider" v-model.number="minPrice" :min="0" :max="5000" step="1" type="range" />
-                                <input @change="slider" v-model.number="maxPrice" :min="0" :max="5000" step="1" type="range" />
+                                <input @change="slider" v-model.number="minPrice" :min="199" :max="5000" step="1" type="range" />
+                                <input @change="slider" v-model.number="maxPrice" :min="199" :max="5000" step="1" type="range" />
                                 <svg width="100%" height="24"></svg>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             <p>{{ product.name }}</p>
                             <p class="price" v-if="active_promo">Цена: {{ product.price - (product.price * .15)}} ₽</p>
                             <p class="price" v-else>Цена: {{ product.price }} ₽</p>
-                            <button v-if="token" @click.prevent="addCart(product.id)">Купить</button>
+                            <button v-if="token" @click.prevent="addCart(product.id), this.countCart(), accessMessage(product.name)">Купить</button>
                         </div>
                     </router-link>
                     <!-- <div class="warning" v-else>
@@ -71,6 +71,12 @@
                 </div>
             </div>            
         </div>
+        <transition mode="out-in">
+            <div class="alert" v-show="alert == true">
+                <div @click="alert = false">X</div>
+                <p>{{ message }}</p>
+            </div>
+        </transition>        
     </div>
 </template>
 
@@ -85,7 +91,10 @@
                 token: localStorage.getItem("x_xsrf_token"),
                 types: [],
                 sort_on: [],
-                active_promo: localStorage.getItem('active_promo')
+                active_promo: localStorage.getItem('active_promo'),
+                cart_coun: 0,
+                alert: false,
+                message: ''
             }
         },
         mounted(){
@@ -93,6 +102,22 @@
             this.AllTypes()
         },
         methods: {
+            accessMessage(name){
+                this.alert = true
+                this.message = 'Товар '+name+' добавлен в корзину'
+            },
+            countCart(){
+                if(this.token){
+                    this.cart_count = 0
+                    axios.get('/api/cart/all')
+                    .then(res => {
+                        for (let index = 0; index < res.data.data.length; index++) {
+                            this.cart_count += res.data.data[index].count
+                        }
+                        this.$store.state.user.cart_count = this.cart_count;
+                    })
+                }
+            },
             slider: function() {
                 if (this.minPrice > this.maxPrice) {
                     let tmp = this.maxPrice;
@@ -126,7 +151,29 @@
     }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.alert{
+    position: fixed;
+    color: white;
+    background: #1d2023;
+    border: 2px solid #AF3131;
+    margin-left: 74%;
+    margin-top: 35%;
+        font-family: "Comfortaa", serif;
+    p{
+        padding: 2vw 1vw;
+    }
+    .link{
+        color: #af3131;
+    }
+    div{
+        float: right;
+        margin-top: 10px;
+        margin-right: 10px;
+        color: #AF3131;
+        cursor: pointer;
+    }
+}
 .warning{
     color: white;
     font-family: "Comfortaa", serif;

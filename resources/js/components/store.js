@@ -10,6 +10,7 @@ export default createStore({
                 number: '',
                 role: '',
                 avatar: '',
+                cart_count: 0
             }
         }
     },

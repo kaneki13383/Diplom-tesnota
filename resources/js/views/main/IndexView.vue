@@ -11,21 +11,21 @@
     </transition>
 
     <router-view v-slot="{ Component, route }">
-        <transition name="scale">
+        <transition name="scale" mode="out-in">
             <component :is="Component" :key="route.path"></component>
         </transition>
 
-        <transition name="scale1">
+        <transition name="scale1" mode="out-in">
             <div :key="route.path" class="bg"></div>
         </transition>
 
-        <transition name="bounce">
+        <transition name="bounce" mode="out-in">
             <div :key="route.path" class="translate">
                 <img src="img/logo.png" alt="" />
             </div>
         </transition>
 
-        <transition name="bounce2">
+        <transition name="bounce2" mode="out-in">
             <div :key="route.path" class="translate2">
                 <img src="img/animation.png" alt="" />
             </div>
@@ -69,32 +69,32 @@ export default {
 
 .scale-enter-active,
 .scale-leave-active {
-    transition: all 1.5s;
+    transition: all 1s;
 }
 .scale-enter-from,
 .scale-leave-to {
     opacity: 0;
 }
 
-.scale1-enter-active,
+/* .scale1-enter-active,
 .scale1-leave-active {
-    transition: all 8s;
-}
+    transition: all 4s;
+} */
 
 /* .scale1-enter-from {
-        opacity: 1;
-    } */
+    opacity: 1;
+} */
 
-.scale1-leave-to {
+/* .scale1-leave-to {
     transition: all 0.5s;
-}
+} */
 
 .bounce-enter-active {
     animation: bounce-in 4s;
 }
-.bounce-leave-active {
+/* .bounce-leave-active {
     animation: bounce-in 4s;
-}
+} */
 @keyframes bounce-in {
     0% {
         opacity: 1;
@@ -107,9 +107,9 @@ export default {
 .bounce2-enter-active {
     animation: bounce2-in 2s;
 }
-.bounce2-leave-active {
+/* .bounce2-leave-active {
     animation: bounce2-in 2s;
-}
+} */
 @keyframes bounce2-in {
     0% {
         /* opacity: 1; */
