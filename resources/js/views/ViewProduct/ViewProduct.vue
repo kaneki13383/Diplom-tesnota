@@ -7,7 +7,8 @@
             </div>
             <div style="width: 50%; color: white; font-family: 'Roboto', sans-serif;">
                 <h1>{{ this.product['name'] }}</h1>
-                <p class="price">{{ this.product['price'] }}  ₽ / за порцию</p>
+                <p class="price" v-if="active_promo">{{ this.product['price'] - (this.product['price'] * .15) }}  ₽ / за порцию</p>
+                <p class="price" v-else>{{ this.product['price'] }}  ₽ / за порцию</p>
                 <div style="display: flex; flex-direction: column; width: 360px;">
                     <button v-show="token"></button>
                     <button v-show="token" @click.prevent="addCart(product.id)">В корзину</button>
@@ -28,7 +29,8 @@
             return {
                 product: [],
                 id: null,
-                token: localStorage.getItem('x_xsrf_token')
+                token: localStorage.getItem('x_xsrf_token'),
+                active_promo: localStorage.getItem('active_promo')
             }
         },
         mounted() {

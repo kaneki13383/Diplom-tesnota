@@ -5,6 +5,7 @@
             <input v-model="adress" type="text" placeholder="Адрес доставки" />
             <input v-model="number" type="text" placeholder="Номер телефона" />
             <input type="text" v-model="active_promo" placeholder="Промокод (если есть)" />
+            <p class="warning" v-show="show == true">{{ messge }}</p>
             <button @click.prevent="dataOrder">Сохранить</button>
         </form>
     </div>
@@ -18,7 +19,10 @@ export default {
             adress: localStorage.getItem("adress"),
             number: localStorage.getItem("number"),
             promo: [],
-            active_promo: ''
+            active_promo: '',
+            history_promo: localStorage.getItem('history_promo'),
+            show: false,
+            messge: ''
         };
     },
 
@@ -58,16 +62,19 @@ export default {
                         
                         for (let index = 0; index < this.promo.length; index++) {
                             if(this.promo[index].promo == this.active_promo){
-                                localStorage.setItem("active_promo", this.active_promo)
+                                if(this.history_promo == this.active_promo){
+                                    this.messge = 'Этот промокод вы уже использовали'
+                                    this.show = true
+                                }
+                                else{
+                                    localStorage.setItem("active_promo", this.active_promo)
+                                }
                             }
                             else{
-                                
+                                this.messge = 'Такого промокода не существует'
+                                this.show = true
                             }
-                        } 
-
-                        
-
-                        
+                        }
                     })
                 });
         },
@@ -88,6 +95,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.warning{
+    font-size: 20px;
+    color: white;
+    font-family: "Comfortaa", serif;
+}
 .background {
     background: #202428;
     border: 3px #af3131 solid;

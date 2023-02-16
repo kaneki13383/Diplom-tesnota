@@ -101,6 +101,7 @@
                 })
                 .then(res => {
                     this.getCart()
+                    localStorage.setItem('history_promo', this.active_promo)
                     localStorage.removeItem("active_promo")
                 })
             }
