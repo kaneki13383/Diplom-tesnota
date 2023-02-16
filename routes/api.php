@@ -54,3 +54,5 @@ Route::get('/orders_admin', [OrderController::class, 'allAdmin']);
 Route::post('/order_status/{id}', [OrderController::class, 'editStatus']);
 
 Route::get('/promo', [PromoController::class, 'all']);
+Route::post('/add_promo', [PromoController::class, 'add']);
+Route::delete('/delete_promo/{id}', [PromoController::class, 'delete']);

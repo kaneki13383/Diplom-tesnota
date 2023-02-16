@@ -11,4 +11,16 @@ class PromoController extends Controller
     {
         return Promo::all();
     }
+
+    public function delete($id)
+    {
+        Promo::where('id', $id)->delete();
+    }
+
+    public function add(Request $request)
+    {
+        Promo::create([
+            'promo' => $request->input('promo')
+        ]);
+    }
 }

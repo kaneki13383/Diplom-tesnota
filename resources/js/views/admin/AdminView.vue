@@ -28,7 +28,7 @@
                 <div class="item" @click="show = 'orders'">
                     <img width="50" height="50" src="img/Purchase Order.svg" alt="">
                 </div>
-                <div class="item">
+                <div class="item" @click="show = 'promo'">
                     <img width="50" height="50" src="img/Document Writer.svg" alt="">
                 </div>
             </div>
@@ -41,6 +41,7 @@
         <div class="info">
             <Products v-if="show == 'products'" />
             <Orders v-if="show == 'orders'" />
+            <Promo v-if="show == 'promo'" />
         </div>
     </div>
     
@@ -49,15 +50,17 @@
 <script>
 import Products from '../../components/AdminComponents/Products.vue';
 import Orders from '../../components/AdminComponents/Orders.vue';
+import Promo from '../../components/AdminComponents/Promo.vue';
 export default {
     components: {
         Products,
-        Orders
+        Orders,
+        Promo
     },
     data() {
         return {
             role: localStorage.getItem('role'),
-            show: 'products'
+            show: 'promo'
         };
     },
     mounted() {
