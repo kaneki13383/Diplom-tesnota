@@ -51,7 +51,7 @@
     }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 h1{
     font-family: "Comfortaa", serif;
     margin: 15vw 0 15vw 25vw;
@@ -119,5 +119,23 @@ h2{
 .bottom_order p{
     border-bottom: 2px solid #af3131;
     padding-bottom: 10px;
+}
+@media screen and (max-width: 658px) {
+    .card{
+        width: 50vw;
+        height: auto;
+        padding-top: 5vw;
+        padding-bottom: 5vw;
+    }
+    .card img{
+        width: 40vw;
+        height: auto;
+    }
+    .card p{
+        font-size: 14px;
+    }
+    .bottom_order p{
+        font-size: 15px;
+    }
 }
 </style>

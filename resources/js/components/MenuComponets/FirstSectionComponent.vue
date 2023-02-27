@@ -1,6 +1,6 @@
 <template>
     <div class="all">
-        <div class="side_filter">
+        <div class="side_filter" v-show="show == true">
             <h2>Фильтры</h2>
             <div class="d-f gap">
                 <div class="d-f">
@@ -48,12 +48,17 @@
                     </div>
                 </div>
             </div>
+            <button class="apply_filter" @click="show = false" v-show="mobile == true">Применить фильтры</button>
         </div>
-        <div style="width: 70%; margin-left: 20vw;">
+        <div class="adaptive" style="width: 70%;">
             <p class="pagination">
                 <router-link to="/"> Главная </router-link> / О нас
             </p>
             <h3>Меню</h3>
+            <div class="adaptive_filter">
+                <h4>Меню</h4>
+                <img @click="show = true" src="../../../../public/img/Vector.svg" alt="">
+            </div>
             <div class="products_df" >
                 <div v-for="product in menu" :key="product" ref="element">
                     <router-link :to="{ path: '/product/'+product.id }"  v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
@@ -65,9 +70,6 @@
                             <button v-if="token" @click.prevent="addCart(product.id), this.countCart(), accessMessage(product.name)">Купить</button>
                         </div>
                     </router-link>
-                    <!-- <div class="warning" v-else>
-                        <h2>По вашим фильтрам ничего не найдено!</h2>
-                    </div> -->
                 </div>
             </div>            
         </div>
@@ -103,12 +105,22 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                 cart_coun: 0,
                 alert: false,
                 message: '',
-                counter: 1
+                counter: 1,
+                show: false,
+                mobile: false
             }
         },
         mounted(){
             this.allMenu()
             this.AllTypes()
+                if(window.innerWidth > 1600){
+                    this.show = true
+                    this.mobile = false
+                }
+                else{
+                    this.show = false
+                    this.mobile = true
+                }
         },
         methods: {
             accessMessage(name){
@@ -163,6 +175,9 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 </script>
 
 <style lang="scss" scoped>
+.adaptive_filter{
+    display: none;
+}
 .alert{
     position: fixed;
     color: white;
@@ -405,5 +420,56 @@ h3{
     border-bottom: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+.adaptive{
+        margin-left: 20vw;
+    }
+@media screen and (max-width: 1600px) {
+    h3{
+        display: none;
+    }
+    .adaptive_filter{
+        display: flex;
+        flex-direction: row;
+        h4{
+            color: white;
+            font-family: "Comfortaa", serif;
+            font-size: 40px;
+            margin-top: 50px;
+            margin-bottom: 40px;
+        }
+        img{
+            margin-left: 45vw;
+        }
+    }
+    .products_df{
+        align-items: center;
+        justify-content: center;
+    }
+    .adaptive{
+        margin-left: 5vw;
+    }
+    .side_filter{
+        background: #212529;
+        width: 100%;
+        height: 100vh;
+        left: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow-y: hidden;
+        .apply_filter{
+            background: #af3131;
+            color: white;
+            border: none;
+            font-size: 15px;
+            font-family: "Comfortaa", serif;
+            padding: 15px;
+            border-radius: 7px;
+            margin-top: 4vw;
+        }
+    }
 }
 </style>

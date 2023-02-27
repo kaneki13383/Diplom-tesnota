@@ -27,7 +27,7 @@
                         </div>                        
                     </div>
                     <button v-show="token" @click.prevent="addCart(product.id), countCart()">В корзину</button>
-                    <button v-show="token">Добавить к столику</button>
+                    <!-- <button v-show="token">Добавить к столику</button> -->
                 </div>
             </div>
         </div>

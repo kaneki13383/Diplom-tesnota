@@ -308,4 +308,20 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
     width: 90%;
     margin-left: 5%;
 }
+
+@media screen and (max-width: 1500px) {
+    .item{
+        flex-direction: column;
+        gap: 3vw;
+        text-align: center;
+    }
+}
+@media screen and (max-width: 616px) {
+    .bottom_div{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10vw;
+    }
+}
 </style>
