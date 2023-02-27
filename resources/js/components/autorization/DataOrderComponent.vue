@@ -30,7 +30,7 @@ export default {
         this.getId();
         this.getAdress();
         this.getNumber();
-        if (this.adress == 'NULL' || this.number == 'NULL'){
+        if (this.adress == 'NULL' && this.number == 'NULL' && addres == 'undefined' && number == 'undefined'){
             this.adress = ''
             this.number = ''
         }

@@ -33,7 +33,7 @@
             <div class="all_product">
                 <div v-for="product in menu" :key="product">
                     <div :id="product.type.type" class="card">
-                        <img :src="product.img" alt="">
+                        <img :src="product.images[0].img" alt="">
                         <p>{{ product.name }}</p>
                         <p>{{ product.type.type }}</p>
                         <p class="price">Цена: {{ product.price }} ₽</p>
@@ -85,18 +85,17 @@ export default {
             this.id_product = id
             axios.get(`/api/product/${id}`)
             .then(res => {
-                this.name = res.data['name']
-                this.price = res.data['price']
-                this.discription = res.data['discription']
-                this.type = res.data['type']
-                // this.file = res.data['file']
+                this.name = res.data.data[0]['name']
+                this.price = res.data.data[0]['price']
+                this.discription = res.data.data[0]['discription']
+                this.type = res.data.data[0]['type']
             })
         },
         saveEdit(){         
             let formData = new FormData();
-            formData.append("file", this.file);
             formData.append("id_product", this.id_product);
             formData.append("name", this.name);
+            formData.append("file", this.file);
             formData.append("price", this.price);
             formData.append("discription", this.discription);
             formData.append("type", this.type);
@@ -109,7 +108,6 @@ export default {
                     this.price = '' 
                     this.discription = '' 
                     this.type = '' 
-                    this.file = ''
                     this.show = false
                     this.allMenu()
                 })

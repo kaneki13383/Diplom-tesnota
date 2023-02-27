@@ -19,7 +19,7 @@ class CartResource extends JsonResource
         return [
             'id' => $this->id,
             'id_user' => User::find($this->id_user),
-            'id_product' => Menu::find($this->id_product),
+            'id_product' => MenuResource::collection(Menu::where('id',$this->id_product)->get()),
             'count' => $this->count
         ];
     }

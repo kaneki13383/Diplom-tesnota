@@ -45,7 +45,6 @@ class OrderController extends Controller
         $myorder = Order::select('id')->where('id_user',Auth::user()->id)->get()->last();
         
         for ($i=0; $i < count($mycart); $i++) {
-
             ProductsOrder::create([
                 'id_order' => $myorder->id,
                 'id_product' => $mycart[$i]['id_product'],

@@ -4,12 +4,16 @@
         <div>
             <div v-for="product in cart" :key="product">
                 <div class="item">
-                    <img :src="product.id_product.img" alt="">
-                    <p>{{ product.id_product.name }}</p>
+                    <carousel :items-to-show="1" class="img">
+                       <slide v-for="img in product.id_product[0].images" :key="img">
+                           <img class="img" :src="img.img" alt="">
+                       </slide>
+                    </carousel>
+                    <p>{{ product.id_product[0].name }}</p>
                     <p>Кол-во порций: {{ product.count }}</p>
-                    <p v-if="active_promo">Цена: {{ (product.id_product.price - (product.id_product.price * .15)) * product.count }} ₽</p>
-                    <p v-else>Цена: {{ product.id_product.price * product.count}} ₽</p>
-                    <div class="delete" @click.prevent="deleteProduct(product.id_product.id), countCart()">
+                    <p v-if="active_promo">Цена: {{ (product.id_product[0].price - (product.id_product[0].price * .15)) * product.count }} ₽</p>
+                    <p v-else>Цена: {{ product.id_product[0].price * product.count}} ₽</p>
+                    <div class="delete" @click.prevent="deleteProduct(product.id_product[0].id), countCart()">
                         <svg width="45" height="45" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="60" height="60" fill="url(#pattern0)"/>
                             <defs>
@@ -28,7 +32,7 @@
                 </div>
                 <div class="order" v-if="cart.length != 0">
                     <form>
-                        <button v-if="addres != 'NULL' && number != 'NULL'" @click.prevent="createOrder(), countCart()">Оформить заказ</button>
+                        <button v-if="addres != 'NULL' && number != 'NULL' && addres != 'undefined' && number != 'undefined'" @click.prevent="createOrder(), countCart()">Оформить заказ</button>
                         <button v-else @click.prevent="show = true">Оформить заказ</button>
                         <div class="warning" v-show="show == true">
                             <div class="close" @click="show = false">X</div>
@@ -50,7 +54,15 @@
 </template>
 
 <script>
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
     export default {
+        components: {
+            Carousel,
+            Slide,
+            Pagination,
+            Navigation,
+        },
         data() {
             return {
                 cart: [],
@@ -85,15 +97,15 @@
 
                         if(this.active_promo){
                             for (let index = 0; index < this.cart.length; index++) {
-                                this.summ += (this.cart[index].id_product.price - (this.cart[index].id_product.price * .15)) * this.cart[index].count
+                                this.summ += (this.cart[index].id_product[0].price - (this.cart[index].id_product[0].price * .15)) * this.cart[index].count
                             }  
                         }
                         else{
                             for (let index = 0; index < this.cart.length; index++) {
-                                this.summ += this.cart[index].id_product.price * this.cart[index].count
+                                this.summ += this.cart[index].id_product[0].price * this.cart[index].count
                             }
                         }
-                        
+                        console.log(this.cart);
                     })
             },
             getPromo(){
@@ -130,8 +142,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 7vw;
-    margin-top: 10vw;
+    /* margin-left: 7vw;
+    margin-top: 10vw; */
 }
 .warning p{
     font-family: "Roboto", serif;
@@ -183,7 +195,7 @@
 .item:first-child{
     margin-top: 100px;
 }
-.item img{
+.item .img{
     width: 200px;
     height: 150px;
     border-radius: 14px;

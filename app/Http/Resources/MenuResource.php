@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Image;
 use App\Models\Type;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +21,8 @@ class MenuResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'discription' => $this->discription,
-            'img' => $this->img,
             'type' => Type::find($this->type),
+            'images' => Image::where('id_menus',$this->id)->get(),
             'created_at' => $this->created_at,
         ];
     }

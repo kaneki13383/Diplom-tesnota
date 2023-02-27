@@ -25,4 +25,9 @@ class Menu extends Model
     {
         return $this->belongsTo(ProductsOrder::class, 'id');
     }
+
+    public function images()
+    {
+        return $this->belongsTo(Image::class, 'id');
+    }
 }

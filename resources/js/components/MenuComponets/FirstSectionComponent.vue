@@ -24,12 +24,12 @@
                     <div class="last_active">
                         <div class="active">
                             <div class="range-slider">
-                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number" :min="199" :max="5000"/> 
+                                <span @change="slider"><p> От </p><input v-model.number="minPrice" type="number" :min="80" :max="5000"/> 
                                     <p>До</p> 
-                                    <input  v-model.number="maxPrice" type="number"  :min="199" :max="5000"/>
+                                    <input  v-model.number="maxPrice" type="number"  :min="80" :max="5000"/>
                                 </span>
-                                <input @change="slider" v-model.number="minPrice" :min="199" :max="5000" step="1" type="range" />
-                                <input @change="slider" v-model.number="maxPrice" :min="199" :max="5000" step="1" type="range" />
+                                <input @change="slider" v-model.number="minPrice" :min="80" :max="5000" step="1" type="range" />
+                                <input @change="slider" v-model.number="maxPrice" :min="80" :max="5000" step="1" type="range" />
                                 <svg width="100%" height="24"></svg>
                             </div>
                         </div>
@@ -58,8 +58,8 @@
                 <div v-for="product in menu" :key="product" ref="element">
                     <router-link :to="{ path: '/product/'+product.id }"  v-if="(product.price >= minPrice && product.price <= maxPrice && sort_on == '') ||  sort_on.includes(product.type.type)">
                         <div class="card">
-                            <img :src="product.img" alt="">
-                            <p>{{ product.name }}</p>
+                            <img class="img" :src="product.images[0].img" alt="">
+                            <p class="name">{{ product.name }}</p>
                             <p class="price" v-if="active_promo">Цена: {{ product.price - (product.price * .15)}} ₽</p>
                             <p class="price" v-else>Цена: {{ product.price }} ₽</p>
                             <button v-if="token" @click.prevent="addCart(product.id), this.countCart(), accessMessage(product.name)">Купить</button>
@@ -81,7 +81,15 @@
 </template>
 
 <script>
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
     export default {
+        components: {
+            Carousel,
+            Slide,
+            Pagination,
+            Navigation,
+        },
         data(){
             return{
                 minPrice: 0,
@@ -94,7 +102,8 @@
                 active_promo: localStorage.getItem('active_promo'),
                 cart_coun: 0,
                 alert: false,
-                message: ''
+                message: '',
+                counter: 1
             }
         },
         mounted(){
@@ -136,6 +145,8 @@
                         this.minPrice = Math.min.apply(null, this.price);
                         this.maxPrice = Math.max.apply(null, this.price);
 
+                        console.log(this.menu);
+
                     })
             },
             AllTypes(){
@@ -145,7 +156,7 @@
                     })
             },
             addCart(id){
-                axios.post(`/api/cart/${id}`)
+                axios.post(`/api/cart/${id}`, {counter: this.counter})
             }
         }
     }
@@ -182,6 +193,7 @@
 .side_filter{
     position: fixed;
     left: 100px;
+    top: 25px;
 }
 .products_df{
     display: flex;
@@ -220,6 +232,9 @@ div:empty{
 .card p{
     font-size: 17px;
 }
+.card .name{
+    text-align: center;
+}
 .card .price{
     font-size: 25px;
 }
@@ -238,7 +253,7 @@ div:empty{
     color: #1d2023;
     font-weight: bold;
 }
-.card img{
+.card .img{
     width: 240px;
     height: 180px;
     border-radius: 5px;

@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('price');
-            $table->string('discription', 1000);
-            $table->unsignedBigInteger('type');
-            $table->foreign('type')->references('id')->on('types')->onDelete('cascade');
+            $table->unsignedBigInteger('id_menus');
+            $table->foreign('id_menus')->references('id')->on('menus')->onDelete('cascade'); 
+            $table->string('img');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('images');
     }
 };

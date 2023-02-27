@@ -26,7 +26,7 @@
                 <li v-show="token"><router-link to="/cart">Корзина <p class="cart_count" v-if="this.$store.state.user.cart_count != 0">{{ this.$store.state.user.cart_count }}</p></router-link></li>
                 <li><router-link to="/about">О нас</router-link></li>
                 <li>
-                    <input type="search" placeholder="Поиск" />
+                    <input type="search" placeholder="Поиск" v-model="search" />
                     <!-- <img
                         class="search"
                         src="img/search.png"
@@ -56,7 +56,8 @@ export default {
             token: "",
             name: "",
             width: window.innerWidth,
-            cart_count: 0
+            cart_count: 0,
+            search: ''
         };
     },
 
@@ -74,7 +75,6 @@ export default {
         this.getName();
         window.addEventListener("resize", function(){
             let width_window = this.innerWidth;
-            // console.log(width_window);
             if(width_window >= 768){
                 document.getElementById('navig').style.display = 'flex'
                 document.getElementById('navig').style.opacity = '1'
@@ -127,12 +127,13 @@ export default {
 <style lang="css" scoped>
 .cart_count{
     position: absolute;
-    top: 2%;
+    top: 3%;
     right: 54%;
     background: #af3131;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     border-radius: 100%;
+    font-size: 10px;
     display: flex;
     justify-content: center;
     align-items: center;

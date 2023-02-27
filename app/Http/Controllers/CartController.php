@@ -14,10 +14,10 @@ class CartController extends Controller
         return CartResource::collection(Cart::where('id_user',Auth::user()->id)->get());
     }
 
-    public function add($id)
+    public function add($id, Request $request)
     {
         $mycart = Cart::where('id_user',Auth::user()->id)->where('id_product',$id)->get()->first();
-        $count = 1;
+        $count = $request->input('counter');
 
         if(!$mycart){
             Cart::create([

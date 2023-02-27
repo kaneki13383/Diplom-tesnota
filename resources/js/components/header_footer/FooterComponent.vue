@@ -5,7 +5,7 @@
                 <li>Политика конфедициальности</li>
                 <li>Условия возврата</li>
                 <li>О компании</li>
-                <li class="adaptive"><img src="img/logo.png" alt="" /></li>
+                <li class="adaptive"><img src="../../../../public/img/logo.png" alt="" /></li>
                 <li>Соглашени на обработку данных</li>
                 <li>Партнеры</li>
                 <li>Условия сделки</li>

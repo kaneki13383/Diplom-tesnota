@@ -19,7 +19,7 @@
                             class="hl-line"
                         />
                     </svg>
-                    <span>Перейти к выбору</span>
+                    <router-link to="/catalog">Перейти к выбору</router-link>
                 </button>
             </a>
         </div>
@@ -103,7 +103,7 @@ h1 {
     stroke-dashoffset: -290;
 }
 
-.btn span {
+.btn a {
     color: white;
     font-size: 18px;
     font-weight: 100;

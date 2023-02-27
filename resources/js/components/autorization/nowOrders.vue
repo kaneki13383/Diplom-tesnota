@@ -8,8 +8,8 @@
                         <div v-for="product in order.products" :key="product">
                             <router-link :to="{path: '/product/' + product.id_product[0].id}">
                                 <div class="card">
-                                    <img :src="product.id_product[0].img" alt="">
-                                    <p>{{ product.id_product[0].name }}</p>
+                                    <img :src="product.id_product[0].images[0].img" alt="">
+                                    <p class="name">{{ product.id_product[0].name }}</p>
                                     <p class="price">Цена: {{ product.id_product[0].price }} ₽</p>
                                     <p>Кол-во порций: {{ product.count }}</p>
                                 </div>
@@ -44,6 +44,7 @@
                 axios.get('/api/orders')
                 .then(res => {
                     this.orders = res.data.data;
+                    console.log(this.orders);
                 })
             }
         },
@@ -92,6 +93,9 @@ div:empty{
 .card p{
     font-size: 17px;
     font-family: "Comfortaa", serif;
+}
+.card .name{
+    text-align: center;
 }
 .card .price{
     font-size: 25px;

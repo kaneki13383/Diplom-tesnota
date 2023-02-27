@@ -26,33 +26,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::group(['middleware' => 'auth:sanctum'], function(){
-//     Route::post('/load-avatar', '\App\Http\Controllers\LoadAvatarController');
-// });
+Route::group(['middleware' => 'auth:sanctum'], function(){
+    Route::post('/load-avatar', [LoadAvatarController::class, 'store']);
+    Route::post('/changeInfoUser', [UserOutputController::class, 'changeInfoUser']);
+    Route::post('/dataOrder', [UserOutputController::class, 'dataOrder']);
+    Route::post('/create_product', [MenuController::class, 'createProduct']);
+    Route::post('/edit_product', [MenuController::class, 'edit']);
+    Route::post('/cart/{id}', [CartController::class, 'add']);
+    Route::post('/cart_delete/{id}', [CartController::class, 'delete']);
+    Route::post('/add_review', [ReviewController::class, 'add']);
+    Route::post('/create_order', [OrderController::class, 'createOrder']);
+    Route::post('/order_status/{id}', [OrderController::class, 'editStatus']);
+    Route::post('/add_promo', [PromoController::class, 'add']);
+    Route::delete('/delete_promo/{id}', [PromoController::class, 'delete']);
+    Route::delete('/delete_product{id}', [MenuController::class, 'delete']);
+});
 
-Route::post('/load-avatar', [LoadAvatarController::class, 'store']);
-Route::post('/changeInfoUser', [UserOutputController::class, 'changeInfoUser']);
-Route::post('/dataOrder', [UserOutputController::class, 'dataOrder']);
 Route::get('/menu_all', [MenuController::class, 'allMenu']);
 Route::get('/type_all', [TypeController::class, 'all']);
-Route::post('/create_product', [MenuController::class, 'createProduct']);
-Route::delete('/delete_product{id}', [MenuController::class, 'delete']);
 Route::get('/product/{id}', [MenuController::class, 'find']);
-Route::post('/edit_product', [MenuController::class, 'edit']);
-
 Route::get('/cart/all', [CartController::class, 'all']);
-Route::post('/cart/{id}', [CartController::class, 'add']);
-Route::post('/cart_delete/{id}', [CartController::class, 'delete']);
-
 Route::get('/reviews', [ReviewController::class, 'all']);
-Route::post('/add_review', [ReviewController::class, 'add']);
-
-Route::post('/create_order', [OrderController::class, 'createOrder']);
 Route::get('/orders', [OrderController::class, 'all']);
 Route::get('/orders_end', [OrderController::class, 'allEndOrders']);
 Route::get('/orders_admin', [OrderController::class, 'allAdmin']);
-Route::post('/order_status/{id}', [OrderController::class, 'editStatus']);
-
 Route::get('/promo', [PromoController::class, 'all']);
-Route::post('/add_promo', [PromoController::class, 'add']);
-Route::delete('/delete_promo/{id}', [PromoController::class, 'delete']);

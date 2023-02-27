@@ -5,7 +5,7 @@
                 <h2>Заказ №{{ order.id }}</h2>
                 <div style="display: flex; flex-wrap: wrap; gap: 5vw; justify-content: center;">
                     <div class="card" v-for="product in order.products" :key="product">
-                        <img :src="product.id_product[0].img" alt="">
+                        <img :src="product.id_product[0].images[0].img" alt="">
                         <p>{{ product.id_product[0].name }}</p>
                         <p class="price">Цена: {{ product.id_product[0].price }} ₽</p>
                         <p>Кол-во порций: {{ product.count }}</p>

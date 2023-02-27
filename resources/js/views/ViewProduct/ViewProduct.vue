@@ -1,16 +1,31 @@
 <template>
     <div>
         <p class="pagination"><router-link to="/">Главная</router-link> / <router-link to="/catalog">Меню</router-link> / {{ this.product['name'] }}</p>
-        <div style="display: flex; flex-direction: row;">
-            <div style="width: 50%; display: flex; flex-direction: row; justify-content: space-around;">
-                <img class="img active" :src="this.product['img']" alt="">
+        <div style="display: flex; flex-direction: row; margin-left: 8vw;">
+            <div style="width: 50%;">
+                <carousel :items-to-show="1">
+                    <slide v-for="img in this.product.images" :key="img">
+                        <img class="active" :src="img.img" alt="">
+                    </slide>
+
+                    <template #addons>
+                        <navigation />
+                        <pagination />
+                    </template>
+                </carousel>
             </div>
-            <div style="width: 50%; color: white; font-family: 'Roboto', sans-serif;">
+            <div style="width: 50%; color: white; font-family: 'Roboto'; margin-left: 4vw;">
                 <h1>{{ this.product['name'] }}</h1>
-                <p class="price" v-if="active_promo">{{ this.product['price'] - (this.product['price'] * .15) }}  ₽ / за порцию</p>
-                <p class="price" v-else>{{ this.product['price'] }}  ₽ / за порцию</p>
+                <p class="price" v-if="active_promo">{{ this.product['price'] - (this.product['price'] * .15)  }}  ₽  / <span v-if="this.product['name'] == 'Пончики шоколадные'">шт</span><span v-else>порция</span></p>
+                <p class="price" v-else>{{ this.product['price'] }}  ₽ / <span v-if="this.product['name'] == 'Пончики шоколадные'">шт</span><span v-else>порция</span></p>
                 <div style="display: flex; flex-direction: column; width: 360px;">
-                    <button v-show="token"></button>
+                    <div v-show="token" class="count">
+                        <p>{{ counter }} / кол-во <span v-if="this.product['name'] == 'Пончики шоколадные'">шт</span><span v-else>порций</span></p>
+                        <div>
+                            <button @click="counter++">+</button>
+                            <button @click="Plus">-</button>
+                        </div>                        
+                    </div>
                     <button v-show="token" @click.prevent="addCart(product.id), countCart()">В корзину</button>
                     <button v-show="token">Добавить к столику</button>
                 </div>
@@ -24,13 +39,24 @@
 </template>
 
 <script>
+import StyleComponent from '../../components/StyleComponent.vue'
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
     export default {
+        components: {
+            Carousel,
+            Slide,
+            Pagination,
+            Navigation,
+            StyleComponent
+        },
         data() {
             return {
                 product: [],
                 id: null,
                 token: localStorage.getItem('x_xsrf_token'),
-                active_promo: localStorage.getItem('active_promo')
+                active_promo: localStorage.getItem('active_promo'),
+                counter: 1
             }
         },
         mounted() {
@@ -38,6 +64,14 @@
             this.getProduct()
         },
         methods: {
+            Plus(){
+                if(this.counter == 1){
+                    this.counter = 1
+                }
+                else{
+                    this.counter--
+                }
+            },
             countCart(){
                 this.cart_count = 0
                 axios.get('/api/cart/all')
@@ -51,26 +85,53 @@
             getProduct(){
                 axios.get(`/api/product/${this.id}`)
                     .then((res) => {
-                        this.product = res.data
+                        this.product = res.data.data[0]
                         document.title = this.product['name']
+                        console.log(this.product);
                     })
             },
             parseURL(){
                 let url = window.location.pathname
-                this.id = url.split('/')[2]
+                this.id = url.split('/')[2] 
             },
             addCart(id){
-                axios.post(`/api/cart/${id}`)
+                axios.post(`/api/cart/${id}`,{counter: this.counter})
             }
         },
     }
 </script>
 
 <style lang="css" scoped>
+.count{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    width: auto;
+    height: 4vw;
+    margin-top: 2vw;
+    background: #1D2023;
+    border: 2px solid #af3131;
+    border-radius: 7px;
+}
+.count p{
+    font-size: 20px;
+}
+.count div{
+    display: flex;
+    flex-direction: column;
+}
+.count button{
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+}
 .active{
-    width: 650px;
-    height: 485px;
+    width: 750px;
+    height: auto;
     border-radius: 15px;
+    margin-left: 1.5vw;
 }
 .pagination{
     color: #af3131;

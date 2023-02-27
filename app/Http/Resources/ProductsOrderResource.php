@@ -16,7 +16,7 @@ class ProductsOrderResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id_product' => Menu::where('id',$this->id_product)->get(),
+            'id_product' => MenuResource::collection(Menu::where('id',$this->id_product)->get()),
             'count' => $this->count
         ];
     }
