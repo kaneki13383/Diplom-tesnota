@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserOutputController extends Controller
 {
     public function all(){
-        return User::all();
+        return User::where('id', '!=', Auth::user()->id)->get();
     }
 
     public function changeInfoUser(Request $request)
@@ -35,6 +36,34 @@ class UserOutputController extends Controller
         DB::table('users')->where('id', $id)->update([
             'adress' => $adress,
             'number' => $number
+        ]);
+    }
+
+    public function ban($id)
+    {
+        User::where('id', $id)->update([
+            'role' => 3
+        ]);
+    }
+
+    public function unban($id)
+    {
+        User::where('id', $id)->update([
+            'role' => 0
+        ]);
+    }
+    
+    public function setadmin($id)
+    {
+        User::where('id', $id)->update([
+            'role' => 1
+        ]);
+    }
+
+    public function setmanager($id)
+    {
+        User::where('id', $id)->update([
+            'role' => 2
         ]);
     }
 }

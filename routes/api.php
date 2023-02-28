@@ -40,6 +40,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/add_promo', [PromoController::class, 'add']);
     Route::delete('/delete_promo/{id}', [PromoController::class, 'delete']);
     Route::delete('/delete_product{id}', [MenuController::class, 'delete']);
+    Route::post('/ban/{id}', [UserOutputController::class, 'ban']);
+    Route::post('/unban/{id}', [UserOutputController::class, 'unban']);
+    Route::post('/setadmin/{id}', [UserOutputController::class, 'setadmin']);
+    Route::post('/setmanager/{id}', [UserOutputController::class, 'setmanager']);
+    Route::get('/all_users', [UserOutputController::class, 'all']);
 });
 
 Route::get('/menu_all', [MenuController::class, 'allMenu']);

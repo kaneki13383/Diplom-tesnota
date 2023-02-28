@@ -1,4 +1,8 @@
 <template>
+    <div class="head">
+        <p>Админ панель / Заказы</p>
+        <h1>Заказы</h1>
+    </div>
     <div style="width: 90%; margin-left: 5%;">
         <div v-for="order in orders" :key="order">
             <div>
@@ -62,10 +66,29 @@
     }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 *{
     color: white;
 }
+.head{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 2vw;
+        font-size: 18px;
+        border-bottom: 2px solid #af3131;
+        padding-bottom: 35px;
+        p{
+            color: #af3131;
+            font-family: "Comfortaa", serif;
+        }
+        h1{
+            color: white;
+            font-family: "Comfortaa", serif;
+            margin-top: 25px;
+        }
+    }
 .card img{
     width: 240px;
     height: 180px;

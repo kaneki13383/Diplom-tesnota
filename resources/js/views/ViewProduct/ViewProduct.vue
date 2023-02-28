@@ -1,8 +1,8 @@
 <template>
     <div>
         <p class="pagination"><router-link to="/">Главная</router-link> / <router-link to="/catalog">Меню</router-link> / {{ this.product['name'] }}</p>
-        <div style="display: flex; flex-direction: row; margin-left: 8vw;">
-            <div style="width: 50%;">
+        <div class="adaptive">
+            <div class="w50">
                 <carousel :items-to-show="1">
                     <slide v-for="img in this.product.images" :key="img">
                         <img class="active" :src="img.img" alt="">
@@ -14,7 +14,7 @@
                     </template>
                 </carousel>
             </div>
-            <div style="width: 50%; color: white; font-family: 'Roboto'; margin-left: 4vw;">
+            <div class="adaptive_two">
                 <h1>{{ this.product['name'] }}</h1>
                 <p class="price" v-if="active_promo">{{ this.product['price'] - (this.product['price'] * .15)  }}  ₽  / <span v-if="this.product['name'] == 'Пончики шоколадные'">шт</span><span v-else>порция</span></p>
                 <p class="price" v-else>{{ this.product['price'] }}  ₽ / <span v-if="this.product['name'] == 'Пончики шоколадные'">шт</span><span v-else>порция</span></p>
@@ -102,6 +102,17 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 </script>
 
 <style lang="css" scoped>
+.adaptive{
+    display: flex; 
+    flex-direction: row; 
+    margin-left: 8vw;
+}
+.adaptive_two{
+    width: 50%; 
+    color: white; 
+    font-family: 'Roboto'; 
+    margin-left: 4vw;
+}
 .count{
     display: flex;
     flex-direction: row;
@@ -126,6 +137,9 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
     width: 30px;
     height: 30px;
     margin: 0px;
+}
+.w50{
+    width: 50%;
 }
 .active{
     width: 750px;
@@ -178,5 +192,47 @@ div .discription{
     font-size: 20px;
     text-align: center;
     margin-bottom: 100px;
+}
+@media screen and (max-width: 1600px) {
+    .adaptive{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+    .adaptive_two{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+@media screen and (max-width: 1460px) {
+    .w50{
+        width: 100%;
+    }
+    .adaptive_two{
+        width: 100%;
+    }
+    .count{
+        height: 65px;
+    }
+}
+@media screen and (max-width: 750px) {
+    .active{
+        width: 500px;
+    }
+    .adaptive_two h1{
+        text-align: center;
+    }
+}
+@media screen and (max-width: 507px) {
+    .active{
+        width: 375px;
+    }
+    .pagination{
+        margin-left: 0;
+        text-align: center;
+    }
 }
 </style>

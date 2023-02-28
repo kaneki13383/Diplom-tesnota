@@ -5,7 +5,7 @@
                 <div class="logo">
                     <img width="50" height="60" style="margin-top: 1vw;" src="img/logo_admin.svg" alt="">
                 </div>
-                <div class="item active">
+                <div class="item">
                     <svg width="50" height="50" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <rect width="70" height="70" fill="url(#pattern0)"/>
                     <defs>
@@ -16,19 +16,19 @@
                     </defs>
                     </svg>
                 </div>
-                <div class="item" @click="show = 'products'">
+                <div v-if="role == 1" class="item" @click="show = 'products'">
                     <img width="50" height="50" src="img/Plus.svg" alt="">
                 </div>
-                <div class="item">
+                <div v-if="role == 2" class="item" @click="show = 'users'">
                     <img width="50" height="50" src="img/Users.svg" alt="">
                 </div>
-                <div class="item">
+                <div v-if="role == 2" class="item">
                     <img width="50" height="50" src="img/Speech.svg" alt="">
                 </div>
-                <div class="item" @click="show = 'orders'">
+                <div v-if="role == 2" class="item" @click="show = 'orders'">
                     <img width="50" height="50" src="img/Purchase Order.svg" alt="">
                 </div>
-                <div class="item" @click="show = 'promo'">
+                <div v-if="role == 1" class="item" @click="show = 'promo'">
                     <img width="50" height="50" src="img/Document Writer.svg" alt="">
                 </div>
             </div>
@@ -42,30 +42,35 @@
             <Products v-if="show == 'products'" />
             <Orders v-if="show == 'orders'" />
             <Promo v-if="show == 'promo'" />
+            <Users v-if="show == 'users'" />
         </div>
-    </div>
-    
+    </div>    
 </template>
 
 <script>
 import Products from '../../components/AdminComponents/Products.vue';
 import Orders from '../../components/AdminComponents/Orders.vue';
 import Promo from '../../components/AdminComponents/Promo.vue';
+import Users from '../../components/AdminComponents/Users.vue';
 export default {
     components: {
         Products,
         Orders,
-        Promo
+        Promo,
+        Users
     },
     data() {
         return {
             role: localStorage.getItem('role'),
-            show: 'promo'
+            show: ''
         };
     },
     mounted() {
         document.title = "Админка";
-        if (this.role != 1) {
+        if (this.role == 1 || this.role == 2) {
+            this.$router.push("/admin")
+        }
+        else{
             this.$router.push("/")
         }
     },

@@ -86,10 +86,25 @@ export default {
                         localStorage.setItem("number", r.data["number"]);
                         localStorage.setItem("role", r.data["role"]);
                         if (r.data["role"] == 0) {
-                            this.$router.push("/dashboard");
-                        } else {
-                            this.$router.push("/admin");
-                        }
+                            this.$router.push("/dashboard")
+                        } else if(r.data["role"] == 1 || r.data["role"] == 2) {
+                            this.$router.push("/admin")
+                        } else (
+                            axios.post("/logout").then((res) => {
+                                localStorage.removeItem("x_xsrf_token");
+                                localStorage.removeItem("name");
+                                localStorage.removeItem("surname");
+                                localStorage.removeItem("email");
+                                localStorage.removeItem("id");
+                                localStorage.removeItem("avatar");
+                                localStorage.removeItem("adress");
+                                localStorage.removeItem("number");
+                                localStorage.removeItem("age");
+                                localStorage.removeItem("city");
+                                localStorage.removeItem("role");
+                                this.$router.push("/login")
+                            })
+                        )
                     })
                     .catch((err) => {
                         console.log(err.response);
