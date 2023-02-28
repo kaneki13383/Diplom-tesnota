@@ -19,7 +19,7 @@
                 <div v-if="role == 1" class="item" @click="show = 'products'">
                     <img width="50" height="50" src="img/Plus.svg" alt="">
                 </div>
-                <div v-if="role == 2" class="item" @click="show = 'users'">
+                <div v-if="role == 1" class="item" @click="show = 'users'">
                     <img width="50" height="50" src="img/Users.svg" alt="">
                 </div>
                 <div v-if="role == 2" class="item" @click="show = 'review'">
@@ -28,7 +28,7 @@
                 <div v-if="role == 2" class="item" @click="show = 'orders'">
                     <img width="50" height="50" src="img/Purchase Order.svg" alt="">
                 </div>
-                <div v-if="role == 1" class="item" @click="show = 'promo'">
+                <div v-if="role == 2" class="item" @click="show = 'promo'">
                     <img width="50" height="50" src="img/Document Writer.svg" alt="">
                 </div>
             </div>
