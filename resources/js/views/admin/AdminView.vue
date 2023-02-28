@@ -5,7 +5,7 @@
                 <div class="logo">
                     <img width="50" height="60" style="margin-top: 1vw;" src="img/logo_admin.svg" alt="">
                 </div>
-                <div class="item">
+                <div class="item" @click="show = 'home'">
                     <svg width="50" height="50" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <rect width="70" height="70" fill="url(#pattern0)"/>
                     <defs>
@@ -22,7 +22,7 @@
                 <div v-if="role == 2" class="item" @click="show = 'users'">
                     <img width="50" height="50" src="img/Users.svg" alt="">
                 </div>
-                <div v-if="role == 2" class="item">
+                <div v-if="role == 2" class="item" @click="show = 'review'">
                     <img width="50" height="50" src="img/Speech.svg" alt="">
                 </div>
                 <div v-if="role == 2" class="item" @click="show = 'orders'">
@@ -39,10 +39,12 @@
             </div>        
         </div>
         <div class="info">
+            <Home v-if="show == 'home'" />
             <Products v-if="show == 'products'" />
             <Orders v-if="show == 'orders'" />
             <Promo v-if="show == 'promo'" />
             <Users v-if="show == 'users'" />
+            <Reviews v-if="show == 'review'" />
         </div>
     </div>    
 </template>
@@ -52,17 +54,21 @@ import Products from '../../components/AdminComponents/Products.vue';
 import Orders from '../../components/AdminComponents/Orders.vue';
 import Promo from '../../components/AdminComponents/Promo.vue';
 import Users from '../../components/AdminComponents/Users.vue';
+import Reviews from '../../components/AdminComponents/Reviews.vue';
+import Home from '../../components/AdminComponents/Home.vue';
 export default {
     components: {
         Products,
         Orders,
         Promo,
-        Users
+        Users,
+        Reviews,
+        Home
     },
     data() {
         return {
             role: localStorage.getItem('role'),
-            show: ''
+            show: 'home'
         };
     },
     mounted() {

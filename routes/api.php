@@ -34,7 +34,6 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/edit_product', [MenuController::class, 'edit']);
     Route::post('/cart/{id}', [CartController::class, 'add']);
     Route::post('/cart_delete/{id}', [CartController::class, 'delete']);
-    Route::post('/add_review', [ReviewController::class, 'add']);
     Route::post('/create_order', [OrderController::class, 'createOrder']);
     Route::post('/order_status/{id}', [OrderController::class, 'editStatus']);
     Route::post('/add_promo', [PromoController::class, 'add']);
@@ -45,13 +44,14 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/setadmin/{id}', [UserOutputController::class, 'setadmin']);
     Route::post('/setmanager/{id}', [UserOutputController::class, 'setmanager']);
     Route::get('/all_users', [UserOutputController::class, 'all']);
+    Route::get('/reviews', [ReviewController::class, 'all']);
 });
 
+Route::post('/add_review', [ReviewController::class, 'add']);
 Route::get('/menu_all', [MenuController::class, 'allMenu']);
 Route::get('/type_all', [TypeController::class, 'all']);
 Route::get('/product/{id}', [MenuController::class, 'find']);
 Route::get('/cart/all', [CartController::class, 'all']);
-Route::get('/reviews', [ReviewController::class, 'all']);
 Route::get('/orders', [OrderController::class, 'all']);
 Route::get('/orders_end', [OrderController::class, 'allEndOrders']);
 Route::get('/orders_admin', [OrderController::class, 'allAdmin']);
