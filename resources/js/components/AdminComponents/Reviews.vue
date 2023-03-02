@@ -28,7 +28,6 @@ export default {
             axios.get('/api/reviews')
             .then(res => {
                 this.reviews = res.data
-                console.log(this.reviews);
             })
         }
     }

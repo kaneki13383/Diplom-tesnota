@@ -26,7 +26,7 @@
                             <button @click="Plus">-</button>
                         </div>                        
                     </div>
-                    <button v-show="token" @click.prevent="addCart(product.id), countCart()">В корзину</button>
+                    <button v-show="token" @click.prevent="addCart(product.id), countCart(), accessMessage(product.name)">В корзину</button>
                     <!-- <button v-show="token">Добавить к столику</button> -->
                 </div>
             </div>
@@ -34,6 +34,10 @@
         <div style="width: 90%; border-top: 2px solid #af3131; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center;  margin-top: 115px; margin-left: 5%;">
             <h2>Описание</h2>
             <p class="discription">{{ this.product['discription'] }}</p>
+        </div>
+        <div class="alert" v-show="alert == true">
+            <div @click="alert = false">X</div>
+            <p>{{ message }}</p>
         </div>
     </div>
 </template>
@@ -56,7 +60,8 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                 id: null,
                 token: localStorage.getItem('x_xsrf_token'),
                 active_promo: localStorage.getItem('active_promo'),
-                counter: 1
+                counter: 1,
+                alert: false
             }
         },
         mounted() {
@@ -64,6 +69,10 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
             this.getProduct()
         },
         methods: {
+            accessMessage(name){
+                this.alert = true
+                this.message = 'Товар '+name+' добавлен в корзину'
+            },
             Plus(){
                 if(this.counter == 1){
                     this.counter = 1
@@ -87,7 +96,6 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                     .then((res) => {
                         this.product = res.data.data[0]
                         document.title = this.product['name']
-                        console.log(this.product);
                     })
             },
             parseURL(){
@@ -101,7 +109,29 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
     }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.alert{
+    position: fixed;
+    color: white;
+    background: #1d2023;
+    border: 2px solid #AF3131;
+    top: 85vh;
+    left: 74%;
+    font-family: "Comfortaa", serif;
+    p{
+        padding: 2vw 1vw;
+    }
+    .link{
+        color: #af3131;
+    }
+    div{
+        float: right;
+        margin-top: 10px;
+        margin-right: 10px;
+        color: #AF3131;
+        cursor: pointer;
+    }
+}
 .adaptive{
     display: flex; 
     flex-direction: row; 

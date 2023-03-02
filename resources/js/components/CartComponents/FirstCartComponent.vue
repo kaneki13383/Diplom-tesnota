@@ -105,7 +105,6 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                                 this.summ += this.cart[index].id_product[0].price * this.cart[index].count
                             }
                         }
-                        console.log(this.cart);
                     })
             },
             getPromo(){

@@ -51,7 +51,6 @@
                 axios.get('/api/orders_admin')
                 .then(res => {
                     this.orders = res.data.data
-                    console.log(this.orders);
                 })
             },
             changeStatusOrder(id){

@@ -156,9 +156,6 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                         }
                         this.minPrice = Math.min.apply(null, this.price);
                         this.maxPrice = Math.max.apply(null, this.price);
-
-                        console.log(this.menu);
-
                     })
             },
             AllTypes(){

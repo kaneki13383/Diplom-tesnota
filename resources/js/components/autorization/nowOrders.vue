@@ -44,7 +44,6 @@
                 axios.get('/api/orders')
                 .then(res => {
                     this.orders = res.data.data;
-                    console.log(this.orders);
                 })
             }
         },
