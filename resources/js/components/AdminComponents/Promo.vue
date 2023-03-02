@@ -1,4 +1,8 @@
 <template>
+    <div class="head">
+        <p>Админ панель / Промокоды</p>
+        <h1>Промокоды</h1>
+    </div>
     <div style="width: 90%; margin-left: 5%; display: flex; justify-content: center; margin-top: 5vw; flex-direction: column;">
         <div>
             <form action="">
@@ -66,6 +70,25 @@
 </script>
 
 <style lang="scss" scoped>
+.head{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 2vw;
+        font-size: 18px;
+        border-bottom: 2px solid #af3131;
+        padding-bottom: 35px;
+        p{
+            color: #af3131;
+            font-family: "Comfortaa", serif;
+        }
+        h1{
+            color: white;
+            font-family: "Comfortaa", serif;
+            margin-top: 25px;
+        }
+    }
 .container {
     max-width: 1000px;
     margin-left: auto;

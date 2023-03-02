@@ -8,6 +8,9 @@
             <!-- <input type="password" placeholder="Пароль" /> -->
             <button @click.prevent="changeInfoUser">Сохранить</button>
         </form>
+        <div class="alert" v-if="show == true" @click="show = false">
+            <p>{{ msg }}</p>
+        </div>
     </div>
 </template>
 
@@ -21,6 +24,8 @@ export default {
             name: localStorage.getItem("name"),
             surname: localStorage.getItem("surname"),
             email: localStorage.getItem("email"),
+            show: false,
+            msg: ''
         };
     },
 
@@ -55,7 +60,13 @@ export default {
                     this.getName();
                     this.getSurame();
                     this.getEmail();
-                });
+                    this.msg = 'Данные успешно изменены!'
+                    this.show = true
+                })
+                .catch((err) => {
+                    this.msg = 'Ошибка, повторите попытку еще раз.'
+                    this.show = true
+                })
         },
 
         submitFile() {
@@ -105,6 +116,22 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.alert{
+    position: fixed;
+    top: 87vh;
+    left: 82%;
+    width: 300px;
+    height: 100px;
+    border: 2px solid #af3131;
+    background: #1d2023;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto", serif;
+    cursor: pointer;
+}
 .background {
     background: #202428;
     border: 3px #af3131 solid;

@@ -8,6 +8,9 @@
             <p class="warning" v-show="show == true">{{ messge }}</p>
             <button @click.prevent="dataOrder">Сохранить</button>
         </form>
+        <div class="alert" v-if="show2 == true" @click="show2 = false">
+            <p>{{ msg }}</p>
+        </div>
     </div>
 </template>
 
@@ -22,7 +25,9 @@ export default {
             active_promo: '',
             history_promo: localStorage.getItem('history_promo'),
             show: false,
-            messge: ''
+            show2: false,
+            messge: '',
+            msg: ''
         };
     },
 
@@ -30,10 +35,6 @@ export default {
         this.getId();
         this.getAdress();
         this.getNumber();
-        if (this.adress == 'NULL' && this.number == 'NULL' && addres == 'undefined' && number == 'undefined'){
-            this.adress = ''
-            this.number = ''
-        }
     },
 
     methods: {
@@ -75,6 +76,12 @@ export default {
                                 this.show = true
                             }
                         }
+                        this.msg = 'Данные успешно сохранены!'
+                        this.show2 = true
+                    })
+                    .cath(err => {
+                        this.msg = 'Ошибка, попробуйте еще раз.'
+                        this.show2 = true
                     })
                 });
         },
@@ -95,6 +102,22 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.alert{
+    position: fixed;
+    top: 87vh;
+    left: 82%;
+    width: 300px;
+    height: 100px;
+    border: 2px solid #af3131;
+    background: #1d2023;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto", serif;
+    cursor: pointer;
+}
 .warning{
     font-size: 20px;
     color: white;
