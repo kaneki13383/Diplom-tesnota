@@ -27,17 +27,35 @@
                         </div>                        
                     </div>
                     <button v-show="token" @click.prevent="addCart(product.id), countCart(), accessMessage(product.name)">В корзину</button>
-                    <!-- <button v-show="token">Добавить к столику</button> -->
                 </div>
             </div>
         </div>
         <div style="width: 90%; border-top: 2px solid #af3131; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center;  margin-top: 115px; margin-left: 5%;">
-            <h2>Описание</h2>
-            <p class="discription">{{ this.product['discription'] }}</p>
+            <div class="text"><p @click="comm = false">Описание</p> <p @click="comm = true, getComm()">Коментарии</p></div>
+            <p class="discription" v-if="comm == false">{{ this.product['discription'] }}</p>
+            <div v-if="comm == true" style="width: 80%;">
+                <div class="add_comm" v-if="token">
+                    <form action="">
+                        <textarea v-model="text_comm" name="" id="" cols="30" rows="10" placeholder="Оставьте коментарий о нашем продукте"></textarea>
+                        <button @click.prevent="addComm()">Отправить</button>
+                    </form>
+                </div>
+                <div class="comments" v-for="comment in comments" :key="comment">
+                    <div>
+                        <img :src="comment.id_user.avatar" alt="">
+                        <p>{{ comment.id_user.name }} {{ comment.id_user.surname }}</p>
+                    </div>
+                    
+                    <p>{{ comment.comment }}</p>
+                </div>
+            </div>
+            <div v-if="comm == true && comments.length == 0">
+                <p class="no_comm">Коментариев пока нет!</p>
+            </div>         
         </div>
         <div class="alert" v-show="alert == true">
             <div @click="alert = false">X</div>
-            <p>{{ message }}</p>
+            <p>{{ message }} </p>
         </div>
     </div>
 </template>
@@ -61,14 +79,34 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                 token: localStorage.getItem('x_xsrf_token'),
                 active_promo: localStorage.getItem('active_promo'),
                 counter: 1,
-                alert: false
+                alert: false,
+                message: '',
+                comm: false,
+                comments: [],
+                text_comm: ''
             }
         },
         mounted() {
             this.parseURL()
             this.getProduct()
+            this.getComm()
         },
         methods: {
+            addComm(){
+                axios.post('/api/add/comment', {id_product: this.id, comment: this.text_comm})
+                .then(res => {
+                    this.alert = true
+                    this.message = 'Коментарий успешно отправлен!'
+                    this.text_comm = ''
+                    this.getComm()
+                })
+            },
+            getComm(){
+                axios.post('/api/comments', {id_product: this.id})
+                .then(res => {
+                    this.comments = res.data.data
+                })
+            },
             accessMessage(name){
                 this.alert = true
                 this.message = 'Товар '+name+' добавлен в корзину'
@@ -110,6 +148,77 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 </script>
 
 <style lang="scss" scoped>
+.no_comm{
+    font-size: 2vw; 
+    font-family: 'Comfortaa', serif; 
+    margin-top: 4vw; 
+    margin-bottom: 4vw; 
+}
+.add_comm{
+    margin-bottom: 2vw;
+    form{
+        textarea{
+            width: 99%;
+            background: #1D2023;
+            border: 2px solid #af3131;
+            resize: none;
+            padding-left: 1%;
+            padding-top: 1%;
+            color: white;
+            font-size: 17px;
+            font-family: "Roboto", serif;
+            border-radius: 7px;
+        }
+        button{
+            width: 30%;
+        }
+    }
+}
+.comments{
+    display: flex;
+    flex-direction: column;
+    margin: 2vw;
+    margin-top: 0;
+    padding: 2vw;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 2px solid #af3131;
+    background: #1D2023;
+    border-radius: 7px;
+    width: auto;
+    div{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        p{
+            font-family: "Comfortaa", serif;
+            font-size: 20px;
+        }
+    }
+    img{
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        margin-top: 25px;
+    }
+    p{
+        font-size: 16px;
+        font-family: "Roboto", serif;
+        margin: 1vw;
+    }
+}
+.text{    
+    display: flex; 
+    justify-content: center; 
+    gap: 4vw;
+}
+.text p{
+    font-family: "Comfortaa", serif;
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    cursor: pointer;
+}
 .alert{
     position: fixed;
     color: white;
@@ -210,13 +319,7 @@ div button:hover{
     color: #1D2023;
     cursor: pointer;
     font-weight: bold;
-}
-div h2{
-    font-family: "Comfortaa", serif;
-    font-size: 30px;
-    margin-top: 30px;
-    margin-bottom: 60px;
-}
+} 
 div .discription{
     font-family: 'Roboto', sans-serif; 
     font-size: 20px;
@@ -242,11 +345,24 @@ div .discription{
         width: 100%;
     }
     .adaptive_two{
-        width: 100%;
+        width: 90%;
     }
     .count{
         height: 65px;
     }
+    .add_comm{
+        form{
+            button{
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) { 
+    .no_comm{
+        font-size: 20px;
+    }        
 }
 @media screen and (max-width: 750px) {
     .active{

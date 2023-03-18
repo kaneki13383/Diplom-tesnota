@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoadAvatarController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
@@ -45,6 +46,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/setmanager/{id}', [UserOutputController::class, 'setmanager']);
     Route::get('/all_users', [UserOutputController::class, 'all']);
     Route::get('/reviews', [ReviewController::class, 'all']);
+    Route::post('/add/comment', [CommentController::class, 'addcomm']);
+    Route::post('/delete/comment', [CommentController::class, 'delcomm']);
 });
 
 Route::post('/add_review', [ReviewController::class, 'add']);
@@ -56,3 +59,5 @@ Route::get('/orders', [OrderController::class, 'all']);
 Route::get('/orders_end', [OrderController::class, 'allEndOrders']);
 Route::get('/orders_admin', [OrderController::class, 'allAdmin']);
 Route::get('/promo', [PromoController::class, 'all']);
+Route::post('/comments', [CommentController::class, 'allcomm']);
+Route::get('/all/comments', [CommentController::class, 'all']);

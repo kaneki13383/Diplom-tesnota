@@ -30,4 +30,9 @@ class Menu extends Model
     {
         return $this->belongsTo(Image::class, 'id');
     }
+
+    public function comments()
+    {
+        return $this->belongsTo(Comment::class, 'id');
+    }
 }
