@@ -140,6 +140,9 @@
               </button>
             </div>
           </router-link>
+          <!-- <p v-else-if="sort_on.includes(product.type.type) != true">
+            {{ sort_on.includes(product.type.type) }}
+          </p> -->
         </div>
       </div>
     </div>
@@ -192,9 +195,7 @@ export default {
       this.mobile = true;
     }
   },
-  updated() {
-    console.log(this.maxPrice);
-  },
+  updated() {},
   methods: {
     accessMessage(name) {
       this.alert = true;
