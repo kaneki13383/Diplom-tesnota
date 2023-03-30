@@ -72,24 +72,6 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="sort_on != ''" class="d-f">
-                    <div>
-                        <div class="filter">
-                            <p>Вкл. фильтры</p>
-                        </div>
-                    </div>
-                    <div class="last_active">
-                        <div
-                            class="active"
-                            v-for="(active, index) in sort_on"
-                            :key="active"
-                            @click="sort_on.splice(index, 1)"
-                        >
-                            <p>{{ active }}</p>
-                            <p>X</p>
-                        </div>
-                    </div>
-                </div>
             </div>
             <button
                 class="apply_filter"
@@ -104,6 +86,19 @@
                 <router-link to="/"> Главная </router-link> / О нас
             </p>
             <h3>Меню</h3>
+            <div v-if="sort_on != ''" class="d-f-2">
+                <div class="last_active">
+                    <div
+                        class="active"
+                        v-for="(active, index) in sort_on"
+                        :key="active"
+                        @click="sort_on.splice(index, 1)"
+                    >
+                        <p>{{ active }}</p>
+                        <p>X</p>
+                    </div>
+                </div>
+            </div>
             <div class="adaptive_filter">
                 <h4>Меню</h4>
                 <img
@@ -279,6 +274,81 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.filter {
+    color: white;
+    font-family: "Comfortaa", serif;
+    font-size: 30px;
+    width: 270px;
+    height: 50px;
+    background: #212529;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.active {
+    color: white;
+    font-family: "Comfortaa", serif;
+    font-size: 30px;
+    width: 270px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #ad9562;
+    font-size: 18px;
+    border-bottom: 1px white solid;
+    cursor: pointer;
+}
+
+.d-f-2 .last_active {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.d-f-2 .last_active .active,
+.d-f-2 .last_active {
+    border: none;
+    border-radius: 11px;
+    height: 40px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.d-f-2 .last_active .active {
+    padding: 0 10px;
+}
+
+.d-f-2 .last_active p:last-child {
+    margin-left: 10px;
+}
+
+.d-f {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.d-f .d-f:nth-child(2) .last_active {
+    height: 117px;
+}
+
+.d-f .d-f:nth-child(2) .active {
+    height: 100%;
+}
+
+.gap {
+    gap: 10px;
+}
+
+.last_active :last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 .notFound {
     color: white;
     font-size: 30px;
