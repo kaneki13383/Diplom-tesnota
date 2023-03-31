@@ -108,6 +108,10 @@
                 />
             </div>
             <div class="products_df">
+                <div class="fulfilling-bouncing-circle-spinner" v-if="load == true">
+                    <div class="circle"></div>
+                    <div class="orbit"></div>
+                </div>
                 <div v-for="product in menu" :key="product" ref="element">
                     <router-link
                         :to="{ path: '/product/' + product.id }"
@@ -190,6 +194,7 @@ export default {
             show: false,
             mobile: false,
             notFound: false,
+            load: true
         };
     },
     mounted() {
@@ -259,6 +264,7 @@ export default {
                 this.minPrice = Math.min.apply(null, this.price);
                 this.maxPrice = Math.max.apply(null, this.price);
                 this.max = Math.max.apply(null, this.price);
+                this.load = false
             });
         },
         AllTypes() {
@@ -274,6 +280,114 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fulfilling-bouncing-circle-spinner, .fulfilling-bouncing-circle-spinner * {
+      box-sizing: border-box;
+    }
+
+    .fulfilling-bouncing-circle-spinner {
+      height: 60px;
+      width: 60px;
+      position: relative;
+      left: 30vw;
+      top: 15vh;
+      margin-bottom: 33.5vh;
+      animation: fulfilling-bouncing-circle-spinner-animation infinite 4000ms ease;
+    }
+
+    .fulfilling-bouncing-circle-spinner .orbit {
+      height: 60px;
+      width: 60px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      border: calc(60px * 0.03) solid #c22020;
+      animation: fulfilling-bouncing-circle-spinner-orbit-animation infinite 4000ms ease;
+    }
+
+    .fulfilling-bouncing-circle-spinner .circle {
+      height: 60px;
+      width: 60px;
+      color: #c22020;
+      display: block;
+      border-radius: 50%;
+      position: relative;
+      border: calc(60px * 0.1) solid #c22020;
+      animation: fulfilling-bouncing-circle-spinner-circle-animation infinite 4000ms ease;
+      transform: rotate(0deg) scale(1);
+    }
+
+    @keyframes fulfilling-bouncing-circle-spinner-animation {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fulfilling-bouncing-circle-spinner-orbit-animation {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1);
+      }
+      62.5% {
+        transform: scale(0.8);
+      }
+      75% {
+        transform: scale(1);
+      }
+      87.5% {
+        transform: scale(0.8);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fulfilling-bouncing-circle-spinner-circle-animation {
+      0% {
+        transform: scale(1);
+        border-color: transparent;
+        border-top-color: inherit;
+      }
+      16.7% {
+        border-color: transparent;
+        border-top-color: initial;
+        border-right-color: initial;
+      }
+      33.4% {
+        border-color: transparent;
+        border-top-color: inherit;
+        border-right-color: inherit;
+        border-bottom-color: inherit;
+      }
+      50% {
+        border-color: inherit;
+        transform: scale(1);
+      }
+      62.5% {
+        border-color: inherit;
+        transform: scale(1.4);
+      }
+      75% {
+        border-color: inherit;
+        transform: scale(1);
+        opacity: 1;
+      }
+      87.5% {
+        border-color: inherit;
+        transform: scale(1.4);
+      }
+      100% {
+        border-color: transparent;
+        border-top-color: inherit;
+        transform: scale(1);
+      }
+    }
 .filter {
     color: white;
     font-family: "Comfortaa", serif;
