@@ -201,6 +201,9 @@ export default {
     }
     this.noneMenu();
   },
+  updated() {
+    this.noneMenu();
+  },
   methods: {
     noneMenu() {
       for (let index = 0; index < this.menu.length; index++) {
