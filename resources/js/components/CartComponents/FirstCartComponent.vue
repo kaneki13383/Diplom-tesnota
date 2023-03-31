@@ -32,7 +32,7 @@
                 </div>
                 <div class="order" v-if="cart.length != 0">
                     <form>
-                        <button v-if="addres != 'NULL' && number != 'NULL' && addres != 'undefined' && number != 'undefined'" @click.prevent="createOrder(), countCart()">Оформить заказ</button>
+                        <button v-if="addres != 'NULL' && number != 'NULL' && addres != 'undefined' && number != 'undefined' && addres != '' && number != ''" @click.prevent="createOrder(), countCart()">Оформить заказ</button>
                         <button v-else @click.prevent="show = true">Оформить заказ</button>
                         <div class="warning" v-show="show == true">
                             <div class="close" @click="show = false">X</div>

@@ -174,17 +174,9 @@ export default {
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);
-                        localStorage.setItem("adress", '');
-                        localStorage.setItem("number", '');
+                        localStorage.setItem("adress", r.data["adress"]);
+                        localStorage.setItem("number", r.data["number"]);
                         this.$router.push("/dashboard");
-                    })
-                    .catch((errors) => {
-                        // console.log(errors);
-                        // if (errors.response.status === 422) {
-                            // console.log(errors.response.data.errors);
-                            // this.errors.title = error.response.data.errors.title
-                            // this.errors.description = error.response.data.errors.description
-                        // }
                     });
             });
         },
