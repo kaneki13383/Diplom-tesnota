@@ -150,7 +150,6 @@ export default {
 
     methods: {
         register() {
-            this.errors.name = ''
             axios.get("/sanctum/csrf-cookie").then((Response) => {
                 axios
                     .post("/register", {
@@ -175,8 +174,8 @@ export default {
                         localStorage.setItem("email", r.data["email"]);
                         localStorage.setItem("id", r.data["id"]);
                         localStorage.setItem("avatar", r.data["avatar"]);
-                        localStorage.setItem("adress", r.data["adress"]);
-                        localStorage.setItem("number", r.data["number"]);
+                        localStorage.setItem("adress", '');
+                        localStorage.setItem("number", '');
                         this.$router.push("/dashboard");
                     })
                     .catch((errors) => {
