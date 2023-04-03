@@ -12,7 +12,7 @@
 
     <router-view v-slot="{ Component, route }">
         <transition name="scale" mode="out-in">
-            <component :is="Component" :key="route.path"></component>
+            <component :is="Component" :key="route.path" />
         </transition>
 
         <transition name="scale1" mode="out-in">
@@ -76,25 +76,9 @@ export default {
     opacity: 0;
 }
 
-/* .scale1-enter-active,
-.scale1-leave-active {
-    transition: all 4s;
-} */
-
-/* .scale1-enter-from {
-    opacity: 1;
-} */
-
-/* .scale1-leave-to {
-    transition: all 0.5s;
-} */
-
 .bounce-enter-active {
     animation: bounce-in 4s;
 }
-/* .bounce-leave-active {
-    animation: bounce-in 4s;
-} */
 @keyframes bounce-in {
     0% {
         opacity: 1;
@@ -107,9 +91,6 @@ export default {
 .bounce2-enter-active {
     animation: bounce2-in 2s;
 }
-/* .bounce2-leave-active {
-    animation: bounce2-in 2s;
-} */
 @keyframes bounce2-in {
     0% {
         /* opacity: 1; */
@@ -131,7 +112,6 @@ export default {
     position: fixed;
     top: 0;
     left: -100%;
-    /* background: #212529; */
     height: 110vh;
     width: 100%;
     display: flex;
