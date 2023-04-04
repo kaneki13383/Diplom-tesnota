@@ -43,6 +43,7 @@
           </div>
           <div class="bottom_order">
             <p>Итого заказа: {{ order.order_price }} ₽</p>
+            <p>Оплата: Наличными</p>
             <p>Статус: {{ order.status }}</p>
           </div>
         </div>

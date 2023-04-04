@@ -254,6 +254,7 @@ div:empty {
 .card p {
   font-size: 17px;
   font-family: "Comfortaa", serif;
+  text-align: center;
 }
 .card .price {
   font-size: 25px;
