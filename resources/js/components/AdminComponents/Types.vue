@@ -34,7 +34,23 @@
           <div class="card">
             <p>{{ i.type }}</p>
             <div style="cursor: pointer" @click.prevent="deleteType(i.id)">
-              Delete
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 48 48"
+                width="40px"
+                height="40px"
+              >
+                <path
+                  fill="#F44336"
+                  d="M21.5 4.5H26.501V43.5H21.5z"
+                  transform="rotate(45.001 24 24)"
+                />
+                <path
+                  fill="#F44336"
+                  d="M21.5 4.5H26.5V43.501H21.5z"
+                  transform="rotate(135.008 24 24)"
+                />
+              </svg>
             </div>
           </div>
         </div>
@@ -326,7 +342,7 @@ option {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.4vw;
+  gap: 0.5vw;
   color: white;
 }
 .card p {
