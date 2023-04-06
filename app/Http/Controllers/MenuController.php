@@ -6,10 +6,12 @@ use App\Http\Resources\MenuResource;
 use App\Models\Image;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
-    public function allMenu(){
+    public function allMenu()
+    {
         return MenuResource::collection(Menu::inRandomOrder()->get());
     }
 
@@ -24,23 +26,25 @@ class MenuController extends Controller
 
         $menu = Menu::get()->last();
 
-        $fileName = $request->file->getClientOriginalName();
-        $request->file->move(public_path('menu'), $fileName);
+        $images = $request->file;
 
-        Image::create([
-            'id_menus' => $menu->id,
-            'img' => '../menu/'.$fileName
-        ]);
+        foreach ($images as $image) {
+            Image::create([
+                'id_menus' => $menu->id,
+                'img' => '../menu/' . $image->getClientOriginalName()
+            ]);
+        }
     }
-    
+
     public function delete($id)
     {
         Menu::where('id', $id)->delete();
+        Image::where('id_menus', $id)->delete();
     }
 
     public function find($id)
     {
-        return MenuResource::collection(Menu::where('id',$id)->get());
+        return MenuResource::collection(Menu::where('id', $id)->get());
     }
 
     public function edit(Request $request)
@@ -57,7 +61,7 @@ class MenuController extends Controller
 
         Image::create([
             'id_menus' => $request->input('id_product'),
-            'img' => '../menu/'.$fileName
+            'img' => '../menu/' . $fileName
         ]);
     }
 }
