@@ -6,13 +6,24 @@ use App\Http\Resources\MenuResource;
 use App\Models\Image;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
     public function allMenu()
     {
-        return MenuResource::collection(Menu::inRandomOrder()->get());
+        $pagination = DB::table('menus')->paginate(6);
+        $items = $pagination->items();
+        $products = [];
+        foreach ($items as $item) {
+            $products[] = Menu::find($item->id);
+        }
+        return response()->json([
+            'message' => 'Для Каталога',
+            'content' => $pagination,
+            'products' => MenuResource::collection($products)
+        ]);
     }
 
     public function createProduct(Request $request)

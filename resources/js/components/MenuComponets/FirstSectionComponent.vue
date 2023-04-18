@@ -144,7 +144,22 @@
           </router-link>
         </div>
       </div>
-      <p v-if="notFound == true" class="notFound">Ничего не найдено</p>
+      <div class="pagination-page">
+        <router-link
+          v-for="link in pagination.links"
+          :key="link"
+          :to="
+            link.url == null
+              ? {
+                  name: 'catalog',
+                  params: { page: pagination.current_page },
+                }
+              : { name: 'catalog', params: { page: link.url } }
+          "
+          v-html="link.label"
+        ></router-link>
+      </div>
+      <!-- <p v-if="notFound == true" class="notFound">Ничего не найдено</p> -->
     </div>
     <transition mode="out-in">
       <div class="alert" v-show="alert == true">
@@ -167,7 +182,6 @@ export default {
     Navigation,
     StyleComponent,
   },
-  setup() {},
   data() {
     return {
       minPrice: 0,
@@ -187,6 +201,8 @@ export default {
       mobile: false,
       notFound: false,
       load: true,
+      page: this.$route.params["page"],
+      pagination: {},
     };
   },
   mounted() {
@@ -200,6 +216,13 @@ export default {
       this.mobile = true;
     }
     this.noneMenu();
+  },
+  watch: {
+    $route() {
+      this.page = this.$route.params.page;
+      this.loading = true;
+      this.allMenu();
+    },
   },
   updated() {
     this.noneMenu();
@@ -247,18 +270,48 @@ export default {
       }
     },
     allMenu() {
-      axios.get("/api/menu_all").then((res) => {
-        this.menu = res.data.data;
-
-        for (let index = 0; index < this.menu.length; index++) {
-          this.price.push(this.menu[index]["price"]);
-        }
-        this.minPrice = Math.min.apply(null, this.price);
-        this.maxPrice = Math.max.apply(null, this.price);
-        this.max = Math.max.apply(null, this.price);
-        this.load = false;
-      });
+      axios
+        .get(`/api/catalog?page=${this.page}`)
+        .then((response) => {
+          // console.log(response.data);
+          this.menu = response.data.products;
+          this.pagination = this.changeUrl(response.data.content);
+        })
+        .finally(() => {
+          this.loading = false;
+          for (let index = 0; index < this.menu.length; index++) {
+            this.price.push(this.menu[index]["price"]);
+          }
+          this.minPrice = Math.min.apply(null, this.price);
+          this.maxPrice = Math.max.apply(null, this.price);
+          this.max = Math.max.apply(null, this.price);
+          this.load = false;
+        });
     },
+    changeUrl(arr) {
+      arr.links.forEach((link) => {
+        link.url = this.parseUrl(link);
+      });
+      return arr;
+    },
+    parseUrl(link) {
+      if (link.url != null) {
+        let url = new URL(link.url);
+        return url.searchParams.get("page");
+      }
+      return this.page;
+    },
+    // axios.get("/api/menu_all").then((res) => {
+    //   this.menu = res.data.data;
+
+    // for (let index = 0; index < this.menu.length; index++) {
+    //   this.price.push(this.menu[index]["price"]);
+    // }
+    // this.minPrice = Math.min.apply(null, this.price);
+    // this.maxPrice = Math.max.apply(null, this.price);
+    // this.max = Math.max.apply(null, this.price);
+    // this.load = false;
+    // });
     AllTypes() {
       axios.get("/api/type_all").then((res) => {
         this.types = res.data;
@@ -272,6 +325,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pagination-page {
+  width: 330px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+.pagination-page a:first-child,
+.pagination-page a:last-child {
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  color: #af3131;
+}
+.pagination-page a:not(:first-child, :last-child) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #af3131;
+  border-radius: 8px;
+  background: transparent;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  color: #af3131;
+}
+.pagination-page a:not(:first-child, :last-child).router-link-active {
+  background: #af3131;
+  border: 1px solid #6b1f1f;
+  color: #000;
+}
 .fulfilling-bouncing-circle-spinner,
 .fulfilling-bouncing-circle-spinner * {
   box-sizing: border-box;
