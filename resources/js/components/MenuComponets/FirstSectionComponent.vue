@@ -215,7 +215,8 @@ export default {
       this.show = false;
       this.mobile = true;
     }
-    this.noneMenu();
+    // this.noneMenu();
+    // console.log();
   },
   watch: {
     $route() {
@@ -225,7 +226,7 @@ export default {
     },
   },
   updated() {
-    this.noneMenu();
+    // this.noneMenu();
   },
   methods: {
     noneMenu() {
@@ -289,7 +290,104 @@ export default {
         });
     },
     changeUrl(arr) {
-      arr.links.forEach((link) => {
+      let num_arr = arr.links.length - 1;
+      let svg_left = `<svg fill="#af3131" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="30px" height="30px" viewBox="0 0 314.069 314.069" style="enable-background:new 0 0 314.069 314.069;"
+	 xml:space="preserve">
+<g>
+	<g id="_x34_97._Back">
+		<g>
+			<path d="M293.004,78.525C249.648,3.436,153.62-22.295,78.531,21.061C3.436,64.411-22.296,160.443,21.068,235.542
+				c43.35,75.087,139.375,100.822,214.465,57.467C310.629,249.648,336.365,153.621,293.004,78.525z M219.836,265.802
+				c-60.075,34.685-136.894,14.114-171.576-45.969C13.57,159.762,34.155,82.936,94.232,48.253
+				c60.071-34.683,136.894-14.099,171.578,45.979C300.495,154.308,279.908,231.118,219.836,265.802z M187.645,101.528
+				c-6.136-6.133-16.078-6.133-22.205,0l-44.406,44.4c-6.129,6.131-6.129,16.078,0,22.213l44.406,44.402
+				c6.127,6.128,16.069,6.128,22.205,0c6.132-6.131,6.123-16.077,0-22.201l-33.308-33.302l33.308-33.315
+				C193.777,117.587,193.785,107.649,187.645,101.528z"/>
+		</g>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>`;
+      let svg_right = `<svg fill="#af3131" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="30px" height="30px" viewBox="0 0 314.069 314.069" style="enable-background:new 0 0 314.069 314.069;"
+	 xml:space="preserve">
+<g>
+	<g id="_x34_97._Back">
+		<g>
+			<path d="M293.004,78.525C249.648,3.436,153.62-22.295,78.531,21.061C3.436,64.411-22.296,160.443,21.068,235.542
+				c43.35,75.087,139.375,100.822,214.465,57.467C310.629,249.648,336.365,153.621,293.004,78.525z M219.836,265.802
+				c-60.075,34.685-136.894,14.114-171.576-45.969C13.57,159.762,34.155,82.936,94.232,48.253
+				c60.071-34.683,136.894-14.099,171.578,45.979C300.495,154.308,279.908,231.118,219.836,265.802z M187.645,101.528
+				c-6.136-6.133-16.078-6.133-22.205,0l-44.406,44.4c-6.129,6.131-6.129,16.078,0,22.213l44.406,44.402
+				c6.127,6.128,16.069,6.128,22.205,0c6.132-6.131,6.123-16.077,0-22.201l-33.308-33.302l33.308-33.315
+				C193.777,117.587,193.785,107.649,187.645,101.528z"/>
+		</g>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>`;
+      arr.links[num_arr].label = svg_right;
+      arr.links[0].label = svg_left;
+      arr.links.forEach((link, index) => {
         link.url = this.parseUrl(link);
       });
       return arr;
@@ -301,17 +399,6 @@ export default {
       }
       return this.page;
     },
-    // axios.get("/api/menu_all").then((res) => {
-    //   this.menu = res.data.data;
-
-    // for (let index = 0; index < this.menu.length; index++) {
-    //   this.price.push(this.menu[index]["price"]);
-    // }
-    // this.minPrice = Math.min.apply(null, this.price);
-    // this.maxPrice = Math.max.apply(null, this.price);
-    // this.max = Math.max.apply(null, this.price);
-    // this.load = false;
-    // });
     AllTypes() {
       axios.get("/api/type_all").then((res) => {
         this.types = res.data;
@@ -334,13 +421,8 @@ export default {
   margin: 0 auto;
   margin-bottom: 50px;
 }
-.pagination-page a:first-child,
 .pagination-page a:last-child {
-  font-family: "Comfortaa";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  color: #af3131;
+  rotate: 180deg;
 }
 .pagination-page a:not(:first-child, :last-child) {
   display: flex;
