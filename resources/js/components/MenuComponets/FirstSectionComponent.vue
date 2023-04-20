@@ -105,23 +105,13 @@
           alt=""
         />
       </div>
-      <div class="products_df">
+      <div class="products_df" v-if="sort_on == ''">
         <div class="fulfilling-bouncing-circle-spinner" v-if="load == true">
           <div class="circle"></div>
           <div class="orbit"></div>
         </div>
-        <div v-for="product in menu" :key="product" ref="element">
-          <router-link
-            :to="{ path: '/product/' + product.id }"
-            v-if="
-              (product.price >= minPrice &&
-                product.price <= maxPrice &&
-                sort_on == '') ||
-              (product.price >= minPrice &&
-                product.price <= maxPrice &&
-                sort_on.includes(product.type.type))
-            "
-          >
+        <div v-for="product in menu" :key="product">
+          <router-link :to="{ path: '/product/' + product.id }">
             <div class="card">
               <img class="img" :src="product.images[0].img" alt="" />
               <p class="name">{{ product.name }}</p>
@@ -144,7 +134,7 @@
           </router-link>
         </div>
       </div>
-      <div class="pagination-page">
+      <div class="pagination-page" v-if="sort_on == ''">
         <router-link
           v-for="link in pagination.links"
           :key="link"
@@ -158,6 +148,32 @@
           "
           v-html="link.label"
         ></router-link>
+      </div>
+
+      <div class="products_df" v-if="sort_on != ''">
+        <div v-for="product in filteredList" :key="product">
+          <router-link :to="{ path: '/product/' + product.id }">
+            <div class="card">
+              <img class="img" :src="product.images[0].img" alt="" />
+              <p class="name">{{ product.name }}</p>
+              <p class="price" v-if="active_promo">
+                Цена:
+                {{ product.price - product.price * 0.15 }} ₽
+              </p>
+              <p class="price" v-else>Цена: {{ product.price }} ₽</p>
+              <button
+                v-if="token"
+                @click.prevent="
+                  addCart(product.id),
+                    this.countCart(),
+                    accessMessage(product.name)
+                "
+              >
+                Купить
+              </button>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
     <transition mode="out-in">
@@ -187,6 +203,7 @@ export default {
       maxPrice: 0,
       max: 0,
       menu: [],
+      all_menu: [],
       price: [],
       token: localStorage.getItem("x_xsrf_token"),
       types: [],
@@ -206,6 +223,7 @@ export default {
   },
   mounted() {
     this.allMenu();
+    this.allMenu2();
     this.AllTypes();
     if (window.innerWidth > 1600) {
       this.show = true;
@@ -216,6 +234,23 @@ export default {
     }
     // this.noneMenu();
     // console.log();
+  },
+  computed: {
+    filteredList() {
+      let sort = this.sort_on;
+      let min = this.minPrice;
+      let max = this.maxPrice;
+      return this.all_menu.filter(function (elem) {
+        if (sort === "") return false;
+        else if (sort != "") {
+          return (
+            sort.includes(elem.type.type) &&
+            elem.price >= min &&
+            elem.price <= max
+          );
+        }
+      });
+    },
   },
   watch: {
     $route() {
@@ -269,12 +304,18 @@ export default {
         this.minPrice = tmp;
       }
     },
+    allMenu2() {
+      axios.get("/api/admin/catalog").then((res) => {
+        this.all_menu = res.data.data;
+      });
+    },
     allMenu() {
       axios
         .get(`/api/catalog?page=${this.page}`)
         .then((response) => {
           // console.log(response.data);
           this.menu = response.data.products;
+          // console.log(this.menu);
           this.pagination = this.changeUrl(response.data.content);
         })
         .finally(() => {
