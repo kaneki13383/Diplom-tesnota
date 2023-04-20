@@ -134,23 +134,8 @@
           </router-link>
         </div>
       </div>
-      <div class="pagination-page" v-if="sort_on == ''">
-        <router-link
-          v-for="link in pagination.links"
-          :key="link"
-          :to="
-            link.url == null
-              ? {
-                  name: 'catalog',
-                  params: { page: pagination.current_page },
-                }
-              : { name: 'catalog', params: { page: link.url } }
-          "
-          v-html="link.label"
-        ></router-link>
-      </div>
 
-      <div class="products_df" v-if="sort_on != ''">
+      <div class="products_df love">
         <div v-for="product in filteredList" :key="product">
           <router-link :to="{ path: '/product/' + product.id }">
             <div class="card">
@@ -174,6 +159,21 @@
             </div>
           </router-link>
         </div>
+      </div>
+      <div class="pagination-page" v-if="sort_on == ''">
+        <router-link
+          v-for="link in pagination.links"
+          :key="link"
+          :to="
+            link.url == null
+              ? {
+                  name: 'catalog',
+                  params: { page: pagination.current_page },
+                }
+              : { name: 'catalog', params: { page: link.url } }
+          "
+          v-html="link.label"
+        ></router-link>
       </div>
     </div>
     <transition mode="out-in">
@@ -232,8 +232,9 @@ export default {
       this.show = false;
       this.mobile = true;
     }
-    // this.noneMenu();
-    // console.log();
+    // if () {
+
+    // }
   },
   computed: {
     filteredList() {
@@ -241,13 +242,22 @@ export default {
       let min = this.minPrice;
       let max = this.maxPrice;
       return this.all_menu.filter(function (elem) {
-        if (sort === "") return false;
-        else if (sort != "") {
+        if (sort == "") {
+          return false;
+        } else if (sort != "") {
+          // if (
+          //   sort.includes(elem.type.type) &&
+          //   elem.price >= min &&
+          //   elem.price <= max == false
+          // ) {
+          //   return console.log(document.querySelector(".love > div"));
+          // }
           return (
             sort.includes(elem.type.type) &&
             elem.price >= min &&
             elem.price <= max
           );
+          // return console.log(document.querySelector(".love > div"));
         }
       });
     },
@@ -260,6 +270,8 @@ export default {
     },
   },
   updated() {
+    console.log();
+    // document.querySelector(".love > div")
     // this.noneMenu();
   },
   methods: {
@@ -307,6 +319,14 @@ export default {
     allMenu2() {
       axios.get("/api/admin/catalog").then((res) => {
         this.all_menu = res.data.data;
+        // console.log(this.all_menu);
+
+        for (let index = 0; index < this.all_menu.length; index++) {
+          this.price.push(this.all_menu[index]["price"]);
+        }
+        this.minPrice = Math.min.apply(null, this.price);
+        this.maxPrice = Math.max.apply(null, this.price);
+        this.max = Math.max.apply(null, this.price);
       });
     },
     allMenu() {
@@ -320,12 +340,6 @@ export default {
         })
         .finally(() => {
           this.loading = false;
-          for (let index = 0; index < this.menu.length; index++) {
-            this.price.push(this.menu[index]["price"]);
-          }
-          this.minPrice = Math.min.apply(null, this.price);
-          this.maxPrice = Math.max.apply(null, this.price);
-          this.max = Math.max.apply(null, this.price);
           this.load = false;
         });
     },
@@ -744,9 +758,6 @@ a {
 }
 .card:hover {
   box-shadow: 8px 7px 20px #af3131;
-}
-div:empty {
-  display: none;
 }
 .card p {
   font-size: 17px;
