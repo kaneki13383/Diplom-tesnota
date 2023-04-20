@@ -159,7 +159,6 @@
           v-html="link.label"
         ></router-link>
       </div>
-      <!-- <p v-if="notFound == true" class="notFound">Ничего не найдено</p> -->
     </div>
     <transition mode="out-in">
       <div class="alert" v-show="alert == true">
@@ -417,6 +416,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   margin: 0 auto;
   margin-bottom: 50px;

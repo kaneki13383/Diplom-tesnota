@@ -49,6 +49,7 @@ class MenuController extends Controller
                 'id_menus' => $menu->id,
                 'img' => '../menu/' . $image->getClientOriginalName()
             ]);
+            $image->move(public_path('menu'), $image->getClientOriginalName());
         }
     }
 
@@ -72,12 +73,14 @@ class MenuController extends Controller
             'type' => $request->input('type')
         ]);
 
-        $fileName = $request->file->getClientOriginalName();
-        $request->file->move(public_path('menu'), $fileName);
+        $images = $request->file;
 
-        Image::create([
-            'id_menus' => $request->input('id_product'),
-            'img' => '../menu/' . $fileName
-        ]);
+        foreach ($images as $image) {
+            Image::create([
+                'id_menus' => $request->input('id_product'),
+                'img' => '../menu/' . $image->getClientOriginalName()
+            ]);
+            $image->move(public_path('menu'), $image->getClientOriginalName());
+        }
     }
 }

@@ -22,7 +22,7 @@
           </router-link>
         </li>
         <li><router-link to="/">Главная</router-link></li>
-        <li><router-link to="/catalog">Меню</router-link></li>
+        <li><router-link to="/catalog/1">Меню</router-link></li>
         <li v-show="token">
           <router-link to="/cart"
             >Корзина
