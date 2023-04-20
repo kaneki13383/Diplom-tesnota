@@ -232,9 +232,6 @@ export default {
       this.show = false;
       this.mobile = true;
     }
-    // if () {
-
-    // }
   },
   computed: {
     filteredList() {
@@ -327,6 +324,10 @@ export default {
         this.minPrice = Math.min.apply(null, this.price);
         this.maxPrice = Math.max.apply(null, this.price);
         this.max = Math.max.apply(null, this.price);
+
+        // let arr_leght = this.all_menu.length - 1;
+
+        // console.log(this.all_menu.length - arr_leght);
       });
     },
     allMenu() {

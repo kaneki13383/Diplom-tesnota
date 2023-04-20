@@ -21,16 +21,37 @@
     </p>
     <div class="adaptive">
       <div class="w50">
-        <carousel :items-to-show="1">
-          <slide v-for="img in this.product.images" :key="img">
-            <img class="active" :src="img.img" alt="" />
-          </slide>
+        <Carousel
+          id="gallery"
+          :items-to-show="1"
+          :wrap-around="false"
+          v-model="currentSlide"
+        >
+          <Slide v-for="slide in this.product.images" :key="slide">
+            <div class="carousel__item">
+              <img class="active" :src="slide.img" alt="No Ethernet" />
+            </div>
+          </Slide>
+        </Carousel>
 
-          <template #addons>
-            <navigation />
-            <pagination />
-          </template>
-        </carousel>
+        <Carousel
+          id="thumbnails"
+          :items-to-show="4"
+          :wrap-around="true"
+          v-model="currentSlide"
+          ref="carousel"
+        >
+          <Slide v-for="(slide, index) in this.product.images" :key="slide">
+            <div class="carousel__item" @click="slideTo(index)">
+              <img
+                width="150"
+                class="active_two"
+                :src="slide.img"
+                alt="No Ethernet"
+              />
+            </div>
+          </Slide>
+        </Carousel>
       </div>
       <div class="adaptive_two">
         <h1>{{ this.product["name"] }}</h1>
@@ -151,6 +172,7 @@ export default {
   },
   data() {
     return {
+      currentSlide: 0,
       product: [],
       id: null,
       token: localStorage.getItem("x_xsrf_token"),
@@ -171,6 +193,9 @@ export default {
     this.getComm();
   },
   methods: {
+    slideTo(val) {
+      this.currentSlide = val;
+    },
     addComm() {
       axios
         .post("/api/add/comment", {
@@ -229,6 +254,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.active_two {
+  width: 150px;
+  border-radius: 7px;
+}
 .fulfilling-bouncing-circle-spinner,
 .fulfilling-bouncing-circle-spinner * {
   box-sizing: border-box;
@@ -533,6 +562,9 @@ div .discription {
 @media screen and (max-width: 1460px) {
   .w50 {
     width: 100%;
+  }
+  .active_two {
+    width: 20vw;
   }
   .adaptive_two {
     width: 90%;
