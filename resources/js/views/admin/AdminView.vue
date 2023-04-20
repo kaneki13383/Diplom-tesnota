@@ -245,7 +245,7 @@ export default {
   data() {
     return {
       role: localStorage.getItem("role"),
-      show: "products",
+      show: "home",
     };
   },
   mounted() {

@@ -48,6 +48,22 @@
       <div class="h2_tovar">
         <h2>Товары</h2>
       </div>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 5vh;
+        "
+      >
+        <input
+          type="search"
+          class="search"
+          placeholder="Введите название товара"
+          v-model="name2"
+        />
+      </div>
+
       <div class="all_product">
         <div
           style="
@@ -65,7 +81,7 @@
             <div class="orbit"></div>
           </div>
         </div>
-        <div v-else v-for="product in menu" :key="product">
+        <div v-else v-for="product in filteredList" :key="product">
           <div :id="product.type.type" class="card">
             <img :src="product.images[0].img" alt="No ethernet" />
             <p>{{ product.name }}</p>
@@ -128,11 +144,24 @@ export default {
       id_product: 0,
       load: true,
       res: "",
+      name2: "",
     };
   },
   mounted() {
     this.AllTypes();
     this.allMenu();
+  },
+  computed: {
+    filteredList: function () {
+      let sear = this.name2;
+      return this.menu.filter(function (elem) {
+        if (sear === "") {
+          return true;
+        } else {
+          return elem.name.indexOf(sear) > -1;
+        }
+      });
+    },
   },
   methods: {
     AllTypes() {
@@ -216,6 +245,16 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.search {
+  background: transparent;
+  border: 2px #af3131 solid;
+  height: 50px;
+  width: 310px;
+  border-radius: 15px;
+  font-family: "Comfortaa", serif;
+  font-size: 15px;
+  padding-left: 5px;
+}
 svg {
   cursor: pointer;
 }
