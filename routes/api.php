@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::post('/add_review', [ReviewController::class, 'add']);
 Route::get('/catalog', [MenuController::class, 'allMenu']);
+Route::get('/admin/catalog', [MenuController::class, 'allAdminMenu']);
 Route::get('/type_all', [TypeController::class, 'all']);
 Route::get('/product/{id}', [MenuController::class, 'find']);
 Route::get('/cart/all', [CartController::class, 'all']);

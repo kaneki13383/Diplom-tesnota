@@ -5,14 +5,30 @@
       <h1>Добавить новый товар</h1>
       <form>
         <label for="file">Выберите фото товара</label>
-        <input multiple type="file" id="file" ref="file" required v-on:change="handleFileUpload()" />
+        <input
+          multiple
+          type="file"
+          id="file"
+          ref="file"
+          required
+          v-on:change="handleFileUpload()"
+        />
         <!-- <p class="file_name" v-show="file.name">{{ file.name }}</p> -->
 
-        <input type="text" v-model="name" placeholder="Введите название товара" />
+        <input
+          type="text"
+          v-model="name"
+          placeholder="Введите название товара"
+        />
 
         <input type="text" v-model="price" placeholder="Введите цену товара" />
 
-        <textarea placeholder="Введите описание товара" v-model="discription" cols="30" rows="10"></textarea>
+        <textarea
+          placeholder="Введите описание товара"
+          v-model="discription"
+          cols="30"
+          rows="10"
+        ></textarea>
 
         <select v-model="type" name="Выберите тип">
           <option v-for="typ in types" :key="typ" :value="typ.id">
@@ -33,14 +49,17 @@
         <h2>Товары</h2>
       </div>
       <div class="all_product">
-        <div style="
-                      display: flex;
-                      flex-direction: column;
-                      justify-content: center;
-                      align-items: center;
-                      height: 65vh;
-                      width: 100%;
-                    " v-if="load == true">
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 65vh;
+            width: 100%;
+          "
+          v-if="load == true"
+        >
           <div class="fulfilling-bouncing-circle-spinner">
             <div class="circle"></div>
             <div class="orbit"></div>
@@ -54,17 +73,36 @@
             <p class="price">Цена: {{ product.price }} ₽</p>
             <div style="display: flex; gap: 40px">
               <p @click.prevent="deleteProduct(product.id)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="40px" height="40px">
-                  <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" />
-                  <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 48 48"
+                  width="40px"
+                  height="40px"
+                >
+                  <path
+                    fill="#F44336"
+                    d="M21.5 4.5H26.501V43.5H21.5z"
+                    transform="rotate(45.001 24 24)"
+                  />
+                  <path
+                    fill="#F44336"
+                    d="M21.5 4.5H26.5V43.501H21.5z"
+                    transform="rotate(135.008 24 24)"
+                  />
                 </svg>
               </p>
               <p @click.prevent="editProduct(product.id)">
-                <!-- icon666.com - MILLIONS vector ICONS FREE --><svg id="Layer_1" viewBox="0 0 32 32" width="30px"
-                  height="30px" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="orange"
-                    d="m31.381 4.62c-1.383-1.412-2.795-2.812-4.002-4.004-.412-.412-.96-.616-1.51-.616-.549 0-1.099.205-1.51.617-7.089 7.101-14.189 14.195-21.288 21.292-.117.117-.205.259-.258.417-.777 2.331-2.172 6.143-2.771 8.323-.216.779.48 1.505 1.269 1.323 2.594-.599 6.064-2.021 8.362-2.787.155-.051.299-.138.417-.252 7.094-7.102 14.197-14.196 21.291-21.295.822-.824.822-2.195 0-3.018zm-28.629 24.626c.187-.575.389-1.157.59-1.763.265.111.514.27.729.487.207.207.359.44.47.688-.601.2-1.207.405-1.789.588zm6.015-2.006c-.685.232-1.449.493-2.206.75-.217-.556-.537-1.084-.983-1.531-.456-.455-.992-.776-1.563-.992.254-.752.519-1.556.743-2.227l17.173-17.18c1.336 1.335 2.671 2.67 4.007 4.006-5.716 5.723-11.448 11.451-17.171 17.174zm18.678-18.685-4.004-4.002 2.427-2.4 3.978 3.975z">
-                  </path>
+                <!-- icon666.com - MILLIONS vector ICONS FREE --><svg
+                  id="Layer_1"
+                  viewBox="0 0 32 32"
+                  width="30px"
+                  height="30px"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill="orange"
+                    d="m31.381 4.62c-1.383-1.412-2.795-2.812-4.002-4.004-.412-.412-.96-.616-1.51-.616-.549 0-1.099.205-1.51.617-7.089 7.101-14.189 14.195-21.288 21.292-.117.117-.205.259-.258.417-.777 2.331-2.172 6.143-2.771 8.323-.216.779.48 1.505 1.269 1.323 2.594-.599 6.064-2.021 8.362-2.787.155-.051.299-.138.417-.252 7.094-7.102 14.197-14.196 21.291-21.295.822-.824.822-2.195 0-3.018zm-28.629 24.626c.187-.575.389-1.157.59-1.763.265.111.514.27.729.487.207.207.359.44.47.688-.601.2-1.207.405-1.789.588zm6.015-2.006c-.685.232-1.449.493-2.206.75-.217-.556-.537-1.084-.983-1.531-.456-.455-.992-.776-1.563-.992.254-.752.519-1.556.743-2.227l17.173-17.18c1.336 1.335 2.671 2.67 4.007 4.006-5.716 5.723-11.448 11.451-17.171 17.174zm18.678-18.685-4.004-4.002 2.427-2.4 3.978 3.975z"
+                  ></path>
                 </svg>
               </p>
             </div>
@@ -89,7 +127,7 @@ export default {
       show: false,
       id_product: 0,
       load: true,
-      res: ''
+      res: "",
     };
   },
   mounted() {
@@ -103,9 +141,8 @@ export default {
       });
     },
     allMenu() {
-      axios.get("/api/menu_all").then((res) => {
+      axios.get("/api/admin/catalog").then((res) => {
         this.menu = res.data.data;
-        console.log(this.menu);
         this.load = false;
       });
     },
@@ -151,21 +188,22 @@ export default {
       let formData = new FormData();
       for (let index = 0; index < this.file.length; index++) {
         formData.append("file[]", this.file[index]);
-      };
+      }
       formData.append("name", this.name);
       formData.append("price", this.price);
       formData.append("discription", this.discription);
       formData.append("type", this.type);
-      axios.post("/api/create_product", formData, {
+      axios
+        .post("/api/create_product", formData, {
           headers: {
-            "Content-type": "multipart/form-data"
+            "Content-type": "multipart/form-data",
           },
         })
         .then((res) => {
-          this.name = "",
-          this.price = "",
-          this.discription = "",
-          this.type = "";
+          (this.name = ""),
+            (this.price = ""),
+            (this.discription = ""),
+            (this.type = "");
           this.file = "";
           this.allMenu();
         });
@@ -203,7 +241,8 @@ svg {
   left: 0;
   border-radius: 50%;
   border: calc(60px * 0.03) solid #c22020;
-  animation: fulfilling-bouncing-circle-spinner-orbit-animation infinite 4000ms ease;
+  animation: fulfilling-bouncing-circle-spinner-orbit-animation infinite 4000ms
+    ease;
 }
 
 .fulfilling-bouncing-circle-spinner .circle {
@@ -214,7 +253,8 @@ svg {
   border-radius: 50%;
   position: relative;
   border: calc(60px * 0.1) solid #c22020;
-  animation: fulfilling-bouncing-circle-spinner-circle-animation infinite 4000ms ease;
+  animation: fulfilling-bouncing-circle-spinner-circle-animation infinite 4000ms
+    ease;
   transform: rotate(0deg) scale(1);
 }
 

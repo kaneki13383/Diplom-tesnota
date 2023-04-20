@@ -26,6 +26,11 @@ class MenuController extends Controller
         ]);
     }
 
+    public function allAdminMenu()
+    {
+        return MenuResource::collection(Menu::all());
+    }
+
     public function createProduct(Request $request)
     {
         Menu::create([
