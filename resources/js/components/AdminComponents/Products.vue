@@ -158,7 +158,10 @@ export default {
         if (sear === "") {
           return true;
         } else {
-          return elem.name.indexOf(sear) > -1;
+          let name_product = elem.name;
+          name_product = name_product.toLowerCase();
+          let result = sear.toLocaleLowerCase();
+          return name_product.indexOf(result) > -1;
         }
       });
     },
