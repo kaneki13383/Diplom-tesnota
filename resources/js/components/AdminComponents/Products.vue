@@ -18,19 +18,26 @@
         <input
           type="text"
           v-model="name"
+          required
           placeholder="Введите название товара"
         />
 
-        <input type="text" v-model="price" placeholder="Введите цену товара" />
+        <input
+          type="text"
+          v-model="price"
+          required
+          placeholder="Введите цену товара"
+        />
 
         <textarea
           placeholder="Введите описание товара"
           v-model="discription"
           cols="30"
           rows="10"
+          required
         ></textarea>
 
-        <select v-model="type" name="Выберите тип">
+        <select required v-model="type" name="Выберите тип">
           <option v-for="typ in types" :key="typ" :value="typ.id">
             {{ typ.type }}
           </option>
@@ -192,7 +199,9 @@ export default {
       let formData = new FormData();
       formData.append("id_product", this.id_product);
       formData.append("name", this.name);
-      formData.append("file", this.file);
+      for (let index = 0; index < this.file.length; index++) {
+        formData.append("file[]", this.file[index]);
+      }
       formData.append("price", this.price);
       formData.append("discription", this.discription);
       formData.append("type", this.type);

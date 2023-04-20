@@ -43,7 +43,6 @@ class MenuController extends Controller
         $menu = Menu::get()->last();
 
         $images = $request->file;
-
         foreach ($images as $image) {
             Image::create([
                 'id_menus' => $menu->id,
@@ -66,21 +65,31 @@ class MenuController extends Controller
 
     public function edit(Request $request)
     {
-        Menu::where('id', $request->input('id_product'))->update([
-            'name' => $request->input('name'),
-            'price' => $request->input('price'),
-            'discription' => $request->input('discription'),
-            'type' => $request->input('type')
-        ]);
+        if ($request->input('type') == "[object Object]") {
+            Menu::where('id', $request->input('id_product'))->update([
+                'name' => $request->input('name'),
+                'price' => $request->input('price'),
+                'discription' => $request->input('discription')
+            ]);
+        } else {
+            Menu::where('id', $request->input('id_product'))->update([
+                'name' => $request->input('name'),
+                'price' => $request->input('price'),
+                'discription' => $request->input('discription'),
+                'type' => $request->input('type')
+            ]);
+        }
 
         $images = $request->file;
 
-        foreach ($images as $image) {
-            Image::create([
-                'id_menus' => $request->input('id_product'),
-                'img' => '../menu/' . $image->getClientOriginalName()
-            ]);
-            $image->move(public_path('menu'), $image->getClientOriginalName());
+        if ($images != "null") {
+            foreach ($images as $image) {
+                Image::create([
+                    'id_menus' => $request->input('id_product'),
+                    'img' => '../menu/' . $image->getClientOriginalName()
+                ]);
+                $image->move(public_path('menu'), $image->getClientOriginalName());
+            }
         }
     }
 }
