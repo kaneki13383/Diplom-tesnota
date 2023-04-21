@@ -17,7 +17,8 @@
   <div v-else>
     <p class="pagination">
       <router-link to="/">Главная</router-link> /
-      <router-link to="/catalog">Меню</router-link> / {{ this.product["name"] }}
+      <a @click="$router.go(-1)">Меню</a> /
+      {{ this.product["name"] }}
     </p>
     <div class="adaptive">
       <div class="w50">

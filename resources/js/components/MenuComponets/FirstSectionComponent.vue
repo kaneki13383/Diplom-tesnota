@@ -997,12 +997,19 @@ h3 {
   h3 {
     display: none;
   }
+  .search {
+    justify-content: center;
+    margin-top: 5vh;
+  }
   .fulfilling-bouncing-circle-spinner {
     left: 0vw;
   }
   .d-f-2 {
     margin-top: 5vw;
     margin-bottom: 0vw;
+  }
+  .side_filter {
+    z-index: 2;
   }
   .adaptive_filter {
     display: flex;
@@ -1021,6 +1028,7 @@ h3 {
   .products_df {
     align-items: center;
     justify-content: center;
+    z-index: 1;
   }
   .adaptive {
     margin-left: 5vw;
