@@ -36,21 +36,21 @@
                   <input
                     v-model.number="minPrice"
                     type="number"
-                    :min="80"
+                    :min="min"
                     :max="max"
                   />
                   <p>До</p>
                   <input
                     v-model.number="maxPrice"
                     type="number"
-                    :min="80"
+                    :min="min"
                     :max="max"
                   />
                 </span>
                 <input
                   @change="slider"
                   v-model.number="minPrice"
-                  :min="80"
+                  :min="min"
                   :max="max"
                   step="1"
                   type="range"
@@ -59,7 +59,7 @@
                 <input
                   @change="slider"
                   v-model.number="maxPrice"
-                  :min="minPrice"
+                  :min="min"
                   :max="max"
                   step="1"
                   type="range"
@@ -83,7 +83,10 @@
       <p class="pagination">
         <router-link to="/"> Главная </router-link> / О нас
       </p>
-      <h3>Меню</h3>
+      <div class="search">
+        <h3>Меню</h3>
+        <input type="search" placeholder="Поиск" v-model="search" />
+      </div>
       <div v-if="sort_on != ''" class="d-f-2">
         <div class="last_active">
           <div
@@ -105,7 +108,7 @@
           alt=""
         />
       </div>
-      <div class="products_df" v-if="sort_on == ''">
+      <div class="products_df d-n" v-show="sort_on == ''">
         <div class="fulfilling-bouncing-circle-spinner" v-if="load == true">
           <div class="circle"></div>
           <div class="orbit"></div>
@@ -160,7 +163,7 @@
           </router-link>
         </div>
       </div>
-      <div class="pagination-page" v-if="sort_on == ''">
+      <div class="pagination-page" v-show="sort_on == ''">
         <router-link
           v-for="link in pagination.links"
           :key="link"
@@ -202,6 +205,7 @@ export default {
       minPrice: 0,
       maxPrice: 0,
       max: 0,
+      min: 0,
       menu: [],
       all_menu: [],
       price: [],
@@ -219,6 +223,7 @@ export default {
       load: true,
       page: this.$route.params["page"],
       pagination: {},
+      search: "",
     };
   },
   mounted() {
@@ -236,11 +241,29 @@ export default {
   computed: {
     filteredList() {
       let sort = this.sort_on;
+      const min_const = this.min;
+      const max_const = this.max;
       let min = this.minPrice;
       let max = this.maxPrice;
+      let search = this.search;
       return this.all_menu.filter(function (elem) {
         if (sort == "") {
-          return false;
+          if (max_const == max && min_const == min) {
+            // if (document.querySelector(".products_df.d-n") == "null") {
+            document.querySelector(".products_df.d-n").style.opacity = 1;
+            document.querySelector(".d-n").style.position = "relative";
+            document.querySelector(".pagination-page").style.opacity = 1;
+            document.querySelector(".pagination-page").style.position =
+              "relative";
+            // }
+            return false;
+          }
+          document.querySelector(".d-n").style.opacity = 0;
+          document.querySelector(".d-n").style.position = "absolute";
+          document.querySelector(".pagination-page").style.opacity = 0;
+          document.querySelector(".pagination-page").style.position =
+            "absolute";
+          return elem.price >= min && elem.price <= max;
         } else if (sort != "") {
           // if (
           //   sort.includes(elem.type.type) &&
@@ -324,6 +347,7 @@ export default {
         this.minPrice = Math.min.apply(null, this.price);
         this.maxPrice = Math.max.apply(null, this.price);
         this.max = Math.max.apply(null, this.price);
+        this.min = Math.min.apply(null, this.price);
 
         // let arr_leght = this.all_menu.length - 1;
 
@@ -467,6 +491,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.search input[type="search"] {
+  height: 44px;
+  width: 350px;
+  background: transparent;
+  border: white 2px solid;
+  border-radius: 13px;
+  color: white;
+  font-family: "Comfortaa", cursive;
+  padding-left: 10px;
+  margin-right: 3vw;
+}
 .pagination-page {
   width: 330px;
   display: flex;
@@ -733,7 +774,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 5vw;
-  margin-bottom: 5vw;
+  margin-bottom: 5vh;
 }
 .pagination,
 a {

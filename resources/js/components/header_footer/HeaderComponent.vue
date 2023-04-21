@@ -32,14 +32,13 @@
           >
         </li>
         <li><router-link to="/about">О нас</router-link></li>
-        <li>
-          <input type="search" placeholder="Поиск" v-model="search" />
-          <!-- <img
+        <!-- <li>
+          <img
                         class="search"
                         src="img/search.png"
                         alt=""
-                    /> -->
-        </li>
+                    />
+        </li> -->
         <li>
           <router-link v-show="!token" class="register" to="/register"
             >Регистрация</router-link
@@ -64,7 +63,6 @@ export default {
       name: "",
       width: window.innerWidth,
       cart_count: 0,
-      search: "",
     };
   },
 
