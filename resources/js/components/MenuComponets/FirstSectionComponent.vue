@@ -247,15 +247,29 @@ export default {
       let max = this.maxPrice;
       let search = this.search;
       return this.all_menu.filter(function (elem) {
+        let name_product = elem.name;
+        name_product = name_product.toLowerCase();
+        let result = search.toLocaleLowerCase();
         if (sort == "") {
           if (max_const == max && min_const == min) {
-            // if (document.querySelector(".products_df.d-n") == "null") {
             document.querySelector(".products_df.d-n").style.opacity = 1;
             document.querySelector(".d-n").style.position = "relative";
             document.querySelector(".pagination-page").style.opacity = 1;
             document.querySelector(".pagination-page").style.position =
               "relative";
-            // }
+            if (search != "") {
+              document.querySelector(".d-n").style.opacity = 0;
+              document.querySelector(".d-n").style.position = "absolute";
+              document.querySelector(".pagination-page").style.opacity = 0;
+              document.querySelector(".pagination-page").style.position =
+                "absolute";
+              return name_product.indexOf(result) > -1;
+            }
+            document.querySelector(".products_df.d-n").style.opacity = 1;
+            document.querySelector(".d-n").style.position = "relative";
+            document.querySelector(".pagination-page").style.opacity = 1;
+            document.querySelector(".pagination-page").style.position =
+              "relative";
             return false;
           }
           document.querySelector(".d-n").style.opacity = 0;
@@ -263,21 +277,19 @@ export default {
           document.querySelector(".pagination-page").style.opacity = 0;
           document.querySelector(".pagination-page").style.position =
             "absolute";
-          return elem.price >= min && elem.price <= max;
+
+          return (
+            elem.price >= min &&
+            elem.price <= max &&
+            name_product.indexOf(result) > -1
+          );
         } else if (sort != "") {
-          // if (
-          //   sort.includes(elem.type.type) &&
-          //   elem.price >= min &&
-          //   elem.price <= max == false
-          // ) {
-          //   return console.log(document.querySelector(".love > div"));
-          // }
           return (
             sort.includes(elem.type.type) &&
             elem.price >= min &&
-            elem.price <= max
+            elem.price <= max &&
+            name_product.indexOf(result) > -1
           );
-          // return console.log(document.querySelector(".love > div"));
         }
       });
     },
