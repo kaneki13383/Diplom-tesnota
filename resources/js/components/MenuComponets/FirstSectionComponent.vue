@@ -10,6 +10,12 @@
             </div>
           </div>
           <div class="last_active">
+            <div v-if="load2 == true">
+              <div class="active_loading"></div>
+              <div class="active_loading"></div>
+              <div class="active_loading"></div>
+            </div>
+
             <div
               v-for="typ in types"
               :key="typ"
@@ -81,7 +87,7 @@
     </div>
     <div class="adaptive" style="width: 70%">
       <p class="pagination">
-        <router-link to="/"> Главная </router-link> / О нас
+        <router-link to="/"> Главная </router-link> / Меню
       </p>
       <div class="search">
         <h3>Меню</h3>
@@ -109,7 +115,10 @@
         />
       </div>
       <div class="products_df d-n" v-show="sort_on == ''">
-        <div class="fulfilling-bouncing-circle-spinner" v-if="load == true">
+        <div
+          class="fulfilling-bouncing-circle-spinner margin"
+          v-if="load == true"
+        >
           <div class="circle"></div>
           <div class="orbit"></div>
         </div>
@@ -221,6 +230,7 @@ export default {
       mobile: false,
       notFound: false,
       load: true,
+      load2: true,
       page: this.$route.params["page"],
       pagination: {},
       search: "",
@@ -302,7 +312,6 @@ export default {
     },
   },
   updated() {
-    console.log();
     // document.querySelector(".love > div")
     // this.noneMenu();
   },
@@ -493,6 +502,7 @@ export default {
     AllTypes() {
       axios.get("/api/type_all").then((res) => {
         this.types = res.data;
+        this.load2 = false;
       });
     },
     addCart(id) {
@@ -503,6 +513,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.active_loading {
+  background: linear-gradient(
+    110deg,
+    rgba(175, 49, 49, 0.58) 8%,
+    #9e3b3b 18%,
+    rgba(175, 49, 49, 0.58) 33%
+  );
+  border-radius: 5px;
+  width: 270px;
+  height: 50px;
+  background-size: 200% 100%;
+  border-bottom: 1px white solid;
+  animation: 1s shine linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
 .search {
   display: flex;
   flex-direction: row;
@@ -678,22 +707,6 @@ export default {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
-.active {
-  color: white;
-  font-family: "Comfortaa", serif;
-  font-size: 30px;
-  width: 270px;
-  height: 50px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: #ad9562;
-  font-size: 18px;
-  border-bottom: 1px white solid;
-  cursor: pointer;
-}
-
 .d-f-2 .last_active {
   display: flex;
   flex-direction: row;
