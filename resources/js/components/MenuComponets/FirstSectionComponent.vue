@@ -71,7 +71,7 @@
                   type="range"
                   class="slider"
                 />
-                <svg width="100%" height="24"></svg>
+                <!-- <svg width="100%" height="24"></svg> -->
               </div>
             </div>
           </div>
@@ -884,21 +884,6 @@ a {
   flex-direction: row;
   justify-content: space-around;
 }
-.range-slider {
-  width: 90%;
-  margin: auto;
-  text-align: center;
-  position: relative;
-  height: 6em;
-}
-
-.range-slider svg,
-.range-slider input[type="range"] {
-  position: absolute;
-  left: 0;
-  top: 70px;
-}
-
 input[type="number"] {
   border: none;
   color: white;
@@ -916,52 +901,106 @@ input[type="number"]:invalid,
 input[type="number"]:out-of-range {
   border: 2px solid #ff6347;
 }
+.range-slider {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  height: 6em;
+}
 
+.range-slider input[type="range"] {
+  position: absolute;
+  left: 0;
+  top: 70px;
+}
 input[type="range"] {
   width: 100%;
+  color: #af3131;
+  -webkit-appearance: none;
 }
-
-input[type="range"]:focus {
-  outline: none;
-}
-
-input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #af3131;
-}
-
-input[type="range"]:focus::-ms-fill-lower {
-  background: #af3131;
-}
-
-input[type="range"]:focus::-ms-fill-upper {
-  background: #af3131;
-}
+// input[type="range"]::-webkit-slider-thumb {
+//   z-index: 2;
+//   position: relative;
+//   border: 1px solid #af3131;
+//   height: 18px;
+//   width: 18px;
+//   border-radius: 100px;
+//   background: #af3131;
+//   cursor: pointer;
+//   -webkit-appearance: none;
+//   margin-top: -7px;
+// }
 
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
-  height: 5px;
+  height: 3px;
   cursor: pointer;
-  background: #af3131;
+  animation: 0.2s;
+  background: #ffff;
   border-radius: 1px;
   box-shadow: none;
   border: 0;
 }
-span p {
-  margin-top: 3px;
-}
-
 input[type="range"]::-webkit-slider-thumb {
   z-index: 2;
   position: relative;
-  box-shadow: 0px 0px 0px #000;
-  border: 1px solid #af3131;
-  height: 18px;
-  width: 18px;
-  border-radius: 100px;
-  background: #af3131;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: #ffffff;
   cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -7px;
+  margin-top: -6px;
+}
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  animation: 0.2s;
+  background: #3faffa;
+  border-radius: 1px;
+  box-shadow: none;
+  border: 0;
+}
+input[type="range"]::-moz-range-thumb {
+  z-index: 2;
+  position: relative;
+  box-shadow: 0px 0px 0px #000;
+  border: 1px solid #2497e3;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #3faffa;
+  cursor: pointer;
+}
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animation: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type="range"]::-ms-fill-lower,
+input[type="range"]::-ms-fill-upper {
+  background: #3faffa;
+  border-radius: 1px;
+  box-shadow: none;
+  border: 0;
+}
+input[type="range"]::-ms-thumb {
+  z-index: 2;
+  position: relative;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #3faffa;
+  cursor: pointer;
+}
+span p {
+  margin-top: 3px;
 }
 span {
   display: flex;
