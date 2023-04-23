@@ -76,6 +76,13 @@
             </div>
           </div>
         </div>
+        <div
+          class="active"
+          @click="clearFilter()"
+          v-if="filteredList.length != 0 || sort_on != ''"
+        >
+          Очистить фильтры
+        </div>
       </div>
       <button
         class="apply_filter"
@@ -148,6 +155,12 @@
       </div>
 
       <div class="products_df love">
+        <div
+          class="notFound"
+          v-if="filteredList.length == 0 && (dn == 'none' || op != 1)"
+        >
+          <p>Ничего не найдено</p>
+        </div>
         <div v-for="product in filteredList" :key="product">
           <router-link :to="{ path: '/product/' + product.id }">
             <div class="card">
@@ -211,6 +224,8 @@ export default {
   },
   data() {
     return {
+      dn: "",
+      op: "",
       minPrice: 0,
       maxPrice: 0,
       max: 0,
@@ -247,6 +262,7 @@ export default {
       this.show = false;
       this.mobile = true;
     }
+    // console.log();
   },
   computed: {
     filteredList() {
@@ -312,8 +328,8 @@ export default {
     },
   },
   updated() {
-    // document.querySelector(".love > div")
-    // this.noneMenu();
+    this.dn = document.querySelector(".d-n").style.display;
+    this.op = document.querySelector(".d-n").style.opacity;
   },
   methods: {
     noneMenu() {
@@ -507,6 +523,10 @@ export default {
     },
     addCart(id) {
       axios.post(`/api/cart/${id}`, { counter: this.counter });
+    },
+    clearFilter() {
+      (this.sort_on = []), (this.minPrice = this.min);
+      this.maxPrice = this.max;
     },
   },
 };
@@ -757,8 +777,12 @@ export default {
   color: white;
   font-size: 30px;
   font-family: "Comfortaa", serif;
-  padding-bottom: 36vh;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50vh;
 }
 .adaptive_filter {
   display: none;
