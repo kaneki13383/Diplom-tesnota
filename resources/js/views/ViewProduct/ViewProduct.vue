@@ -37,7 +37,7 @@
 
         <Carousel
           id="thumbnails"
-          :items-to-show="4"
+          :items-to-show="3"
           :wrap-around="true"
           v-model="currentSlide"
           ref="carousel"

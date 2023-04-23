@@ -902,7 +902,7 @@ input[type="range"]:focus {
 }
 
 input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: white;
+  background: #af3131;
 }
 
 input[type="range"]:focus::-ms-fill-lower {
@@ -910,14 +910,14 @@ input[type="range"]:focus::-ms-fill-lower {
 }
 
 input[type="range"]:focus::-ms-fill-upper {
-  background: white;
+  background: #af3131;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 5px;
   cursor: pointer;
-  background: white;
+  background: #af3131;
   border-radius: 1px;
   box-shadow: none;
   border: 0;
