@@ -151,7 +151,7 @@ h2 {
 .background_img_text {
   width: 685px;
   height: 215px;
-  background-image: url("img/about_img.png");
+  background-image: url("/img/about_img.png");
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 15px;
@@ -175,7 +175,7 @@ span {
   font-weight: bold;
 }
 .background2_img_text {
-  background-image: url("img/about_img2.png");
+  background-image: url("/img/about_img2.png");
 }
 .d-f_info {
   display: flex;
