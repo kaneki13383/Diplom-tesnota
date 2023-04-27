@@ -157,7 +157,11 @@
       <div class="products_df love">
         <div
           class="notFound"
-          v-if="filteredList.length == 0 && (dn == 'none' || op != 1)"
+          v-if="
+            filteredList.length == 0 &&
+            (dn == 'none' || op != 1) &&
+            load != true
+          "
         >
           <p>Ничего не найдено</p>
         </div>
@@ -354,6 +358,9 @@ export default {
     accessMessage(name) {
       this.alert = true;
       this.message = "Товар " + name + " добавлен в корзину";
+      setTimeout(() => {
+        this.alert = false;
+      }, 4000);
     },
     countCart() {
       if (this.token) {
@@ -817,7 +824,6 @@ export default {
 .side_filter {
   position: fixed;
   left: 100px;
-  top: 25px;
 }
 .products_df {
   display: flex;
@@ -908,7 +914,6 @@ input[type="number"]:out-of-range {
   position: relative;
   height: 6em;
 }
-
 .range-slider input[type="range"] {
   position: absolute;
   left: 0;
@@ -919,19 +924,6 @@ input[type="range"] {
   color: #af3131;
   -webkit-appearance: none;
 }
-// input[type="range"]::-webkit-slider-thumb {
-//   z-index: 2;
-//   position: relative;
-//   border: 1px solid #af3131;
-//   height: 18px;
-//   width: 18px;
-//   border-radius: 100px;
-//   background: #af3131;
-//   cursor: pointer;
-//   -webkit-appearance: none;
-//   margin-top: -7px;
-// }
-
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 3px;
@@ -1086,6 +1078,9 @@ h3 {
   }
   .side_filter {
     z-index: 2;
+  }
+  input[type="number"] {
+    font-size: 18px;
   }
   .adaptive_filter {
     display: flex;

@@ -1,5 +1,4 @@
 <template>
-  <!-- <transition name="scale" mode="out-in"> -->
   <div
     v-if="
       this.$route.path === '/register' ||
@@ -8,31 +7,9 @@
     "
   ></div>
   <HeaderComponentVue v-else></HeaderComponentVue>
-  <!-- </transition> -->
 
-  <router-view v-slot="{ Component, route }">
-    <!-- <transition name="scale" mode="out-in"> -->
-    <component :is="Component" :key="route.path" />
-    <!-- </transition> -->
+  <router-view></router-view>
 
-    <!-- <transition name="scale1" mode="out-in"> -->
-    <div :key="route.path" class="bg"></div>
-    <!-- </transition> -->
-
-    <!-- <transition name="bounce" mode="out-in"> -->
-    <div :key="route.path" class="translate">
-      <img src="img/logo.png" alt="" />
-    </div>
-    <!-- </transition> -->
-
-    <!-- <transition name="bounce2" mode="out-in"> -->
-    <div :key="route.path" class="translate2">
-      <img src="img/animation.png" alt="" />
-    </div>
-    <!-- </transition> -->
-  </router-view>
-
-  <!-- <transition name="scale" mode="out-in"> -->
   <div
     v-if="
       this.$route.path === '/register' ||
@@ -41,7 +18,6 @@
     "
   ></div>
   <FooterComponentVue v-else></FooterComponentVue>
-  <!-- </transition> -->
 </template>
 <script lang="ts">
 import HeaderComponentVue from "../../components/header_footer/HeaderComponent.vue";
@@ -66,40 +42,6 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap"); /* font-family: 'Comfortaa', cursive; */
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap"); /* font-family: 'Roboto', sans-serif; */
 @import url("https://fonts.googleapis.com/css2?family=Cabin&display=swap"); /* font-family: 'Cabin', sans-serif; */
-
-.scale-enter-active,
-.scale-leave-active {
-  transition: all 1s;
-}
-.scale-enter-from,
-.scale-leave-to {
-  opacity: 0;
-}
-
-.bounce-enter-active {
-  animation: bounce-in 4s;
-}
-@keyframes bounce-in {
-  0% {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(250%);
-  }
-}
-.bounce2-enter-active {
-  animation: bounce2-in 2s;
-}
-@keyframes bounce2-in {
-  0% {
-    /* opacity: 1; */
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(170%);
-  }
-}
 .bg {
   position: fixed;
   top: 0;

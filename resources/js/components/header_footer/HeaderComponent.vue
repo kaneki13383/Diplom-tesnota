@@ -10,7 +10,7 @@
 
         <div>
           <a class="burger" id="burger" v-on:click="display()">
-            <img src="img/burger_menu.svg" alt="" />
+            <img src="/img/burger_menu.svg" alt="" />
           </a>
         </div>
       </div>
@@ -43,8 +43,8 @@
           <router-link v-show="!token" class="register" to="/register"
             >Регистрация</router-link
           >
-          <router-link v-show="token" to="/dashboard">{{
-            this.$store.state.user.name
+          <router-link v-show="token" class="register" to="/dashboard">{{
+            this.$store.state.user.name + " " + this.$store.state.user.surname
           }}</router-link>
         </li>
       </ul>
@@ -134,9 +134,8 @@ export default {
 
 <style lang="css" scoped>
 .cart_count {
-  position: absolute;
-  top: 3%;
-  right: 54%;
+  position: relative;
+  bottom: 2vh;
   background: #af3131;
   width: 20px;
   height: 20px;
@@ -160,6 +159,10 @@ ul {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+ul li:nth-child(4) a {
+  display: flex;
+  flex-direction: row;
 }
 img {
   width: 150px;

@@ -219,6 +219,9 @@ export default {
     accessMessage(name) {
       this.alert = true;
       this.message = "Товар " + name + " добавлен в корзину";
+      setTimeout(() => {
+        this.alert = false;
+      }, 4000);
     },
     Plus() {
       if (this.counter == 1) {
