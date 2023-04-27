@@ -157,6 +157,7 @@ export default {
   mounted() {
     this.AllTypes();
     this.allMenu();
+    console.log(this.file);
   },
   computed: {
     filteredList: function () {
@@ -199,8 +200,10 @@ export default {
       let formData = new FormData();
       formData.append("id_product", this.id_product);
       formData.append("name", this.name);
-      for (let index = 0; index < this.file.length; index++) {
-        formData.append("file[]", this.file[index]);
+      if (this.file != null) {
+        for (let index = 0; index < this.file.length; index++) {
+          formData.append("file[]", this.file[index]);
+        }
       }
       formData.append("price", this.price);
       formData.append("discription", this.discription);
