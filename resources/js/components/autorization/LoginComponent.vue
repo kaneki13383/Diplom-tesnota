@@ -304,7 +304,8 @@ path {
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-around;
-  margin-top: 12vh;
+  padding-top: 12vh;
+  padding-bottom: 12vh;
 }
 img {
   width: 200px;

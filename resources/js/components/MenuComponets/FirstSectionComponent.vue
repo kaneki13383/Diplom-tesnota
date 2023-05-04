@@ -115,11 +115,24 @@
       </div>
       <div class="adaptive_filter">
         <h4>Меню</h4>
-        <img
+        <!-- <img
           @click="show = true"
           src="../../../../public/img/Vector.svg"
           alt=""
-        />
+        /> -->
+        <svg
+          @click="show = true"
+          width="35"
+          height="35"
+          viewBox="0 0 35 35"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0.465408 3.52188C4.90826 9.1875 13.1121 19.6875 13.1121 19.6875V32.8125C13.1121 34.0156 14.1019 35 15.3116 35H19.7104C20.9201 35 21.9099 34.0156 21.9099 32.8125V19.6875C21.9099 19.6875 30.0917 9.1875 34.5346 3.52188C35.6563 2.07813 34.6226 0 32.797 0H2.20296C0.377431 0 -0.656302 2.07813 0.465408 3.52188Z"
+            fill="white"
+          />
+        </svg>
       </div>
       <div class="products_df d-n" v-show="sort_on == ''">
         <div
@@ -259,7 +272,7 @@ export default {
     this.allMenu();
     this.allMenu2();
     this.AllTypes();
-    if (window.innerWidth > 1600) {
+    if (window.innerWidth > 1023) {
       this.show = true;
       this.mobile = false;
     } else {
@@ -1061,9 +1074,21 @@ h3 {
 .adaptive {
   margin-left: 20vw;
 }
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1720px) {
+  .products_df {
+    padding-left: 10vw;
+    justify-content: center;
+  }
+  .search {
+    justify-content: space-evenly;
+  }
+}
+@media screen and (max-width: 1023px) {
   h3 {
     display: none;
+  }
+  .products_df {
+    padding-left: 0vw;
   }
   .search {
     justify-content: center;
@@ -1085,6 +1110,7 @@ h3 {
   .adaptive_filter {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     h4 {
       color: white;
       font-family: "Comfortaa", serif;
@@ -1092,8 +1118,8 @@ h3 {
       margin-top: 50px;
       margin-bottom: 40px;
     }
-    img {
-      margin-left: 45vw;
+    svg {
+      padding-top: 5vh;
     }
   }
   .products_df {

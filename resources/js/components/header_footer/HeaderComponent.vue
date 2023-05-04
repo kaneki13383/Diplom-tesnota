@@ -234,15 +234,12 @@
           >
         </li>
         <li><router-link to="/about">О нас</router-link></li>
-        <!-- <li>
-          <img
-                        class="search"
-                        src="img/search.png"
-                        alt=""
-                    />
-        </li> -->
         <li>
-          <div class="toggleWrapper" @click="changeTheme">
+          <div
+            class="toggleWrapper"
+            v-if="theme === 'light'"
+            @click="changeTheme"
+          >
             <input type="checkbox" class="dn" id="dn" />
             <label for="dn" class="toggle" @click="changeTheme">
               <span class="toggle__handler">
@@ -258,8 +255,23 @@
               <span class="star star--6"></span>
             </label>
           </div>
-        </li>
-        <li>
+
+          <div class="toggleWrapper" v-else @click="changeTheme">
+            <input type="checkbox" checked class="dn" id="dn" />
+            <label for="dn" class="toggle" @click="changeTheme">
+              <span class="toggle__handler">
+                <span class="crater crater--1"></span>
+                <span class="crater crater--2"></span>
+                <span class="crater crater--3"></span>
+              </span>
+              <span class="star star--1"></span>
+              <span class="star star--2"></span>
+              <span class="star star--3"></span>
+              <span class="star star--4"></span>
+              <span class="star star--5"></span>
+              <span class="star star--6"></span>
+            </label>
+          </div>
           <router-link v-show="!token" class="register" to="/register"
             >Регистрация</router-link
           >
@@ -268,9 +280,6 @@
           }}</router-link>
         </li>
       </ul>
-      <!-- <a class="burger-menu_button" id="burger" v-on:click="display()">
-                    <span class="burger-menu_lines"></span>
-                </a> -->
     </header>
   </div>
 </template>
@@ -283,6 +292,7 @@ export default {
       name: "",
       width: window.innerWidth,
       cart_count: 0,
+      theme: localStorage.getItem("theme"),
     };
   },
 
@@ -325,6 +335,7 @@ export default {
     changeTheme() {
       this.$store.state.theme =
         this.$store.state.theme === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", this.$store.state.theme);
     },
     getToken() {
       this.token = localStorage.getItem("x_xsrf_token");
@@ -359,7 +370,207 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.toggleWrapper {
+  overflow: hidden;
+  padding-right: 20px;
+
+  input {
+    position: absolute;
+    left: -99em;
+  }
+}
+
+.toggle {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 40px;
+  background-color: #83d8ff;
+  border-radius: 90px - 6;
+  transition: background-color 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+  &:before {
+    position: absolute;
+    left: -50px;
+    top: 15px;
+    font-size: 18px;
+  }
+
+  &:after {
+    position: absolute;
+    right: -48px;
+    top: 15px;
+    font-size: 18px;
+    color: #749ed7;
+  }
+}
+
+.toggle__handler {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  top: 3px;
+  left: 3px;
+  width: 40px - 6;
+  height: 40px - 6;
+  background-color: #ffcf96;
+  border-radius: 50px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: rotate(-45deg);
+
+  .crater {
+    position: absolute;
+    background-color: #e8cda5;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+    border-radius: 100%;
+  }
+
+  .crater--1 {
+    top: 18px;
+    left: 10px;
+    width: 4px;
+    height: 4px;
+  }
+
+  .crater--2 {
+    top: 28px;
+    left: 22px;
+    width: 6px;
+    height: 6px;
+  }
+
+  .crater--3 {
+    top: 10px;
+    left: 25px;
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.star {
+  position: absolute;
+  background-color: #ffffff;
+  transition: all 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  border-radius: 50%;
+}
+
+.star--1 {
+  top: 10px;
+  left: 35px;
+  z-index: 0;
+  width: 30px;
+  height: 3px;
+}
+
+.star--2 {
+  top: 18px;
+  left: 28px;
+  z-index: 1;
+  width: 30px;
+  height: 3px;
+}
+
+.star--3 {
+  top: 27px;
+  left: 40px;
+  z-index: 0;
+  width: 30px;
+  height: 3px;
+}
+
+.star--4,
+.star--5,
+.star--6 {
+  opacity: 0;
+  transition: all 300ms 0 cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.star--4 {
+  top: 16px;
+  left: 11px;
+  z-index: 0;
+  width: 2px;
+  height: 2px;
+  transform: translate3d(3px, 0, 0);
+}
+
+.star--5 {
+  top: 32px;
+  left: 17px;
+  z-index: 0;
+  width: 3px;
+  height: 3px;
+  transform: translate3d(3px, 0, 0);
+}
+
+.star--6 {
+  top: 36px;
+  left: 28px;
+  z-index: 0;
+  width: 2px;
+  height: 2px;
+  transform: translate3d(3px, 0, 0);
+}
+
+input:checked {
+  + .toggle {
+    background-color: #749dd6;
+
+    &:before {
+      color: #749ed7;
+    }
+
+    &:after {
+      color: #ffffff;
+    }
+
+    .toggle__handler {
+      background-color: #ffe5b5;
+      transform: translate3d(40px, 0, 0) rotate(0);
+
+      .crater {
+        opacity: 1;
+      }
+    }
+
+    .star--1 {
+      width: 2px;
+      height: 2px;
+    }
+
+    .star--2 {
+      width: 4px;
+      height: 4px;
+      transform: translate3d(-5px, 0, 0);
+    }
+
+    .star--3 {
+      width: 2px;
+      height: 2px;
+      transform: translate3d(-7px, 0, 0);
+    }
+
+    .star--4,
+    .star--5,
+    .star--6 {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    .star--4 {
+      transition: all 300ms 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    }
+    .star--5 {
+      transition: all 300ms 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    }
+    .star--6 {
+      transition: all 300ms 400ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    }
+  }
+}
 path {
   fill: rgb(99.215686%, 99.607843%, 99.215686%);
 }
@@ -389,6 +600,10 @@ ul {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+ul li:last-child {
+  display: flex;
+  flex-direction: row;
 }
 ul li:nth-child(4) a {
   display: flex;
@@ -459,6 +674,12 @@ button {
 @media screen and (max-width: 768px) {
   #logo {
     display: none;
+  }
+  ul li:last-child {
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    padding: 0;
   }
   .burger {
     display: block;

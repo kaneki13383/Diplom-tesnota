@@ -350,7 +350,8 @@ svg {
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-around;
-  margin-top: 2vh;
+  padding-top: 2vh;
+  padding-bottom: 13vh;
 }
 img {
   width: 200px;

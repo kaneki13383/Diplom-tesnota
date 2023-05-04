@@ -12,7 +12,7 @@ export default createStore({
                 avatar: '',
                 cart_count: 0
             },
-            theme: 'light'
+            theme: localStorage.getItem('theme')
         }
     },
 })
