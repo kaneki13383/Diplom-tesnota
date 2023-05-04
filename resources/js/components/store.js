@@ -11,7 +11,8 @@ export default createStore({
                 role: '',
                 avatar: '',
                 cart_count: 0
-            }
+            },
+            theme: 'light'
         }
     },
 })

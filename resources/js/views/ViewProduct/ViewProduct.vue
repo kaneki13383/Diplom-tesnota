@@ -493,7 +493,7 @@ export default {
 }
 .count div {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 .count button {
   width: 30px;

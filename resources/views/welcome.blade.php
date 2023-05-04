@@ -32,8 +32,8 @@
   </style>
 </head>
 
-<body id="app">
+<div id="app">
 
-</body>
+</div>
 
 </html>
