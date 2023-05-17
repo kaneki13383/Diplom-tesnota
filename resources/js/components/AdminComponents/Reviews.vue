@@ -221,6 +221,7 @@ export default {
   flex-wrap: wrap;
   gap: 1vw;
   align-items: center;
+  text-align: center;
   font-family: "Comfortaa", serif;
 }
 </style>
