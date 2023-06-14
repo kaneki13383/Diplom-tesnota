@@ -1,16 +1,15 @@
 <template>
   <div class="background">
     <div class="tesnota">
-      <h1>Кафе "Теснота"</h1>
-      <a href="">
+      <h1>Ресторан "Теснота"</h1>
+          <router-link to="/catalog/1">
         <button class="btn">
           <svg width="400px" height="70px" viewBox="0 0 400 70" class="border">
             <polyline points="401,1 401,69 -1,69 -1,1 401,1" class="bg-line" />
             <polyline points="401,1 401,69 -1,69 -1,1 401,1" class="hl-line" />
-          </svg>
-          <router-link to="/catalog/1">Перейти к выбору</router-link>
+          </svg>Перейти к выбору
         </button>
-      </a>
+      </router-link>
     </div>
     <div class="img_eat">
       <img src="/img/main_img.png" alt="" />
@@ -70,7 +69,6 @@ h1 {
   outline: none;
   transition: 1s ease-in-out;
 }
-
 .tesnota a svg {
   position: absolute;
   left: 0;
@@ -83,16 +81,14 @@ h1 {
   transition: 1s ease-in-out;
   border-radius: 28px;
 }
-
 .btn:hover {
   transition: 1s ease-in-out;
 }
-
 .btn:hover svg {
   stroke-dashoffset: -290;
 }
 
-.btn a {
+.btn {
   color: white;
   font-size: 18px;
   font-weight: 100;

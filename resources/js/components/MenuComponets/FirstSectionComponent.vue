@@ -809,6 +809,7 @@ export default {
 }
 .alert {
   position: fixed;
+  z-index: 10;
   color: white;
   background: #1d2023;
   border: 2px solid #af3131;
