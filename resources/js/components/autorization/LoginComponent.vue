@@ -116,6 +116,7 @@
           <input
             v-model="v$.email.$model"
             type="email"
+            maxlength="100"
             name="email"
             placeholder="Введите почту"
           />
@@ -134,6 +135,8 @@
             v-model="v$.password.$model"
             type="password"
             name="password"
+            minlength="8"
+            maxlength="50"
             placeholder="Придумайте пароль"
           />
           <div
@@ -183,21 +186,14 @@ export default {
   validations() {
     return {
       name: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
         name_validation: {
           $validator: validName,
-          $message:
-            "Недопустимое имя. Допустимое имя содержит только русские буквы.",
+          $message: "Недопустимое имя. Допустимое имя содержит только русские буквы.",
         },
       },
       surname: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
         name_validation: {
           $validator: validName,
           $message:
@@ -205,24 +201,15 @@ export default {
         },
       },
       email: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
         email: helpers.withMessage(
           "Значение не является действительным адресом электронной почты",
           email
         ),
       },
       password: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
-        min: helpers.withMessage(
-          "Минимальное количество символов 8",
-          minLength(8)
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
+        min: helpers.withMessage("Минимальное количество символов 8", minLength(8)),
       },
     };
   },
@@ -242,10 +229,7 @@ export default {
             console.log(r);
             this.email = "";
             this.password = "";
-            localStorage.setItem(
-              "x_xsrf_token",
-              r.config.headers["X-XSRF-TOKEN"]
-            );
+            localStorage.setItem("x_xsrf_token", r.config.headers["X-XSRF-TOKEN"]);
             localStorage.setItem("name", r.data["name"]);
             localStorage.setItem("surname", r.data["surname"]);
             localStorage.setItem("email", r.data["email"]);

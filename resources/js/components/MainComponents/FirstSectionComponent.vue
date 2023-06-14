@@ -28,7 +28,7 @@ export default {
 
 <style lang="css" scoped>
 .background {
-  background-image: url("/img/section_main_background.png");
+  background-image: url("/public/img/section_main_background.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;

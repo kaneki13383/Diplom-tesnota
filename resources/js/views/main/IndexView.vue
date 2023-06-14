@@ -42,8 +42,7 @@ export default {
   },
   methods: {
     changeTheme() {
-      this.$store.state.theme =
-        this.$store.state.theme === "dark" ? "light" : "dark";
+      this.$store.state.theme = this.$store.state.theme === "dark" ? "light" : "dark";
     },
   },
 };

@@ -116,6 +116,7 @@
           <input
             v-model="v$.name.$model"
             type="text"
+            maxlength="100"
             name="name"
             placeholder="Введите имя"
           />
@@ -130,6 +131,7 @@
             v-model="v$.surname.$model"
             type="text"
             name="surname"
+            maxlength="100"
             placeholder="Введите фамилию"
           />
           <div
@@ -147,6 +149,7 @@
             v-model="v$.email.$model"
             type="email"
             name="email"
+            maxlength="100"
             placeholder="Введите почту"
           />
           <div
@@ -164,6 +167,8 @@
             v-model="v$.password.$model"
             type="password"
             name="password"
+            minlength="8"
+            maxlength="50"
             placeholder="Придумайте пароль"
           />
           <div
@@ -181,6 +186,8 @@
             v-model="v$.password_confirmation.$model"
             type="password"
             name="password_confirmation"
+            minlength="8"
+            maxlength="50"
             placeholder="Повторите пароль"
           />
           <div
@@ -234,21 +241,14 @@ export default {
   validations() {
     return {
       name: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
         name_validation: {
           $validator: validName,
-          $message:
-            "Недопустимое имя. Допустимое имя содержит только русские буквы.",
+          $message: "Недопустимое имя. Допустимое имя содержит только русские буквы.",
         },
       },
       surname: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
         name_validation: {
           $validator: validName,
           $message:
@@ -256,30 +256,18 @@ export default {
         },
       },
       email: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
         email: helpers.withMessage(
           "Значение не является действительным адресом электронной почты",
           email
         ),
       },
       password: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
-        min: helpers.withMessage(
-          "Минимальное количество символов 8",
-          minLength(8)
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
+        min: helpers.withMessage("Минимальное количество символов 8", minLength(8)),
       },
       password_confirmation: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
+        required: helpers.withMessage("Обязательное поле для заполнения", required),
         // sameAsPassword: helpers.withMessage('Пароли не совпадают',sameAs('password'))
       },
     };
@@ -306,10 +294,7 @@ export default {
             this.email = "";
             this.password = "";
             this.password_confirmation = "";
-            localStorage.setItem(
-              "x_xsrf_token",
-              r.config.headers["X-XSRF-TOKEN"]
-            );
+            localStorage.setItem("x_xsrf_token", r.config.headers["X-XSRF-TOKEN"]);
             localStorage.setItem("name", r.data["name"]);
             localStorage.setItem("surname", r.data["surname"]);
             localStorage.setItem("email", r.data["email"]);
