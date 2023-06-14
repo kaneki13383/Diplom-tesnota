@@ -153,6 +153,32 @@
           Нет аккаунта?
           <router-link to="/register" href="">Зарегистрироваться</router-link>
         </p>
+
+        <div class="check" :class="{ error: v$.check.$errors.length }">
+          <input
+            type="checkbox"
+            required
+            class="custom-checkbox"
+            id="happy"
+            name="happy"
+            value="yes"
+            v-model="v$.check.$model"
+          />
+          <label for="happy"></label>
+          <span
+            >Ставя галочку вы соглашаетесь с
+            <a href="./Условия сделки.docx"
+              >политикой конфиденцальности</a
+            ></span
+          >
+          <div
+            class="input-errors"
+            v-for="(error, index) of v$.check.$errors"
+            :key="index"
+          >
+            <div class="error-msg">{{ error.$message }}</div>
+          </div>
+        </div>
       </form>
     </div>
     <div class="people">
@@ -164,6 +190,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
+
 export function validName(name) {
   let validNamePattern = new RegExp("^[а-яА-Я]+(?:[-'\\s][а-яА-Я]+)*$");
   if (validNamePattern.test(name)) {
@@ -181,42 +208,42 @@ export default {
     return {
       email: null,
       password: null,
+      check: false,
     };
   },
   validations() {
     return {
-      name: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
-        name_validation: {
-          $validator: validName,
-          $message: "Недопустимое имя. Допустимое имя содержит только русские буквы.",
-        },
-      },
-      surname: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
-        name_validation: {
-          $validator: validName,
-          $message:
-            "Недопустимая фамилия. Допустимая фамилия содержит только русские буквы.",
-        },
+      check: {
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
       },
       email: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
         email: helpers.withMessage(
           "Значение не является действительным адресом электронной почты",
           email
         ),
       },
       password: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
-        min: helpers.withMessage("Минимальное количество символов 8", minLength(8)),
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
+        min: helpers.withMessage(
+          "Минимальное количество символов 8",
+          minLength(8)
+        ),
       },
     };
   },
   mounted() {
     document.title = "Войти";
   },
-
   methods: {
     login() {
       axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -226,10 +253,12 @@ export default {
             password: this.password,
           })
           .then((r) => {
-            console.log(r);
             this.email = "";
             this.password = "";
-            localStorage.setItem("x_xsrf_token", r.config.headers["X-XSRF-TOKEN"]);
+            localStorage.setItem(
+              "x_xsrf_token",
+              r.config.headers["X-XSRF-TOKEN"]
+            );
             localStorage.setItem("name", r.data["name"]);
             localStorage.setItem("surname", r.data["surname"]);
             localStorage.setItem("email", r.data["email"]);
@@ -270,6 +299,71 @@ export default {
 <style lang="css" scoped>
 path {
   fill: rgb(99.215686%, 99.607843%, 99.215686%);
+}
+.check {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+  /* width: 360px; */
+  text-align: center;
+  font-family: "Roboto", serif;
+}
+.check span {
+  color: #fff;
+}
+.check span a {
+  color: #af3131;
+}
+.custom-checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.custom-checkbox + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.custom-checkbox + label::before {
+  content: "";
+  display: inline-block;
+  width: 1.3em;
+  height: 1.3em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #af3131;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.custom-checkbox:checked + label::before {
+  border-color: #af3131;
+  background-color: #212529;
+  background-image: url("./img/галочка.svg");
+  background-size: cover;
+}
+/* стили при наведении курсора на checkbox */
+.custom-checkbox:not(:disabled):not(:checked) + label:hover::before {
+  border-color: #d77070;
+}
+/* стили для активного состояния чекбокса (при нажатии на него) */
+.custom-checkbox:not(:disabled):active + label::before {
+  background-color: #d77070;
+  border-color: #d77070;
+}
+/* стили для чекбокса, находящегося в фокусе */
+.custom-checkbox:focus + label::before {
+  box-shadow: 0 0 0 0.2rem #6f1f1f;
+}
+/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
+.custom-checkbox:focus:not(:checked) + label::before {
+  border-color: #d77070;
+}
+/* стили для чекбокса, находящегося в состоянии disabled */
+.custom-checkbox:disabled + label::before {
+  background-color: #d77070;
 }
 .error {
   display: flex;

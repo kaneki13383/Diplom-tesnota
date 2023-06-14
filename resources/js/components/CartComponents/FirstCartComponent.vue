@@ -415,6 +415,11 @@ export default {
   font-size: 20px;
   transition: 0.5s;
 }
+.order button:hover {
+  background: #af3131;
+  color: #212529;
+  cursor: pointer;
+}
 .check {
   display: flex;
   flex-direction: row;
@@ -425,11 +430,6 @@ export default {
 }
 .check span a {
   color: #af3131;
-}
-.order button:hover {
-  background: #af3131;
-  color: #212529;
-  cursor: pointer;
 }
 .custom-checkbox {
   position: absolute;

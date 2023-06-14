@@ -21,75 +21,6 @@
 
 <script>
 export default {
-<<<<<<< HEAD
-  data() {
-    return {
-      id: "",
-      adress: localStorage.getItem("adress"),
-      number: localStorage.getItem("number"),
-      promo: [],
-      active_promo: "",
-      history_promo: localStorage.getItem("history_promo"),
-      show: false,
-      show2: false,
-      messge: "",
-      msg: "",
-    };
-  },
-
-  mounted() {
-    this.getId();
-    this.getAdress();
-    this.getNumber();
-  },
-
-  methods: {
-    dataOrder() {
-      let formData = new FormData();
-      this.getId();
-      formData.append("id", this.id);
-      formData.append("adress", this.adress);
-      formData.append("number", this.number);
-      axios
-        .post("/api/dataOrder", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          localStorage.setItem("adress", this.adress);
-          localStorage.setItem("number", this.number);
-          this.adress = localStorage.getItem("adress");
-          this.number = localStorage.getItem("number");
-          this.getAdress();
-          this.getNumber();
-          axios
-            .get("/api/promo")
-            .then((res) => {
-              this.promo = res.data;
-
-              for (let index = 0; index < this.promo.length; index++) {
-                if (this.promo[index].promo == this.active_promo) {
-                  if (this.history_promo == this.active_promo) {
-                    this.messge = "Этот промокод вы уже использовали";
-                    this.show = true;
-                  } else {
-                    localStorage.setItem("active_promo", this.active_promo);
-                  }
-                } else {
-                  this.messge = "Такого промокода не существует";
-                  this.show = true;
-                }
-              }
-              this.msg = "Данные успешно сохранены!";
-              this.show2 = true;
-            })
-            .cath((err) => {
-              this.msg = "Ошибка, попробуйте еще раз.";
-              this.show2 = true;
-            });
-        });
-=======
     data() {
         return {
             id: "",
@@ -103,21 +34,12 @@ export default {
             messge: '',
             msg: ''
         };
->>>>>>> 8ccf281e2fca0081fa366285099aaf4f94d77345
     },
 
     getId() {
       this.id = localStorage.getItem("id");
     },
 
-<<<<<<< HEAD
-    getAdress() {
-      this.$store.state.user.adress = localStorage.getItem("adress");
-      this.adress = localStorage.getItem("adress");
-      if (this.adress == "undefined") {
-        this.adress = "";
-      }
-=======
     methods: {
         dataOrder() {
             let formData = new FormData();
@@ -186,7 +108,6 @@ export default {
                 this.number = ''
             }
         },
->>>>>>> 8ccf281e2fca0081fa366285099aaf4f94d77345
     },
 
     getNumber() {
@@ -196,8 +117,7 @@ export default {
         this.number = "";
       }
     },
-  },
-};
+  }
 </script>
 
 <style lang="css" scoped>

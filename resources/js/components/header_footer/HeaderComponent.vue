@@ -308,22 +308,22 @@ export default {
     this.countCart();
     this.getToken();
     this.getName();
-    window.addEventListener(
-      "resize",
-      function () {
-        let width_window = this.innerWidth;
-        if (width_window >= 768) {
-          document.getElementById("navig").style.display = "flex";
-          document.getElementById("navig").style.opacity = "1";
-        } else {
-          document.getElementById("navig").style.display = "none";
-          document.getElementById("burger").style.display = "block";
-          document.getElementById("navig").style.opacity = "0";
-          document.getElementById("burger").style.opacity = "1";
-        }
-      },
-      false
-    );
+    // window.addEventListener(
+    //   "resize",
+    //   function () {
+    //     let width_window = this.innerWidth;
+    //     if (width_window >= 768) {
+    //       document.getElementById("navig").style.display = "flex";
+    //       document.getElementById("navig").style.opacity = "1";
+    //     } else {
+    //       document.getElementById("navig").style.display = "none";
+    //       document.getElementById("burger").style.display = "block";
+    //       document.getElementById("navig").style.opacity = "0";
+    //       document.getElementById("burger").style.opacity = "1";
+    //     }
+    //   },
+    //   false
+    // );
   },
 
   updated() {
