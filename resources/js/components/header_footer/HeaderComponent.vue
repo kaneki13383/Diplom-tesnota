@@ -235,7 +235,7 @@
         </li>
         <li><router-link to="/about">О нас</router-link></li>
         <li>
-          <div
+          <!-- <div
             class="toggleWrapper"
             v-if="theme === 'light'"
             @click="changeTheme"
@@ -271,7 +271,7 @@
               <span class="star star--5"></span>
               <span class="star star--6"></span>
             </label>
-          </div>
+          </div> -->
           <router-link v-show="!token" class="register" to="/register"
             >Регистрация</router-link
           >

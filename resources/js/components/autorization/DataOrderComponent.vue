@@ -19,8 +19,8 @@ export default {
     data() {
         return {
             id: "",
-            adress: localStorage.getItem("adress"),
-            number: localStorage.getItem("number"),
+            adress: '',
+            number: '',
             promo: [],
             active_promo: '',
             history_promo: localStorage.getItem('history_promo'),
@@ -92,10 +92,18 @@ export default {
 
         getAdress() {
             this.$store.state.user.adress = localStorage.getItem("adress");
+            this.adress = localStorage.getItem("adress");
+            if (this.adress == 'undefined') {
+                this.adress = ''
+            }
         },
 
         getNumber() {
             this.$store.state.user.number = localStorage.getItem("number");
+            this.number = localStorage.getItem("number");
+            if(this.number == 'undefined'){
+                this.number = ''
+            }
         },
     },
 };

@@ -19,6 +19,7 @@
 
     body {
       background: #212529;
+      overflow-x: hidden;
     }
 
     input,
