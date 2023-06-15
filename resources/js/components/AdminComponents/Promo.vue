@@ -28,7 +28,6 @@
       <h2>Промокоды на скидку 15%</h2>
       <ul class="responsive-table">
         <li class="table-header">
-          <div class="col col-1">Id</div>
           <div class="col col-2">Промокод</div>
           <div class="col col-3">Действие</div>
         </li>
@@ -36,14 +35,13 @@
           <div class="col col-1" data-label="">Промокодов нет</div>
         </li>
         <li class="table-row" v-for="promo in promos" :key="promo">
-          <div class="col col-1" data-label="ID">{{ promo.id }}</div>
           <div class="col col-2" data-label="Промокод">{{ promo.promo }}</div>
           <div
             class="col col-3"
             @click="deletePromo(promo.id)"
             data-label="Действие"
           >
-            Delete
+            Удалить
           </div>
         </li>
       </ul>
@@ -88,6 +86,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h1,
+h2 {
+  font-family: "Comfortaa", serif;
+}
 .head {
   display: flex;
   flex-direction: column;

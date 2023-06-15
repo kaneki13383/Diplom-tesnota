@@ -10,6 +10,7 @@
       justify-content: center;
       gap: 5vw;
       margin-top: 3vw;
+      width: 99%;
     "
   >
     <div
@@ -43,19 +44,19 @@
       <div class="setting">
         <div @click="Ban(user.id)">
           <img src="/img/Ban.svg" alt="" />
-          <p>Ban</p>
+          <p>Бан</p>
         </div>
         <div @click="Unban(user.id)">
           <img src="/img/Unban.svg" alt="" />
-          <p>Unban</p>
+          <p>Разбан</p>
         </div>
         <div @click="Setadmin(user.id)">
           <img src="/img/Setadmin.svg" alt="" />
-          <p>Set Admin</p>
+          <p>Назначить администратором</p>
         </div>
         <div @click="Setmanager(user.id)">
           <img src="/img/Setadmin.svg" alt="" />
-          <p>Set Manager</p>
+          <p>Назначить менеджером</p>
         </div>
       </div>
     </div>
@@ -242,7 +243,7 @@ export default {
   }
 }
 .card {
-  width: 500px;
+  width: 600px;
   height: 500px;
   background-color: #16181b;
   border-radius: 7px;
@@ -285,6 +286,10 @@ export default {
         width: 50px;
         height: 50px;
         border: none;
+      }
+      P {
+        width: auto;
+        text-align: center;
       }
     }
   }

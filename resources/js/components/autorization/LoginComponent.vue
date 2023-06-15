@@ -148,21 +148,21 @@
           </div>
         </div>
 
-        <button @click.prevent="login">Войти ⇀</button>
+        <button @click.prevent="login()">Войти ⇀</button>
         <p>
           Нет аккаунта?
           <router-link to="/register" href="">Зарегистрироваться</router-link>
         </p>
 
-        <div class="check" :class="{ error: v$.check.$errors.length }">
+        <div class="check">
           <input
             type="checkbox"
             required
+            v-model="check"
             class="custom-checkbox"
             id="happy"
             name="happy"
             value="yes"
-            v-model="v$.check.$model"
           />
           <label for="happy"></label>
           <span
@@ -171,14 +171,8 @@
               >политикой конфиденцальности</a
             ></span
           >
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.check.$errors"
-            :key="index"
-          >
-            <div class="error-msg">{{ error.$message }}</div>
-          </div>
         </div>
+        <div class="error-msg" v-show="check == false">{{ msg }}</div>
       </form>
     </div>
     <div class="people">
@@ -209,16 +203,11 @@ export default {
       email: null,
       password: null,
       check: false,
+      msg: "",
     };
   },
   validations() {
     return {
-      check: {
-        required: helpers.withMessage(
-          "Обязательное поле для заполнения",
-          required
-        ),
-      },
       email: {
         required: helpers.withMessage(
           "Обязательное поле для заполнения",
@@ -244,53 +233,62 @@ export default {
   mounted() {
     document.title = "Войти";
   },
+  updated() {
+    if (this.check == false) {
+      this.msg = "Вы не поставили галочку";
+    } else {
+      this.msg = "";
+    }
+  },
   methods: {
     login() {
-      axios.get("/sanctum/csrf-cookie").then((response) => {
-        axios
-          .post("/login", {
-            email: this.email,
-            password: this.password,
-          })
-          .then((r) => {
-            this.email = "";
-            this.password = "";
-            localStorage.setItem(
-              "x_xsrf_token",
-              r.config.headers["X-XSRF-TOKEN"]
-            );
-            localStorage.setItem("name", r.data["name"]);
-            localStorage.setItem("surname", r.data["surname"]);
-            localStorage.setItem("email", r.data["email"]);
-            localStorage.setItem("id", r.data["id"]);
-            localStorage.setItem("avatar", r.data["avatar"]);
-            localStorage.setItem("adress", r.data["adress"]);
-            localStorage.setItem("number", r.data["number"]);
-            localStorage.setItem("role", r.data["role"]);
-            if (r.data["role"] == 0) {
-              this.$router.push("/dashboard");
-            } else if (r.data["role"] == 1 || r.data["role"] == 2) {
-              this.$router.push("/admin");
-            } else
-              axios.post("/logout").then((res) => {
-                localStorage.removeItem("x_xsrf_token");
-                localStorage.removeItem("name");
-                localStorage.removeItem("surname");
-                localStorage.removeItem("email");
-                localStorage.removeItem("id");
-                localStorage.removeItem("avatar");
-                localStorage.removeItem("adress");
-                localStorage.removeItem("number");
-                localStorage.removeItem("age");
-                localStorage.removeItem("city");
-                localStorage.removeItem("role");
-                this.$router.push("/login");
-              });
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
-      });
+      if (this.check != false) {
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+          axios
+            .post("/login", {
+              email: this.email,
+              password: this.password,
+            })
+            .then((r) => {
+              this.email = "";
+              this.password = "";
+              localStorage.setItem(
+                "x_xsrf_token",
+                r.config.headers["X-XSRF-TOKEN"]
+              );
+              localStorage.setItem("name", r.data["name"]);
+              localStorage.setItem("surname", r.data["surname"]);
+              localStorage.setItem("email", r.data["email"]);
+              localStorage.setItem("id", r.data["id"]);
+              localStorage.setItem("avatar", r.data["avatar"]);
+              localStorage.setItem("adress", r.data["adress"]);
+              localStorage.setItem("number", r.data["number"]);
+              localStorage.setItem("role", r.data["role"]);
+              if (r.data["role"] == 0) {
+                this.$router.push("/dashboard");
+              } else if (r.data["role"] == 1 || r.data["role"] == 2) {
+                this.$router.push("/admin");
+              } else
+                axios.post("/logout").then((res) => {
+                  localStorage.removeItem("x_xsrf_token");
+                  localStorage.removeItem("name");
+                  localStorage.removeItem("surname");
+                  localStorage.removeItem("email");
+                  localStorage.removeItem("id");
+                  localStorage.removeItem("avatar");
+                  localStorage.removeItem("adress");
+                  localStorage.removeItem("number");
+                  localStorage.removeItem("age");
+                  localStorage.removeItem("city");
+                  localStorage.removeItem("role");
+                  this.$router.push("/login");
+                });
+            })
+            .catch((err) => {
+              console.log(err.response);
+            });
+        });
+      }
     },
   },
 };
@@ -304,12 +302,12 @@ path {
   display: flex;
   flex-direction: row;
   gap: 1vw;
-  /* width: 360px; */
+  width: 360px;
   text-align: center;
   font-family: "Roboto", serif;
 }
 .check span {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.2);
 }
 .check span a {
   color: #af3131;

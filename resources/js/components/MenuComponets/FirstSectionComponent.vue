@@ -787,7 +787,21 @@ export default {
 .gap {
   gap: 10px;
 }
-
+.last_active {
+  height: 152px;
+  overflow-x: auto;
+}
+.last_active::-webkit-scrollbar {
+  width: 10px; /* ширина scrollbar */
+}
+.last_active::-webkit-scrollbar-track {
+  background: #1d2023; /* цвет дорожки */
+}
+.last_active::-webkit-scrollbar-thumb {
+  background-color: #af3131; /* цвет плашки */
+  border-radius: 50px; /* закругления плашки */
+  border: 10px solid #af3131;
+}
 .last_active :last-child {
   border-bottom: none;
   border-bottom-left-radius: 10px;

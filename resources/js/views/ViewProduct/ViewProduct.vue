@@ -74,7 +74,7 @@
               ><span v-else>порций</span>
             </p>
             <div>
-              <button @click="counter++">+</button>
+              <button @click="counter++" v-if="counter < 5">+</button>
               <button @click="Plus">-</button>
             </div>
           </div>

@@ -206,6 +206,25 @@
           Уже есть аккаунт?
           <router-link to="/login" href="">Войдите</router-link>
         </p>
+        <div class="check">
+          <input
+            type="checkbox"
+            required
+            v-model="check"
+            class="custom-checkbox"
+            id="happy"
+            name="happy"
+            value="yes"
+          />
+          <label for="happy"></label>
+          <span
+            >Ставя галочку вы соглашаетесь с
+            <a href="./Условия сделки.docx"
+              >политикой конфиденцальности</a
+            ></span
+          >
+        </div>
+        <div class="error-msg" v-show="check == false">{{ msg }}</div>
       </form>
     </div>
     <div class="people">
@@ -235,20 +254,36 @@ export default {
       email: "",
       password: "",
       password_confirmation: "",
+      check: false,
+      msg: "",
     };
   },
 
+  updated() {
+    if (this.check == false) {
+      this.msg = "Вы не поставили галочку";
+    } else {
+      this.msg = "";
+    }
+  },
   validations() {
     return {
       name: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
         name_validation: {
           $validator: validName,
-          $message: "Недопустимое имя. Допустимое имя содержит только русские буквы.",
+          $message:
+            "Недопустимое имя. Допустимое имя содержит только русские буквы.",
         },
       },
       surname: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
         name_validation: {
           $validator: validName,
           $message:
@@ -256,18 +291,30 @@ export default {
         },
       },
       email: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
         email: helpers.withMessage(
           "Значение не является действительным адресом электронной почты",
           email
         ),
       },
       password: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
-        min: helpers.withMessage("Минимальное количество символов 8", minLength(8)),
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
+        min: helpers.withMessage(
+          "Минимальное количество символов 8",
+          minLength(8)
+        ),
       },
       password_confirmation: {
-        required: helpers.withMessage("Обязательное поле для заполнения", required),
+        required: helpers.withMessage(
+          "Обязательное поле для заполнения",
+          required
+        ),
         // sameAsPassword: helpers.withMessage('Пароли не совпадают',sameAs('password'))
       },
     };
@@ -279,32 +326,37 @@ export default {
 
   methods: {
     register() {
-      axios.get("/sanctum/csrf-cookie").then((Response) => {
-        axios
-          .post("/register", {
-            name: this.name,
-            surname: this.surname,
-            email: this.email,
-            password: this.password,
-            password_confirmation: this.password_confirmation,
-          })
-          .then((r) => {
-            this.name = "";
-            this.surname = "";
-            this.email = "";
-            this.password = "";
-            this.password_confirmation = "";
-            localStorage.setItem("x_xsrf_token", r.config.headers["X-XSRF-TOKEN"]);
-            localStorage.setItem("name", r.data["name"]);
-            localStorage.setItem("surname", r.data["surname"]);
-            localStorage.setItem("email", r.data["email"]);
-            localStorage.setItem("id", r.data["id"]);
-            localStorage.setItem("avatar", r.data["avatar"]);
-            localStorage.setItem("adress", r.data["adress"]);
-            localStorage.setItem("number", r.data["number"]);
-            this.$router.push("/dashboard");
-          });
-      });
+      if (this.check != false) {
+        axios.get("/sanctum/csrf-cookie").then((Response) => {
+          axios
+            .post("/register", {
+              name: this.name,
+              surname: this.surname,
+              email: this.email,
+              password: this.password,
+              password_confirmation: this.password_confirmation,
+            })
+            .then((r) => {
+              this.name = "";
+              this.surname = "";
+              this.email = "";
+              this.password = "";
+              this.password_confirmation = "";
+              localStorage.setItem(
+                "x_xsrf_token",
+                r.config.headers["X-XSRF-TOKEN"]
+              );
+              localStorage.setItem("name", r.data["name"]);
+              localStorage.setItem("surname", r.data["surname"]);
+              localStorage.setItem("email", r.data["email"]);
+              localStorage.setItem("id", r.data["id"]);
+              localStorage.setItem("avatar", r.data["avatar"]);
+              localStorage.setItem("adress", r.data["adress"]);
+              localStorage.setItem("number", r.data["number"]);
+              this.$router.push("/dashboard");
+            });
+        });
+      }
     },
   },
 };
@@ -313,6 +365,68 @@ export default {
 <style lang="css" scoped>
 path {
   fill: rgb(99.215686%, 99.607843%, 99.215686%);
+}
+.check {
+  display: flex;
+  flex-direction: row;
+  font-family: "Roboto", serif;
+}
+.check span {
+  color: rgba(255, 255, 255, 0.2);
+}
+.check span a {
+  color: #af3131;
+}
+.custom-checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.custom-checkbox + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.custom-checkbox + label::before {
+  content: "";
+  display: inline-block;
+  width: 1.3em;
+  height: 1.3em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #af3131;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.custom-checkbox:checked + label::before {
+  border-color: #af3131;
+  background-color: #212529;
+  background-image: url("./img/галочка.svg");
+  background-size: cover;
+}
+/* стили при наведении курсора на checkbox */
+.custom-checkbox:not(:disabled):not(:checked) + label:hover::before {
+  border-color: #d77070;
+}
+/* стили для активного состояния чекбокса (при нажатии на него) */
+.custom-checkbox:not(:disabled):active + label::before {
+  background-color: #d77070;
+  border-color: #d77070;
+}
+/* стили для чекбокса, находящегося в фокусе */
+.custom-checkbox:focus + label::before {
+  box-shadow: 0 0 0 0.2rem #6f1f1f;
+}
+/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
+.custom-checkbox:focus:not(:checked) + label::before {
+  border-color: #d77070;
+}
+/* стили для чекбокса, находящегося в состоянии disabled */
+.custom-checkbox:disabled + label::before {
+  background-color: #d77070;
 }
 svg {
   margin-bottom: 25px;

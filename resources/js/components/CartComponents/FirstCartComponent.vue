@@ -99,7 +99,7 @@
                 ее
               </p>
             </div>
-            <div class="check">
+            <!-- <div class="check">
               <input
                 type="checkbox"
                 required
@@ -113,7 +113,7 @@
                 >Ставя галочку вы соглашаетесь с
                 <a href="./Условия сделки.docx">уловиями сделки</a></span
               >
-            </div>
+            </div> -->
           </form>
         </div>
       </div>

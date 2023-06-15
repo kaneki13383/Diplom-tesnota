@@ -13,6 +13,21 @@
       <div class="h2_tovar">
         <h2>Все типы</h2>
       </div>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 5vh;
+        "
+      >
+        <input
+          type="search"
+          class="search"
+          placeholder="Введите название товара"
+          v-model="name2"
+        />
+      </div>
       <div class="all_product">
         <div
           style="
@@ -30,7 +45,7 @@
             <div class="orbit"></div>
           </div>
         </div>
-        <div v-else v-for="i in types" :key="i">
+        <div v-else v-for="i in filteredList" :key="i">
           <div class="card">
             <p>{{ i.type }}</p>
             <div style="cursor: pointer" @click.prevent="deleteType(i.id)">
@@ -66,7 +81,23 @@ export default {
       load: true,
       types: [],
       type: "",
+      name2: "",
     };
+  },
+  computed: {
+    filteredList: function () {
+      let sear = this.name2;
+      return this.types.filter(function (elem) {
+        if (sear === "") {
+          return true;
+        } else {
+          let name_product = elem.type;
+          name_product = name_product.toLowerCase();
+          let result = sear.toLocaleLowerCase();
+          return name_product.indexOf(result) > -1;
+        }
+      });
+    },
   },
   mounted() {
     this.AllTypes();
@@ -205,6 +236,16 @@ export default {
 }
 * {
   color: white;
+}
+input {
+  background: transparent;
+  border: 2px #af3131 solid;
+  height: 50px;
+  border-radius: 15px;
+  resize: none;
+  font-family: "Comfortaa", serif;
+  font-size: 15px;
+  padding-left: 5px;
 }
 .h2_tovar {
   font-size: 25px;

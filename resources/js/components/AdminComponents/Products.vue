@@ -23,7 +23,8 @@
         />
 
         <input
-          type="text"
+          type="number"
+          min="1"
           v-model="price"
           required
           placeholder="Введите цену товара"
@@ -143,7 +144,7 @@ export default {
       types: [],
       menu: [],
       name: "",
-      price: "",
+      price: null,
       discription: "",
       type: [],
       file: null,
@@ -158,6 +159,11 @@ export default {
     this.AllTypes();
     this.allMenu();
     console.log(this.file);
+  },
+  updated() {
+    if (this.price <= 0) {
+      this.price = null;
+    }
   },
   computed: {
     filteredList: function () {
@@ -412,7 +418,10 @@ svg {
   justify-content: center;
   margin-left: 150px;
 }
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 .add_product .file_name {
   margin-top: 0px;
   margin-bottom: 0px;
