@@ -3,7 +3,12 @@
     <form>
       <h2>Изменить даные</h2>
       <input v-model="name" type="text" maxlength="100" placeholder="Имя" />
-      <input v-model="surname" type="text" maxlength="100" placeholder="Фамилия" />
+      <input
+        v-model="surname"
+        type="text"
+        maxlength="100"
+        placeholder="Фамилия"
+      />
       <input v-model="email" type="text" maxlength="100" placeholder="Email" />
       <!-- <input type="password" placeholder="Пароль" /> -->
       <button @click.prevent="changeInfoUser">Сохранить</button>
@@ -118,8 +123,10 @@ export default {
 <style lang="css" scoped>
 .alert {
   position: fixed;
-  top: 87vh;
-  left: 82%;
+  bottom: 0;
+  right: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
   width: 300px;
   height: 100px;
   border: 2px solid #af3131;

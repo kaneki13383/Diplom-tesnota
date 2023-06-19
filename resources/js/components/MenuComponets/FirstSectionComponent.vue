@@ -760,6 +760,7 @@ export default {
   height: 40px;
   width: auto;
   margin-bottom: 20px;
+  overflow-y: hidden;
 }
 
 .d-f-2 .last_active .active {

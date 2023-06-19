@@ -195,9 +195,21 @@ h1 {
   background: #202428;
   border: 3px #af3131 solid;
   width: 60vw;
-  height: auto;
+  height: 65vh;
   border-radius: 15px;
   color: white;
+  overflow-y: auto;
+}
+.background::-webkit-scrollbar {
+  width: 5px; /* ширина scrollbar */
+}
+.background::-webkit-scrollbar-track {
+  background: #1d2023; /* цвет дорожки */
+}
+.background::-webkit-scrollbar-thumb {
+  background-color: #af3131; /* цвет плашки */
+  border-radius: 50px; /* закругления плашки */
+  border: 1px solid #af3131;
 }
 .card img {
   width: 240px;
@@ -268,6 +280,10 @@ h2 {
   }
   .card p {
     font-size: 14px;
+  }
+  .bottom_order {
+    flex-direction: column;
+    text-align: center;
   }
   .bottom_order p {
     font-size: 15px;

@@ -324,6 +324,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  bottom: 0;
+  right: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
   /* margin-left: 7vw;
     margin-top: 10vw; */
 }

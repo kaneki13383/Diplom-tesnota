@@ -212,8 +212,10 @@ export default {
 }
 .alert {
   position: fixed;
-  top: 87vh;
-  left: 82%;
+  bottom: 0;
+  right: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
   width: 300px;
   height: 100px;
   border: 2px solid #af3131;
